@@ -1,61 +1,50 @@
 # RUHL / Rockrose — 200 Water Street Landing Page
 
-React + Vite landing page prototype for the 200 Water Street ventilation retrofit project.
+Static **HTML / CSS / JavaScript** landing page for the 200 Water Street ventilation retrofit project. It runs on **GitHub Pages** with **no build step** (`index.html`, `styles.css`, `main.js` at repo root).
 
-## Local setup
+## Local preview
 
-```bash
-npm install
-npm run dev
-```
-
-## Build
+Double-click **`index.html`** or use any static server, for example:
 
 ```bash
-npm run build
-npm run preview
+python -m http.server 8080
 ```
+
+Then open http://localhost:8080/
+
+## Repo layout
+
+| Path | Purpose |
+|------|---------|
+| `index.html` | Full page markup; Tailwind via CDN |
+| `styles.css` | Custom fonts, scroll behavior, `.reveal` animation |
+| `main.js` | Scroll reveal (`IntersectionObserver`) + Lucide icon wiring |
+| `logos/` | Partner images (see `logos/README.md`) |
+| `.nojekyll` | Disables Jekyll so Pages serves static assets as-is |
+
+Third-party CDN (pinned where possible):
+
+- Tailwind styling: `cdn.tailwindcss.com`
+- Icons: Lucide (`jsdelivr` UMD bundle)
+- Fonts: Google Fonts Roboto
+
+## GitHub Pages (recommended)
+
+Because the site is plain static HTML, **GitHub can serve it straight from `main`** — no Actions required.
+
+1. **Settings → Pages → Build and deployment**
+2. **Source**: **Deploy from a branch**
+3. **Branch**: `main`, folder **`/ (root)`**
+4. Save. The site publishes at **`https://<your-username>.github.io/<repo>/`**.
+
+Example (this repo names): **`https://bunny-bun-ux.github.io/ruhl-200-water-landing/`**
+
+Ensure image files listed in `logos/README.md` exist under **`logos/`** so partner tiles show correctly.
+
+### Optional Actions deploy
+
+Earlier versions used a Node/Vite build and GitHub Actions. That path was removed when the project moved to fully static assets. Restore a workflow later only if you reintroduce a build step.
 
 ## Logo sizing
 
-Logo files are in:
-
-```text
-public/logos/
-```
-
-Logo sizes can be adjusted in `src/App.jsx` inside the `partners` array:
-
-```js
-logoClass: 'max-h-28 max-w-[260px]'
-```
-
-The shared logo card container is in the `LogoMark` component:
-
-```jsx
-<div className="flex h-40 ...">
-```
-
-Increase `h-40` to `h-44` or `h-48` if larger logos need more room.
-
-## Deploy options
-
-Recommended free options:
-- Vercel
-- Netlify
-- GitHub Pages — see below
-
-### GitHub Pages (this repo)
-
-This app is compiled by Vite. **Do not** set Pages to “Deploy from a branch” with the repo root (`/`), or visitors only get raw `index.html` and `/src/main.jsx`, which Pages cannot compile.
-
-Instead:
-
-1. Push this repo including `.github/workflows/pages.yml`.
-2. On GitHub: **Settings → Pages → Build and deployment**.
-3. Under **Source**, choose **GitHub Actions** (not “Deploy from a branch”).
-4. Open the **Actions** tab and confirm the workflow “Deploy site to Pages” completed; the live URL is **`https://bunny-bun-ux.github.io/ruhl-200-water-landing/`**.
-
-Production builds use [`vite.config.js`](vite.config.js) with `base: '/ruhl-200-water-landing/'` so asset URLs work under that path (applied on every `vite build`, even with a custom `--mode`). The build also copies `dist/index.html` to `dist/404.html` for GitHub Pages, and [`public/.nojekyll`](public/.nojekyll) is published so Jekyll does not strip static assets. If you rename the repo, update `pagesBase` in `vite.config.js` and redeploy.
-
-To verify a production build locally after `npm run build`, either run **`npm run preview`** or open [`dist/index.html`](dist/index.html) from a server (opening the file directly with `file://` will not resolve module paths correctly).
+Adjust logo dimensions in **`index.html`** on each `<img>` in the Organizations grid (Tailwind classes like `max-h-28`, `max-w-[260px]`), matching the intent of the old `partners` array in React.

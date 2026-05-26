@@ -6,10 +6,729 @@
     <title>200 Water Street Ventilation Retrofit</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+  <body class="antialiased">
+    <main class="min-h-screen bg-[#f7f8f8] text-[#0b1724]">
+      <!-- Hero -->
+      <section class="relative overflow-hidden bg-white">
+        <div class="absolute left-1/2 top-[-18rem] h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-[#fcbe00]/10 blur-3xl"></div>
+        <div class="relative mx-auto w-full max-w-7xl px-6 md:px-10 py-20 md:py-28">
+          <div class="mx-auto max-w-5xl text-center reveal">
+            <div class="mb-8 flex flex-wrap items-center justify-center gap-3">
+              <span class="rounded-full bg-[#00375a] px-5 py-2 text-sm font-black text-white">RUHL TecDesign</span>
+              <span class="text-[#fcbe00]">×</span>
+              <span
+                class="rounded-full bg-white px-5 py-2 text-sm font-black text-[#00375a] shadow-sm ring-1 ring-slate-200"
+                >Rockrose</span
+              >
+              <span class="text-[#fcbe00]">·</span>
+              <span class="rounded-full bg-[#fcbe00] px-5 py-2 text-sm font-black text-[#00375a]"
+                >200 Water Street Project</span
+              >
+            </div>
+            <p class="text-sm font-black uppercase tracking-[0.28em] text-[#00375a]">
+              Closed-loop heat recovery for a 31-story Manhattan residence
+            </p>
+            <h1 class="mt-5 text-5xl font-black leading-[0.95] tracking-tight text-[#00375a] md:text-7xl">
+              200 Water Street Ventilation Retrofit
+            </h1>
+            <p class="mx-auto mt-6 max-w-3xl text-xl leading-8 text-slate-600">
+              Rebalancing airflow, recovering exhaust energy, and creating a scalable path toward Local Law 97
+              compliance for large multifamily buildings.
+            </p>
+            <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+              <a
+                href="#solution"
+                class="inline-flex items-center justify-center gap-2 rounded-full bg-[#00375a] px-6 py-4 text-sm font-black text-white shadow-lg shadow-[#00375a]/20 transition hover:-translate-y-1"
+              >
+                See how it works <i data-lucide="arrow-right" class="h-[18px] w-[18px] stroke-[3]"></i>
+              </a>
+              <a
+                href="#impact"
+                class="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#00375a] bg-white px-6 py-4 text-sm font-black text-[#00375a] transition hover:-translate-y-1"
+              >
+                View impact data
+              </a>
+            </div>
+          </div>
+          <div class="mt-14 grid gap-4 md:grid-cols-3 lg:grid-cols-5">
+            <article class="reveal rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <p class="text-4xl font-black tracking-tight text-[#00375a]">541,000</p>
+              <p class="mt-2 text-sm font-bold uppercase tracking-wide text-slate-900">sq ft</p>
+              <p class="mt-1 text-sm leading-6 text-slate-500">31 floors · 576 residential units</p>
+            </article>
+            <article class="reveal rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <p class="text-4xl font-black tracking-tight text-[#00375a]">26%</p>
+              <p class="mt-2 text-sm font-bold uppercase tracking-wide text-slate-900">energy reduction</p>
+              <p class="mt-1 text-sm leading-6 text-slate-500">ventilation retrofit vs. baseline</p>
+            </article>
+            <article class="reveal rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <p class="text-4xl font-black tracking-tight text-[#00375a]">664</p>
+              <p class="mt-2 text-sm font-bold uppercase tracking-wide text-slate-900">tCO₂e/yr saved</p>
+              <p class="mt-1 text-sm leading-6 text-slate-500">annual ventilation retrofit impact</p>
+            </article>
+            <article class="reveal rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <p class="text-4xl font-black tracking-tight text-[#00375a]">2.3</p>
+              <p class="mt-2 text-sm font-bold uppercase tracking-wide text-slate-900">year payback</p>
+              <p class="mt-1 text-sm leading-6 text-slate-500">with NYSERDA + in-kind</p>
+            </article>
+            <article class="reveal rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <p class="text-4xl font-black tracking-tight text-[#00375a]">36</p>
+              <p class="mt-2 text-sm font-bold uppercase tracking-wide text-slate-900">weeks</p>
+              <p class="mt-1 text-sm leading-6 text-slate-500">kickoff to closeout</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Organizations -->
+      <section class="py-20 md:py-24">
+        <div class="mx-auto w-full max-w-7xl px-6 md:px-10">
+          <div class="mx-auto max-w-4xl text-center reveal">
+            <p class="mb-3 text-xs font-black uppercase tracking-[0.24em] text-[#00375a]">Organizations</p>
+            <h2 class="text-3xl font-black tracking-tight text-[#00375a] md:text-5xl">
+              Project leadership, funding, technology, and support.
+            </h2>
+            <p class="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-600">
+              The page gives RUHL and Rockrose clear visibility while still showing the public project ecosystem around
+              NYSERDA, Swegon, dena, and the German Energy Solutions Initiative.
+            </p>
+          </div>
+          <div class="mt-12 grid auto-rows-fr gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <div class="group flex min-h-[260px] flex-col justify-between rounded-3xl border border-[#00375a]/30 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div class="flex h-40 w-full items-center justify-center rounded-2xl bg-white px-3 ring-1 ring-slate-100">
+                <img src="./logos/ruhl.jpg" alt="RUHL logo" class="max-h-28 max-w-[260px] w-auto object-contain" loading="lazy" />
+              </div>
+              <div class="mt-5 border-t border-slate-100 pt-4 text-center">
+                <p class="text-lg font-black text-[#00375a]">RUHL TecDesign</p>
+                <p class="mt-1 text-sm leading-5 text-slate-500">Lead MEP design engineering</p>
+              </div>
+            </div>
+            <div class="group flex min-h-[260px] flex-col justify-between rounded-3xl border border-[#00375a]/30 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div class="flex h-40 w-full items-center justify-center rounded-2xl bg-white px-3 ring-1 ring-slate-100">
+                <img src="./logos/rockrose.png" alt="Rockrose logo" class="max-h-16 max-w-[280px] w-auto object-contain" loading="lazy" />
+              </div>
+              <div class="mt-5 border-t border-slate-100 pt-4 text-center">
+                <p class="text-lg font-black text-[#00375a]">Rockrose</p>
+                <p class="mt-1 text-sm leading-5 text-slate-500">Owner / development partner</p>
+              </div>
+            </div>
+            <div class="group flex min-h-[260px] flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div class="flex h-40 w-full items-center justify-center rounded-2xl bg-white px-3 ring-1 ring-slate-100">
+                <img src="./logos/nyserda.png" alt="NYSERDA logo" class="max-h-24 max-w-[320px] w-auto object-contain" loading="lazy" />
+              </div>
+              <div class="mt-5 border-t border-slate-100 pt-4 text-center">
+                <p class="text-lg font-black text-[#00375a]">NYSERDA</p>
+                <p class="mt-1 text-sm leading-5 text-slate-500">$2.0M Heat Recovery Program funding</p>
+              </div>
+            </div>
+            <div class="group flex min-h-[260px] flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div class="flex h-40 w-full items-center justify-center rounded-2xl bg-white px-3 ring-1 ring-slate-100">
+                <img src="./logos/swegon.png" alt="Swegon logo" class="max-h-24 max-w-[280px] w-auto object-contain" loading="lazy" />
+              </div>
+              <div class="mt-5 border-t border-slate-100 pt-4 text-center">
+                <p class="text-lg font-black text-[#00375a]">Swegon</p>
+                <p class="mt-1 text-sm leading-5 text-slate-500">GOLD F SD air-handling units</p>
+              </div>
+            </div>
+            <div class="group flex min-h-[260px] flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div class="flex h-40 w-full items-center justify-center rounded-2xl bg-white px-3 ring-1 ring-slate-100">
+                <img src="./logos/dena.png" alt="dena logo" class="max-h-28 max-w-[260px] w-auto object-contain" loading="lazy" />
+              </div>
+              <div class="mt-5 border-t border-slate-100 pt-4 text-center">
+                <p class="text-lg font-black text-[#00375a]">dena</p>
+                <p class="mt-1 text-sm leading-5 text-slate-500">German Energy Agency support</p>
+              </div>
+            </div>
+            <div class="group flex min-h-[260px] flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div class="flex h-40 w-full items-center justify-center rounded-2xl bg-white px-3 ring-1 ring-slate-100">
+                <img
+                  src="./logos/german-energy-solutions.png"
+                  alt="Mittelstand Global Energy Solutions Made in Germany logo"
+                  class="max-h-28 max-w-[320px] w-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+              <div class="mt-5 border-t border-slate-100 pt-4 text-center">
+                <p class="text-lg font-black text-[#00375a]">German Energy Solutions</p>
+                <p class="mt-1 text-sm leading-5 text-slate-500">RES Programme support</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Solution / approach -->
+      <section id="solution" class="bg-white">
+        <div class="py-20 md:py-24">
+          <div class="mx-auto w-full max-w-7xl px-6 md:px-10">
+            <div class="mx-auto max-w-4xl text-center reveal">
+              <p class="mb-3 text-xs font-black uppercase tracking-[0.24em] text-[#00375a]">Engineering approach</p>
+              <h2 class="text-3xl font-black tracking-tight text-[#00375a] md:text-5xl">
+                Efficiency-led retrofit: reduce, recover, modernize.
+              </h2>
+              <p class="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-600">
+                The retrofit attacks the building's core ventilation problem first: uncontrolled exhaust, pressure imbalance,
+                and wasted thermal energy.
+              </p>
+            </div>
+            <div class="mt-12 grid gap-5 md:grid-cols-3">
+              <div class="reveal rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#00375a] text-[#fcbe00]">
+                  <i data-lucide="gauge" class="h-[34px] w-[34px] stroke-[2]"></i>
+                </div>
+                <h3 class="mt-6 text-2xl font-black text-[#00375a]">Reduce Loads</h3>
+                <p class="mt-3 leading-7 text-slate-600">Cut heating and cooling demand before adding larger systems.</p>
+              </div>
+              <div class="reveal rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#00375a] text-[#fcbe00]">
+                  <i data-lucide="refresh-cw" class="h-[34px] w-[34px] stroke-[2]"></i>
+                </div>
+                <h3 class="mt-6 text-2xl font-black text-[#00375a]">Recover Heat</h3>
+                <p class="mt-3 leading-7 text-slate-600">
+                  Transfer exhaust energy to incoming outdoor air without mixing streams.
+                </p>
+              </div>
+              <div class="reveal rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#00375a] text-[#fcbe00]">
+                  <i data-lucide="wind" class="h-[34px] w-[34px] stroke-[2]"></i>
+                </div>
+                <h3 class="mt-6 text-2xl font-black text-[#00375a]">Modernize HVAC</h3>
+                <p class="mt-3 leading-7 text-slate-600">
+                  Coordinate air handling, heat recovery, and staged water-source VRF support.
+                </p>
+              </div>
+            </div>
+            <div class="mt-12 grid gap-5 md:grid-cols-2">
+              <div class="reveal rounded-[2rem] bg-[#00375a] p-8 text-white">
+                <h3 class="text-2xl font-black">The challenge</h3>
+                <p class="mt-4 leading-7 text-white/80">
+                  Multiple roof exhaust systems operated continuously without heat recovery or supply coordination,
+                  producing a 284% negative-pressure regime and high infiltration losses through doors, windows, and façade
+                  leakage.
+                </p>
+              </div>
+              <div class="reveal rounded-[2rem] bg-[#fcbe00] p-8 text-[#00375a]">
+                <h3 class="text-2xl font-black">The solution</h3>
+                <p class="mt-4 leading-7">
+                  Centralized exhaust and dedicated outdoor-air supply units connected by a closed-loop refrigerant heat
+                  recovery circuit, with water-source VRF support only when recovered heat cannot meet setpoints.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- System strategy -->
+        <div class="py-20 md:py-24">
+          <div class="mx-auto w-full max-w-7xl px-6 md:px-10">
+            <div class="mx-auto max-w-4xl text-center reveal">
+              <p class="mb-3 text-xs font-black uppercase tracking-[0.24em] text-[#00375a]">System strategy</p>
+              <h2 class="text-3xl font-black tracking-tight text-[#00375a] md:text-5xl">
+                Airflow rebalanced to reduce infiltration losses.
+              </h2>
+              <p class="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-600">
+                The proposed system reduces excessive exhaust, increases coordinated supply air, and moves the building
+                toward balanced/slight positive pressure.
+              </p>
+            </div>
+            <div class="mt-12 grid gap-5 md:grid-cols-2">
+              <!-- Exhaust -->
+              <div class="reveal rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="mb-6 flex items-start justify-between gap-4">
+                  <div>
+                    <h3 class="text-xl font-black text-[#00375a]">Exhaust Airflow</h3>
+                    <p class="mt-1 text-sm text-slate-500">exhaust reduced and consolidated</p>
+                  </div>
+                  <span class="rounded-full bg-[#fcbe00]/20 px-3 py-1 text-xs font-black text-[#00375a]">CFM</span>
+                </div>
+                <div class="space-y-6">
+                  <div>
+                    <div class="mb-2 flex justify-between text-sm">
+                      <span class="font-medium text-slate-500">Baseline</span><strong>74,780 CFM</strong>
+                    </div>
+                    <div class="h-4 rounded-full bg-slate-100">
+                      <div class="h-4 rounded-full bg-red-500 transition-all duration-1000" style="width: 93.475%"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="mb-2 flex justify-between text-sm">
+                      <span class="font-medium text-slate-500">After Retrofit</span><strong>21,480 CFM</strong>
+                    </div>
+                    <div class="h-4 rounded-full bg-slate-100">
+                      <div class="h-4 rounded-full bg-[#00375a] transition-all duration-1000" style="width: 26.85%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Supply -->
+              <div class="reveal rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="mb-6 flex items-start justify-between gap-4">
+                  <div>
+                    <h3 class="text-xl font-black text-[#00375a]">Supply Airflow</h3>
+                    <p class="mt-1 text-sm text-slate-500">
+                      supply increased to support slight positive pressure
+                    </p>
+                  </div>
+                  <span class="rounded-full bg-[#fcbe00]/20 px-3 py-1 text-xs font-black text-[#00375a]">CFM</span>
+                </div>
+                <div class="space-y-6">
+                  <div>
+                    <div class="mb-2 flex justify-between text-sm">
+                      <span class="font-medium text-slate-500">Baseline</span><strong>26,330 CFM</strong>
+                    </div>
+                    <div class="h-4 rounded-full bg-slate-100">
+                      <div class="h-4 rounded-full bg-red-500 transition-all duration-1000" style="width: 32.9125%"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="mb-2 flex justify-between text-sm">
+                      <span class="font-medium text-slate-500">After Retrofit</span><strong>28,316 CFM</strong>
+                    </div>
+                    <div class="h-4 rounded-full bg-slate-100">
+                      <div class="h-4 rounded-full bg-[#00375a] transition-all duration-1000" style="width: 35.395%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="reveal mt-6 rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+              <p class="text-3xl font-black text-[#00375a]">284% negative pressure → balanced / slight positive</p>
+              <p class="mt-2 text-slate-500">Ventilation losses collapse when exhaust and supply air are coordinated.</p>
+            </div>
+            <div class="mt-10 grid gap-5 md:grid-cols-3">
+              <div class="reveal rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+                <i data-lucide="refresh-cw" class="text-[#00375a]" style="width: 30px; height: 30px"></i>
+                <h3 class="mt-5 text-xl font-black text-[#00375a]">Closed-Loop Run-Around Heat Recovery</h3>
+                <p class="mt-3 leading-7 text-slate-600">
+                  R454B air–refrigerant–air circuit transfers sensible energy between exhaust and supply air without
+                  direct mixing.
+                </p>
+              </div>
+              <div class="reveal rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+                <i data-lucide="network" class="text-[#00375a]" style="width: 30px; height: 30px"></i>
+                <h3 class="mt-5 text-xl font-black text-[#00375a]">Centralized Exhaust + Dedicated Supply</h3>
+                <p class="mt-3 leading-7 text-slate-600">
+                  Existing roof exhaust streams are consolidated into paired exhaust and 100% outdoor-air supply units.
+                </p>
+              </div>
+              <div class="reveal rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+                <i data-lucide="thermometer-sun" class="text-[#00375a]" style="width: 30px; height: 30px"></i>
+                <h3 class="mt-5 text-xl font-black text-[#00375a]">Water-Source VRF Support</h3>
+                <p class="mt-3 leading-7 text-slate-600">
+                  R32 VRF acts as a secondary stage only when heat recovery alone cannot meet supply-air setpoints.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Impact -->
+      <section id="impact" class="bg-white">
+        <div class="py-20 md:py-24">
+          <div class="mx-auto w-full max-w-7xl px-6 md:px-10">
+            <div class="mx-auto max-w-4xl text-center reveal">
+              <p class="mb-3 text-xs font-black uppercase tracking-[0.24em] text-[#00375a]">Measured impact</p>
+              <h2 class="text-3xl font-black tracking-tight text-[#00375a] md:text-5xl">
+                Clear evidence for builders, owners, and engineers.
+              </h2>
+              <p class="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-600">
+                Key values are shown as visual components instead of raw tables, with units and thresholds kept visible
+                for technical credibility.
+              </p>
+            </div>
+
+            <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              <article class="reveal rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <p class="text-4xl font-black tracking-tight text-[#00375a]">11.9M</p>
+                <p class="mt-2 text-sm font-bold uppercase tracking-wide text-slate-900">kBtu/yr saved</p>
+                <p class="mt-1 text-sm leading-6 text-slate-500">annual ventilation retrofit energy savings</p>
+              </article>
+              <article class="reveal rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <p class="text-4xl font-black tracking-tight text-[#00375a]">$277,825</p>
+                <p class="mt-2 text-sm font-bold uppercase tracking-wide text-slate-900">annual cost savings</p>
+                <p class="mt-1 text-sm leading-6 text-slate-500">operational savings</p>
+              </article>
+              <article class="reveal rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <p class="text-4xl font-black tracking-tight text-[#00375a]">~72%</p>
+                <p class="mt-2 text-sm font-bold uppercase tracking-wide text-slate-900">heat recovery effectiveness</p>
+                <p class="mt-1 text-sm leading-6 text-slate-500">closed-loop system</p>
+              </article>
+              <article class="reveal rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <p class="text-4xl font-black tracking-tight text-[#00375a]">$2.832M</p>
+                <p class="mt-2 text-sm font-bold uppercase tracking-wide text-slate-900">total project cost</p>
+                <p class="mt-1 text-sm leading-6 text-slate-500">NYSERDA $2.0M · Rockrose $832K</p>
+              </article>
+            </div>
+
+            <!-- Emissions chart -->
+            <div class="reveal mx-auto mt-12 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+              <div class="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+                <div>
+                  <h3 class="text-2xl font-black text-[#00375a]">CO₂ Emissions vs. LL97 Limits</h3>
+                  <p class="mt-2 max-w-2xl text-slate-500">
+                    Baseline and projected retrofit emissions shown against the same Local Law 97 thresholds.
+                  </p>
+                </div>
+                <div class="rounded-2xl bg-[#00375a] px-5 py-3 text-sm font-black text-white">50% projected CO₂ reduction</div>
+              </div>
+              <div class="overflow-x-auto pb-2">
+                <div class="relative h-[420px] min-w-[980px] pt-4">
+                  <div class="absolute left-0 top-[150px] text-sm font-black text-red-600">Baseline CO₂ Emissions</div>
+                  <div class="absolute left-0 right-0 top-[185px] h-4 rounded-full bg-slate-200"></div>
+                  <div class="absolute left-0 top-[185px] h-4 rounded-full bg-red-500" style="width: 78.85%"></div>
+                  <div class="absolute left-0 top-[285px] text-sm font-black text-[#00375a]">Expected CO₂ After Retrofit</div>
+                  <div class="absolute left-0 right-0 top-[320px] h-4 rounded-full bg-slate-200"></div>
+                  <div class="absolute left-0 top-[320px] h-4 rounded-full bg-[#00375a]" style="width: 39.65%"></div>
+                  <!-- Markers baseline / retrofit -->
+                  <div class="absolute z-20 -translate-x-1/2 text-center" style="left: 78.85%; top: 100px">
+                    <p class="whitespace-nowrap text-[11px] font-black uppercase tracking-wide text-[#fcbe00]">Baseline</p>
+                    <p class="text-xl font-black text-[#fcbe00]">3,154</p>
+                    <div class="mx-auto mt-2 h-10 w-[2px] bg-[#fcbe00]"></div>
+                    <div class="mx-auto h-5 w-5 rounded-full border-4 border-white bg-[#fcbe00] shadow"></div>
+                  </div>
+                  <div class="absolute z-20 -translate-x-1/2 text-center" style="left: 39.65%; top: 235px">
+                    <p class="whitespace-nowrap text-[11px] font-black uppercase tracking-wide" style="color: #00375a">After Retrofit</p>
+                    <p class="text-xl font-black" style="color: #00375a">1,586</p>
+                    <div class="mx-auto mt-2 h-10 w-[2px]" style="background: #00375a"></div>
+                    <div class="mx-auto h-5 w-5 rounded-full border-4 border-white shadow" style="background: #00375a"></div>
+                  </div>
+                  <!-- Limit markers top -->
+                  <div class="absolute z-20 -translate-x-1/2 text-center" style="left: 45.025%; top: 25px">
+                    <p class="whitespace-nowrap text-[11px] font-black uppercase tracking-wide text-[#fcbe00]">2030–2034 Limit</p>
+                    <p class="text-xl font-black text-[#fcbe00]">1,801</p>
+                    <div class="mx-auto mt-2 h-10 w-[2px] bg-[#fcbe00]"></div>
+                    <div class="mx-auto h-5 w-5 rounded-full border-4 border-white bg-[#fcbe00] shadow"></div>
+                  </div>
+                  <div class="absolute z-20 -translate-x-1/2 text-center" style="left: 91.45%; top: 25px">
+                    <p class="whitespace-nowrap text-[11px] font-black uppercase tracking-wide text-[#fcbe00]">2024–2029 Limit</p>
+                    <p class="text-xl font-black text-[#fcbe00]">3,658</p>
+                    <div class="mx-auto mt-2 h-10 w-[2px] bg-[#fcbe00]"></div>
+                    <div class="mx-auto h-5 w-5 rounded-full border-4 border-white bg-[#fcbe00] shadow"></div>
+                  </div>
+                  <div class="absolute -translate-x-1/2" style="left: 45.025%; top: 235px">
+                    <div class="h-10 w-[2px] bg-[#fcbe00]"></div>
+                    <div class="mx-auto h-5 w-5 rounded-full border-4 border-white bg-[#fcbe00] shadow"></div>
+                  </div>
+                  <div class="absolute -translate-x-1/2" style="left: 91.45%; top: 235px">
+                    <div class="h-10 w-[2px] bg-[#fcbe00]"></div>
+                    <div class="mx-auto h-5 w-5 rounded-full border-4 border-white bg-[#fcbe00] shadow"></div>
+                  </div>
+                  <div class="absolute bottom-0 left-0 right-0 flex justify-between text-xs font-bold text-slate-400">
+                    <span>0</span><span>1,000</span><span>2,000</span><span>3,000</span><span>4,000 tCO₂e/year</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Energy -->
+            <div class="reveal mx-auto mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+              <div class="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+                <div>
+                  <h3 class="text-2xl font-black text-[#00375a]">Projected Energy Use: Baseline vs. Retrofit</h3>
+                  <p class="mt-2 text-slate-500">A simple before/after view using the energy values from the project data.</p>
+                </div>
+                <div class="rounded-2xl bg-[#fcbe00]/20 px-5 py-3 text-sm font-black text-[#00375a]">58% reduction in energy use</div>
+              </div>
+              <div class="space-y-8">
+                <div>
+                  <div class="mb-2 flex justify-between text-sm">
+                    <span class="font-black text-red-600">Baseline Energy Use</span><strong>45,919,715 MBtu/year</strong>
+                  </div>
+                  <div class="h-5 rounded-full bg-slate-200">
+                    <div class="h-5 rounded-full bg-red-500" style="width: 91.83943%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mb-2 flex justify-between text-sm">
+                    <span class="font-black text-[#00375a]">Expected Energy Use After Retrofit</span><strong
+                      >19,179,665 MBtu/year</strong
+                    >
+                  </div>
+                  <div class="h-5 rounded-full bg-slate-200">
+                    <div class="h-5 rounded-full bg-[#00375a]" style="width: 38.35933%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-2 flex justify-between text-xs font-bold text-slate-400">
+                <span>0</span><span>10M</span><span>20M</span><span>30M</span><span>40M</span><span>50M MBtu/year</span>
+              </div>
+            </div>
+
+            <!-- Waterfall -->
+            <div class="reveal mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+              <div class="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+                <div>
+                  <h3 class="text-2xl font-black text-[#00375a]">Emission Reduction Waterfall</h3>
+                  <p class="mt-2 max-w-3xl text-slate-500">
+                    Bridge from baseline emissions to projected retrofit emissions. Yellow bars start at the previous
+                    level and step down to the final retrofit value.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-black text-[#00375a]">
+                  Units: tCO₂e/year
+                </div>
+              </div>
+              <div class="mt-10 overflow-x-auto">
+                <div class="relative min-w-[1120px] pr-8 pl-20" style="height: 510px">
+                  <div class="absolute left-20 right-8 border-t border-dashed border-slate-200" style="top: 0">
+                    <span class="absolute -left-14 -top-3 text-xs font-bold text-slate-400">4,000</span>
+                  </div>
+                  <div class="absolute left-20 right-8 border-t border-dashed border-slate-200" style="top: 90px">
+                    <span class="absolute -left-14 -top-3 text-xs font-bold text-slate-400">3,000</span>
+                  </div>
+                  <div class="absolute left-20 right-8 border-t border-dashed border-slate-200" style="top: 180px">
+                    <span class="absolute -left-14 -top-3 text-xs font-bold text-slate-400">2,000</span>
+                  </div>
+                  <div class="absolute left-20 right-8 border-t border-dashed border-slate-200" style="top: 270px">
+                    <span class="absolute -left-14 -top-3 text-xs font-bold text-slate-400">1,000</span>
+                  </div>
+                  <div class="absolute left-20 right-8 border-t border-dashed border-slate-200" style="top: 360px">
+                    <span class="absolute -left-14 -top-3 text-xs font-bold text-slate-400">0</span>
+                  </div>
+                  <div class="absolute left-2 top-[150px] -rotate-90 text-sm font-black text-[#00375a]">
+                    Emissions (tCO₂e/year)
+                  </div>
+                  <div
+                    class="absolute left-20 right-8 grid"
+                    style="grid-template-columns: repeat(8, minmax(110px, 1fr)); height: 360px"
+                  >
+                    <!-- start -->
+                    <div class="relative flex justify-center">
+                      <div class="absolute bottom-0 w-20 rounded-t-xl bg-[#00375a]" style="height: 283.86px"></div>
+                      <p class="absolute text-sm font-black text-[#00375a]" style="bottom: 293.86px">3,154</p>
+                      <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
+                        Baseline Emissions
+                      </p>
+                    </div>
+                    <!-- reductions -->
+                    <div class="relative flex justify-center">
+                      <div class="absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 234.09px; height: 49.77px"></div>
+                      <p class="absolute text-sm font-black text-slate-900" style="bottom: 293.85999999999996px">553</p>
+                      <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
+                        Ventilation Initiatives
+                      </p>
+                    </div>
+                    <div class="relative flex justify-center">
+                      <div class="absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 168.12px; height: 65.97px"></div>
+                      <p class="absolute text-sm font-black text-slate-900" style="bottom: 244.08999999999997px">733</p>
+                      <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
+                        ITEN™ + Heat Pump
+                      </p>
+                    </div>
+                    <div class="relative flex justify-center">
+                      <div class="absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 162.36px; height: 5.76px"></div>
+                      <p class="absolute text-sm font-black text-slate-900" style="bottom: 178.11999999999998px">64</p>
+                      <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
+                        DHW Electrification
+                      </p>
+                    </div>
+                    <div class="relative flex justify-center">
+                      <div class="absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 158.13px; height: 4.23px"></div>
+                      <p class="absolute text-sm font-black text-slate-900" style="bottom: 172.36px">47</p>
+                      <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
+                        Smart Controls
+                      </p>
+                    </div>
+                    <div class="relative flex justify-center">
+                      <div class="absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 149.04px; height: 9.09px"></div>
+                      <p class="absolute text-sm font-black text-slate-900" style="bottom: 168.12999999999997px">101</p>
+                      <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
+                        Sun Protection Film
+                      </p>
+                    </div>
+                    <div class="relative flex justify-center">
+                      <div class="absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 142.74px; height: 6.3px"></div>
+                      <p class="absolute text-sm font-black text-slate-900" style="bottom: 159.04px">70</p>
+                      <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
+                        Additional ECM Margin
+                      </p>
+                    </div>
+                    <!-- end -->
+                    <div class="relative flex justify-center">
+                      <div class="absolute bottom-0 w-20 rounded-t-xl bg-[#00375a]" style="height: 142.74px"></div>
+                      <p class="absolute text-sm font-black text-[#00375a]" style="bottom: 152.74px">1,586</p>
+                      <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
+                        Projected Retrofit
+                      </p>
+                    </div>
+                  </div>
+                  <div class="absolute bottom-10 left-20 right-8 h-[1px] bg-slate-300"></div>
+                  <div class="absolute bottom-0 left-1/2 -translate-x-1/2 text-sm font-black text-[#00375a]">
+                    Emission pathway measures
+                  </div>
+                </div>
+              </div>
+              <div class="mt-5 rounded-2xl bg-slate-50 p-5 text-sm leading-7 text-slate-600">
+                <strong class="text-[#00375a]">Broader ECM reference from the project data:</strong>
+                Exhaust Air Energy Recovery + Balancing: 853 tons · ITEN™ + Heat Pump + Wastewater HR: 1,068 tons · DHW Booster Heat Pumps: 93 tons · Smart Automation + Hydronics: 67 tons · Building Envelope Optimization: 148 tons.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Implementation -->
+      <section class="py-20 md:py-24">
+        <div class="mx-auto w-full max-w-7xl px-6 md:px-10">
+          <div class="mx-auto max-w-4xl text-center reveal">
+            <p class="mb-3 text-xs font-black uppercase tracking-[0.24em] text-[#00375a]">Implementation</p>
+            <h2 class="text-3xl font-black tracking-tight text-[#00375a] md:text-5xl">36-week retrofit roadmap.</h2>
+            <p class="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-600">
+              A phased view of the broader retrofit strategy, including supporting controls and adaptation measures.
+            </p>
+          </div>
+          <div class="mt-12">
+            <div class="relative border-l-4 border-[#00375a] pl-7">
+              <!-- phase 01 -->
+              <div class="reveal relative mb-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div
+                  class="absolute -left-[3.35rem] top-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-[#00375a] text-lg font-black text-[#fcbe00] shadow"
+                >
+                  01
+                </div>
+                <h3 class="text-xl font-black text-[#00375a]">Balance + Recover</h3>
+                <p class="mt-2 leading-7 text-slate-600">
+                  Reduce apartment exhaust airflow, recover roof exhaust energy, add reversible WSHP and low-temp hot/chilled water storage;
+                  optional ASHP can inject heat into ITEN™.
+                </p>
+              </div>
+              <div class="reveal relative mb-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div
+                  class="absolute -left-[3.35rem] top-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-[#00375a] text-lg font-black text-[#fcbe00] shadow"
+                >
+                  02
+                </div>
+                <h3 class="text-xl font-black text-[#00375a]">Wastewater Recovery</h3>
+                <p class="mt-2 leading-7 text-slate-600">
+                  Recover heat from the internal sewer system with water-source heat pumps and low-temperature energy storage.
+                </p>
+              </div>
+              <div class="reveal relative mb-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div
+                  class="absolute -left-[3.35rem] top-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-[#00375a] text-lg font-black text-[#fcbe00] shadow"
+                >
+                  03
+                </div>
+                <h3 class="text-xl font-black text-[#00375a]">DHW Low/Mid Zones</h3>
+                <p class="mt-2 leading-7 text-slate-600">
+                  Introduce booster heat pump DHW for low- and mid-zones using high-temperature storage to reduce summer steam boiler operation.
+                </p>
+              </div>
+              <div class="reveal relative mb-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div
+                  class="absolute -left-[3.35rem] top-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-[#00375a] text-lg font-black text-[#fcbe00] shadow"
+                >
+                  04
+                </div>
+                <h3 class="text-xl font-black text-[#00375a]">DHW High Zone</h3>
+                <p class="mt-2 leading-7 text-slate-600">
+                  Extend booster heat pump DHW to the high zone and use rooftop condensing boilers for heat injection into ITEN™.
+                </p>
+              </div>
+              <div class="reveal relative mb-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div
+                  class="absolute -left-[3.35rem] top-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-[#00375a] text-lg font-black text-[#fcbe00] shadow"
+                >
+                  05
+                </div>
+                <h3 class="text-xl font-black text-[#00375a]">Boiler Cascade</h3>
+                <p class="mt-2 leading-7 text-slate-600">
+                  Install rooftop condensing boiler cascade using existing gas service and dismantle second-floor steam boilers.
+                </p>
+              </div>
+              <div class="reveal relative mb-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div
+                  class="absolute -left-[3.35rem] top-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-[#00375a] text-lg font-black text-[#fcbe00] shadow"
+                >
+                  06
+                </div>
+                <h3 class="text-xl font-black text-[#00375a]">Public Sewer Connection</h3>
+                <p class="mt-2 leading-7 text-slate-600">
+                  Connect wastewater heat recovery to the public sewer system with WSHPs and low-temperature storage.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-6 grid gap-4 md:grid-cols-2">
+            <div class="rounded-3xl bg-[#00375a] p-6 text-white">
+              <strong>Supporting measures:</strong>
+              BMS upgrades, smart automation, hydronic optimization, solid-state heat pump replacement, app-based room
+              control, and demand-based primary flow control.
+            </div>
+            <div class="rounded-3xl bg-[#fcbe00] p-6 text-[#00375a]">
+              <strong>Adaptation measures:</strong>
+              building envelope optimization with sun protection screens to manage climate-related cooling load increases.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- What RUHL delivers -->
+      <section class="bg-[#00375a] text-white">
+        <div class="mx-auto grid w-full max-w-7xl gap-10 px-6 py-20 md:grid-cols-[1fr_0.85fr] md:px-10 md:py-24">
+          <div class="reveal">
+            <p class="text-xs font-black uppercase tracking-[0.24em] text-[#fcbe00]">What RUHL delivers</p>
+            <h2 class="mt-4 text-4xl font-black tracking-tight md:text-5xl">
+              A replicable retrofit model for multifamily decarbonization.
+            </h2>
+            <p class="mt-6 max-w-2xl text-lg leading-8 text-white/75">
+              RUHL's scope connects decarbonization roadmaps, engineering integration, and measurement frameworks for heat recovery, ventilation balance, hydronic optimization, and heat pump integration.
+            </p>
+          </div>
+          <div class="reveal space-y-4">
+            <div class="flex items-center gap-4 rounded-2xl bg-white/10 p-5 ring-1 ring-white/10">
+              <i data-lucide="shield-check" class="flex-shrink-0 text-[#fcbe00]" style="width: 24px; height: 24px"></i><span class="font-black">Decarbonization Roadmaps</span>
+            </div>
+            <div class="flex items-center gap-4 rounded-2xl bg-white/10 p-5 ring-1 ring-white/10">
+              <i data-lucide="shield-check" class="flex-shrink-0 text-[#fcbe00]" style="width: 24px; height: 24px"></i><span class="font-black">Engineering & Integration</span>
+            </div>
+            <div class="flex items-center gap-4 rounded-2xl bg-white/10 p-5 ring-1 ring-white/10">
+              <i data-lucide="shield-check" class="flex-shrink-0 text-[#fcbe00]" style="width: 24px; height: 24px"></i><span class="font-black">Measurement & Verification</span>
+            </div>
+            <div class="flex items-center gap-4 rounded-2xl bg-white/10 p-5 ring-1 ring-white/10">
+              <i data-lucide="shield-check" class="flex-shrink-0 text-[#fcbe00]" style="width: 24px; height: 24px"></i><span class="font-black">Heat Recovery + HVAC Modernization</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="bg-white py-16">
+        <div class="mx-auto w-full max-w-7xl px-6 md:px-10">
+          <div class="grid gap-8 rounded-[2rem] border border-slate-200 bg-[#f7f8f8] p-8 md:grid-cols-[1fr_0.9fr]">
+            <div>
+              <h2 class="text-3xl font-black text-[#00375a]">
+                Interested in heat recovery, HVAC modernization, or a decarbonization roadmap?
+              </h2>
+              <p class="mt-4 text-slate-600">
+                Contact RUHL TecDesign to discuss building-scale retrofit strategy and implementation.
+              </p>
+            </div>
+            <div class="rounded-3xl bg-white p-6 shadow-sm">
+              <p class="text-xl font-black text-[#00375a]">RUHL TecDesign LLC</p>
+              <p class="mt-4 flex items-center gap-3 text-slate-600">
+                <i data-lucide="map-pin" class="flex-shrink-0" style="width: 18px; height: 18px"></i> One World Trade Center, New York, NY 10007
+              </p>
+              <p class="mt-3 flex items-center gap-3 text-slate-600">
+                <i data-lucide="mail" class="flex-shrink-0" style="width: 18px; height: 18px"></i> info@ruhl.org
+              </p>
+              <p class="mt-3 flex items-center gap-3 text-slate-600">
+                <i data-lucide="phone" class="flex-shrink-0" style="width: 18px; height: 18px"></i> (212) 555-0123
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+    <script defer src="./main.js"></script>
   </body>
 </html>
