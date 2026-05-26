@@ -43,4 +43,19 @@ Increase `h-40` to `h-44` or `h-48` if larger logos need more room.
 Recommended free options:
 - Vercel
 - Netlify
-- GitHub Pages
+- GitHub Pages — see below
+
+### GitHub Pages (this repo)
+
+This app is compiled by Vite. **Do not** set Pages to “Deploy from a branch” with the repo root (`/`), or visitors only get raw `index.html` and `/src/main.jsx`, which Pages cannot compile.
+
+Instead:
+
+1. Push this repo including `.github/workflows/pages.yml`.
+2. On GitHub: **Settings → Pages → Build and deployment**.
+3. Under **Source**, choose **GitHub Actions** (not “Deploy from a branch”).
+4. Open the **Actions** tab and confirm the workflow “Deploy site to Pages” completed; the live URL is **`https://<user>.github.io/ruhl-200-water-landing/`**.
+
+Production builds use [`vite.config.js`](vite.config.js) `base: '/ruhl-200-water-landing/'` so asset URLs work under that path. If you rename the repo, update `pagesBase` in `vite.config.js` and redeploy.
+
+To verify a production build locally after `npm run build`, either run **`npm run preview`** or open [`dist/index.html`](dist/index.html) from a server (opening the file directly with `file://` will not resolve module paths correctly).

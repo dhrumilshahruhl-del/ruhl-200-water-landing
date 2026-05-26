@@ -5,6 +5,9 @@ const navy = '#00375a';
 const gold = '#fcbe00';
 const red = '#ef4444';
 
+/** Respect Vite base (needed for github.io/repo-name/ project pages). */
+const assetUrl = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+
 const page = {
   baselineCO2: 3154,
   retrofitCO2: 1586,
@@ -29,12 +32,12 @@ const approach = [
 ];
 
 const partners = [
-  { name: 'RUHL TecDesign', role: 'Lead MEP design engineering', emphasis: true, logoSrc: '/logos/ruhl.jpg', logoAlt: 'RUHL logo', logoClass: 'max-h-28 max-w-[260px]' },
-  { name: 'Rockrose', role: 'Owner / development partner', emphasis: true, logoSrc: '/logos/rockrose.png', logoAlt: 'Rockrose logo', logoClass: 'max-h-16 max-w-[280px]' },
-  { name: 'NYSERDA', role: '$2.0M Heat Recovery Program funding', logoSrc: '/logos/nyserda.png', logoAlt: 'NYSERDA logo', logoClass: 'max-h-24 max-w-[320px]' },
-  { name: 'Swegon', role: 'GOLD F SD air-handling units', logoSrc: '/logos/swegon.png', logoAlt: 'Swegon logo', logoClass: 'max-h-24 max-w-[280px]' },
-  { name: 'dena', role: 'German Energy Agency support', logoSrc: '/logos/dena.png', logoAlt: 'dena logo', logoClass: 'max-h-28 max-w-[260px]' },
-  { name: 'German Energy Solutions', role: 'RES Programme support', logoSrc: '/logos/german-energy-solutions.png', logoAlt: 'Mittelstand Global Energy Solutions Made in Germany logo', logoClass: 'max-h-28 max-w-[320px]' },
+  { name: 'RUHL TecDesign', role: 'Lead MEP design engineering', emphasis: true, logoSrc: assetUrl('logos/ruhl.jpg'), logoAlt: 'RUHL logo', logoClass: 'max-h-28 max-w-[260px]' },
+  { name: 'Rockrose', role: 'Owner / development partner', emphasis: true, logoSrc: assetUrl('logos/rockrose.png'), logoAlt: 'Rockrose logo', logoClass: 'max-h-16 max-w-[280px]' },
+  { name: 'NYSERDA', role: '$2.0M Heat Recovery Program funding', logoSrc: assetUrl('logos/nyserda.png'), logoAlt: 'NYSERDA logo', logoClass: 'max-h-24 max-w-[320px]' },
+  { name: 'Swegon', role: 'GOLD F SD air-handling units', logoSrc: assetUrl('logos/swegon.png'), logoAlt: 'Swegon logo', logoClass: 'max-h-24 max-w-[280px]' },
+  { name: 'dena', role: 'German Energy Agency support', logoSrc: assetUrl('logos/dena.png'), logoAlt: 'dena logo', logoClass: 'max-h-28 max-w-[260px]' },
+  { name: 'German Energy Solutions', role: 'RES Programme support', logoSrc: assetUrl('logos/german-energy-solutions.png'), logoAlt: 'Mittelstand Global Energy Solutions Made in Germany logo', logoClass: 'max-h-28 max-w-[320px]' },
 ];
 
 const airflow = [
