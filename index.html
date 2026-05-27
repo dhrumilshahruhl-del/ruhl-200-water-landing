@@ -130,7 +130,7 @@
             </div>
             <div class="group flex min-h-[260px] flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
               <div class="flex h-40 w-full items-center justify-center rounded-2xl bg-white px-3 ring-1 ring-slate-100">
-                <img src="./logos/swegon.png" alt="Swegon logo" class="max-h-24 max-w-[280px] w-auto object-contain" loading="lazy" />
+                <img src="./logos/swegon.png" alt="Swegon logo" class="max-h-36 max-w-[380px] w-auto object-contain" loading="lazy" />
               </div>
               <div class="mt-5 border-t border-slate-100 pt-4 text-center">
                 <p class="text-lg font-black text-[#00375a]">Swegon</p>
@@ -139,7 +139,7 @@
             </div>
             <div class="group flex min-h-[260px] flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
               <div class="flex h-40 w-full items-center justify-center rounded-2xl bg-white px-3 ring-1 ring-slate-100">
-                <img src="./logos/dena.png" alt="dena logo" class="max-h-28 max-w-[260px] w-auto object-contain" loading="lazy" />
+                <img src="./logos/dena.png" alt="dena logo" class="max-h-24 max-w-[180px] w-auto object-contain" loading="lazy" />
               </div>
               <div class="mt-5 border-t border-slate-100 pt-4 text-center">
                 <p class="text-lg font-black text-[#00375a]">dena</p>
@@ -151,7 +151,7 @@
                 <img
                   src="./logos/german-energy-solutions.png"
                   alt="Mittelstand Global Energy Solutions Made in Germany logo"
-                  class="max-h-28 max-w-[320px] w-auto object-contain"
+                  class="max-h-32 max-w-[360px] w-auto object-contain"
                   loading="lazy"
                 />
               </div>
@@ -238,7 +238,7 @@
                 toward balanced/slight positive pressure.
               </p>
             </div>
-            <div class="mt-12 grid gap-5 md:grid-cols-2">
+            <div id="airflow-charts" class="mt-12 grid gap-5 md:grid-cols-2">
               <!-- Exhaust -->
               <div class="reveal rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
                 <div class="mb-6 flex items-start justify-between gap-4">
@@ -251,18 +251,18 @@
                 <div class="space-y-6">
                   <div>
                     <div class="mb-2 flex justify-between text-sm">
-                      <span class="font-medium text-slate-500">Baseline</span><strong>74,780 CFM</strong>
+                      <span class="font-medium text-slate-500">Baseline</span><strong data-animate-number data-final="74780" data-suffix=" CFM">74,780 CFM</strong>
                     </div>
                     <div class="h-4 rounded-full bg-slate-100">
-                      <div class="h-4 rounded-full bg-red-500 transition-all duration-1000" style="width: 93.475%"></div>
+                      <div class="h-4 rounded-full bg-red-500 transition-all duration-1000" data-animate-width data-final-width="93.475%" style="width: 0%"></div>
                     </div>
                   </div>
                   <div>
                     <div class="mb-2 flex justify-between text-sm">
-                      <span class="font-medium text-slate-500">After Retrofit</span><strong>21,480 CFM</strong>
+                      <span class="font-medium text-slate-500">After Retrofit</span><strong data-animate-number data-final="21480" data-suffix=" CFM">21,480 CFM</strong>
                     </div>
                     <div class="h-4 rounded-full bg-slate-100">
-                      <div class="h-4 rounded-full bg-[#00375a] transition-all duration-1000" style="width: 26.85%"></div>
+                      <div class="h-4 rounded-full bg-[#00375a] transition-all duration-1000" data-animate-width data-final-width="26.85%" style="width: 0%"></div>
                     </div>
                   </div>
                 </div>
@@ -281,18 +281,18 @@
                 <div class="space-y-6">
                   <div>
                     <div class="mb-2 flex justify-between text-sm">
-                      <span class="font-medium text-slate-500">Baseline</span><strong>26,330 CFM</strong>
+                      <span class="font-medium text-slate-500">Baseline</span><strong data-animate-number data-final="26330" data-suffix=" CFM">26,330 CFM</strong>
                     </div>
                     <div class="h-4 rounded-full bg-slate-100">
-                      <div class="h-4 rounded-full bg-red-500 transition-all duration-1000" style="width: 32.9125%"></div>
+                      <div class="h-4 rounded-full bg-red-500 transition-all duration-1000" data-animate-width data-final-width="32.9125%" style="width: 0%"></div>
                     </div>
                   </div>
                   <div>
                     <div class="mb-2 flex justify-between text-sm">
-                      <span class="font-medium text-slate-500">After Retrofit</span><strong>28,316 CFM</strong>
+                      <span class="font-medium text-slate-500">After Retrofit</span><strong data-animate-number data-final="28316" data-suffix=" CFM">28,316 CFM</strong>
                     </div>
                     <div class="h-4 rounded-full bg-slate-100">
-                      <div class="h-4 rounded-full bg-[#00375a] transition-all duration-1000" style="width: 35.395%"></div>
+                      <div class="h-4 rounded-full bg-[#00375a] transition-all duration-1000" data-animate-width data-final-width="35.395%" style="width: 0%"></div>
                     </div>
                   </div>
                 </div>
@@ -380,56 +380,12 @@
                 <div class="rounded-2xl bg-[#00375a] px-5 py-3 text-sm font-black text-white">50% projected CO₂ reduction</div>
               </div>
               <div class="overflow-x-auto pb-2">
-                <div class="relative h-[420px] min-w-[980px] pt-4">
-                  <div class="absolute left-0 top-[150px] text-sm font-black text-red-600">Baseline CO₂ Emissions</div>
-                  <div class="absolute left-0 right-0 top-[185px] h-4 rounded-full bg-slate-200"></div>
-                  <div class="absolute left-0 top-[185px] h-4 rounded-full bg-red-500" style="width: 78.85%"></div>
-                  <div class="absolute left-0 top-[285px] text-sm font-black text-[#00375a]">Expected CO₂ After Retrofit</div>
-                  <div class="absolute left-0 right-0 top-[320px] h-4 rounded-full bg-slate-200"></div>
-                  <div class="absolute left-0 top-[320px] h-4 rounded-full bg-[#00375a]" style="width: 39.65%"></div>
-                  <!-- Markers baseline / retrofit -->
-                  <div class="absolute z-20 -translate-x-1/2 text-center" style="left: 78.85%; top: 100px">
-                    <p class="whitespace-nowrap text-[11px] font-black uppercase tracking-wide text-[#fcbe00]">Baseline</p>
-                    <p class="text-xl font-black text-[#fcbe00]">3,154</p>
-                    <div class="mx-auto mt-2 h-10 w-[2px] bg-[#fcbe00]"></div>
-                    <div class="mx-auto h-5 w-5 rounded-full border-4 border-white bg-[#fcbe00] shadow"></div>
-                  </div>
-                  <div class="absolute z-20 -translate-x-1/2 text-center" style="left: 39.65%; top: 235px">
-                    <p class="whitespace-nowrap text-[11px] font-black uppercase tracking-wide" style="color: #00375a">After Retrofit</p>
-                    <p class="text-xl font-black" style="color: #00375a">1,586</p>
-                    <div class="mx-auto mt-2 h-10 w-[2px]" style="background: #00375a"></div>
-                    <div class="mx-auto h-5 w-5 rounded-full border-4 border-white shadow" style="background: #00375a"></div>
-                  </div>
-                  <!-- Limit markers top -->
-                  <div class="absolute z-20 -translate-x-1/2 text-center" style="left: 45.025%; top: 25px">
-                    <p class="whitespace-nowrap text-[11px] font-black uppercase tracking-wide text-[#fcbe00]">2030–2034 Limit</p>
-                    <p class="text-xl font-black text-[#fcbe00]">1,801</p>
-                    <div class="mx-auto mt-2 h-10 w-[2px] bg-[#fcbe00]"></div>
-                    <div class="mx-auto h-5 w-5 rounded-full border-4 border-white bg-[#fcbe00] shadow"></div>
-                  </div>
-                  <div class="absolute z-20 -translate-x-1/2 text-center" style="left: 91.45%; top: 25px">
-                    <p class="whitespace-nowrap text-[11px] font-black uppercase tracking-wide text-[#fcbe00]">2024–2029 Limit</p>
-                    <p class="text-xl font-black text-[#fcbe00]">3,658</p>
-                    <div class="mx-auto mt-2 h-10 w-[2px] bg-[#fcbe00]"></div>
-                    <div class="mx-auto h-5 w-5 rounded-full border-4 border-white bg-[#fcbe00] shadow"></div>
-                  </div>
-                  <div class="absolute -translate-x-1/2" style="left: 45.025%; top: 235px">
-                    <div class="h-10 w-[2px] bg-[#fcbe00]"></div>
-                    <div class="mx-auto h-5 w-5 rounded-full border-4 border-white bg-[#fcbe00] shadow"></div>
-                  </div>
-                  <div class="absolute -translate-x-1/2" style="left: 91.45%; top: 235px">
-                    <div class="h-10 w-[2px] bg-[#fcbe00]"></div>
-                    <div class="mx-auto h-5 w-5 rounded-full border-4 border-white bg-[#fcbe00] shadow"></div>
-                  </div>
-                  <div class="absolute bottom-0 left-0 right-0 flex justify-between text-xs font-bold text-slate-400">
-                    <span>0</span><span>1,000</span><span>2,000</span><span>3,000</span><span>4,000 tCO₂e/year</span>
-                  </div>
-                </div>
+                <div id="co2-chart" class="relative h-[620px] min-w-[980px] pt-4"></div>
               </div>
             </div>
 
             <!-- Energy -->
-            <div class="reveal mx-auto mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+            <div id="energy-chart" class="reveal mx-auto mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
               <div class="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
                 <div>
                   <h3 class="text-2xl font-black text-[#00375a]">Projected Energy Use: Baseline vs. Retrofit</h3>
@@ -440,20 +396,20 @@
               <div class="space-y-8">
                 <div>
                   <div class="mb-2 flex justify-between text-sm">
-                    <span class="font-black text-red-600">Baseline Energy Use</span><strong>45,919,715 MBtu/year</strong>
+                    <span class="font-black text-red-600">Baseline Energy Use</span><strong data-animate-number data-final="45919715" data-suffix=" MBtu/year">45,919,715 MBtu/year</strong>
                   </div>
                   <div class="h-5 rounded-full bg-slate-200">
-                    <div class="h-5 rounded-full bg-red-500" style="width: 91.83943%"></div>
+                    <div class="h-5 rounded-full bg-red-500" data-animate-width data-final-width="91.83943%" style="width: 0%"></div>
                   </div>
                 </div>
                 <div>
                   <div class="mb-2 flex justify-between text-sm">
-                    <span class="font-black text-[#00375a]">Expected Energy Use After Retrofit</span><strong
+                    <span class="font-black text-[#00375a]">Expected Energy Use After Retrofit</span><strong data-animate-number data-final="19179665" data-suffix=" MBtu/year"
                       >19,179,665 MBtu/year</strong
                     >
                   </div>
                   <div class="h-5 rounded-full bg-slate-200">
-                    <div class="h-5 rounded-full bg-[#00375a]" style="width: 38.35933%"></div>
+                    <div class="h-5 rounded-full bg-[#00375a]" data-animate-width data-final-width="38.35933%" style="width: 0%"></div>
                   </div>
                 </div>
               </div>
@@ -463,7 +419,7 @@
             </div>
 
             <!-- Waterfall -->
-            <div class="reveal mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+            <div id="waterfall-chart" class="reveal mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
               <div class="flex flex-col justify-between gap-4 md:flex-row md:items-end">
                 <div>
                   <h3 class="text-2xl font-black text-[#00375a]">Emission Reduction Waterfall</h3>
@@ -502,59 +458,59 @@
                   >
                     <!-- start -->
                     <div class="relative flex justify-center">
-                      <div class="absolute bottom-0 w-20 rounded-t-xl bg-[#00375a]" style="height: 283.86px"></div>
-                      <p class="absolute text-sm font-black text-[#00375a]" style="bottom: 293.86px">3,154</p>
+                      <div class="wf-bar absolute bottom-0 w-20 rounded-t-xl bg-[#00375a]" style="height: 283.86px"></div>
+                      <p class="wf-label absolute text-sm font-black text-[#00375a]" style="bottom: 293.86px" data-animate-number data-final="3154">3,154</p>
                       <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
                         Baseline Emissions
                       </p>
                     </div>
                     <!-- reductions -->
                     <div class="relative flex justify-center">
-                      <div class="absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 234.09px; height: 49.77px"></div>
-                      <p class="absolute text-sm font-black text-slate-900" style="bottom: 293.85999999999996px">553</p>
+                      <div class="wf-bar absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 234.09px; height: 49.77px"></div>
+                      <p class="wf-label absolute text-sm font-black text-slate-900" style="bottom: 293.85999999999996px" data-animate-number data-final="553">553</p>
                       <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
                         Ventilation Initiatives
                       </p>
                     </div>
                     <div class="relative flex justify-center">
-                      <div class="absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 168.12px; height: 65.97px"></div>
-                      <p class="absolute text-sm font-black text-slate-900" style="bottom: 244.08999999999997px">733</p>
+                      <div class="wf-bar absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 168.12px; height: 65.97px"></div>
+                      <p class="wf-label absolute text-sm font-black text-slate-900" style="bottom: 244.08999999999997px" data-animate-number data-final="733">733</p>
                       <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
                         ITEN™ + Heat Pump
                       </p>
                     </div>
                     <div class="relative flex justify-center">
-                      <div class="absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 162.36px; height: 5.76px"></div>
-                      <p class="absolute text-sm font-black text-slate-900" style="bottom: 178.11999999999998px">64</p>
+                      <div class="wf-bar absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 162.36px; height: 5.76px"></div>
+                      <p class="wf-label absolute text-sm font-black text-slate-900" style="bottom: 178.11999999999998px" data-animate-number data-final="64">64</p>
                       <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
                         DHW Electrification
                       </p>
                     </div>
                     <div class="relative flex justify-center">
-                      <div class="absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 158.13px; height: 4.23px"></div>
-                      <p class="absolute text-sm font-black text-slate-900" style="bottom: 172.36px">47</p>
+                      <div class="wf-bar absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 158.13px; height: 4.23px"></div>
+                      <p class="wf-label absolute text-sm font-black text-slate-900" style="bottom: 172.36px" data-animate-number data-final="47">47</p>
                       <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
                         Smart Controls
                       </p>
                     </div>
                     <div class="relative flex justify-center">
-                      <div class="absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 149.04px; height: 9.09px"></div>
-                      <p class="absolute text-sm font-black text-slate-900" style="bottom: 168.12999999999997px">101</p>
+                      <div class="wf-bar absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 149.04px; height: 9.09px"></div>
+                      <p class="wf-label absolute text-sm font-black text-slate-900" style="bottom: 168.12999999999997px" data-animate-number data-final="101">101</p>
                       <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
                         Sun Protection Film
                       </p>
                     </div>
                     <div class="relative flex justify-center">
-                      <div class="absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 142.74px; height: 6.3px"></div>
-                      <p class="absolute text-sm font-black text-slate-900" style="bottom: 159.04px">70</p>
+                      <div class="wf-bar absolute w-20 rounded-sm bg-[#fcbe00]" style="bottom: 142.74px; height: 6.3px"></div>
+                      <p class="wf-label absolute text-sm font-black text-slate-900" style="bottom: 159.04px" data-animate-number data-final="70">70</p>
                       <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
                         Additional ECM Margin
                       </p>
                     </div>
                     <!-- end -->
                     <div class="relative flex justify-center">
-                      <div class="absolute bottom-0 w-20 rounded-t-xl bg-[#00375a]" style="height: 142.74px"></div>
-                      <p class="absolute text-sm font-black text-[#00375a]" style="bottom: 152.74px">1,586</p>
+                      <div class="wf-bar absolute bottom-0 w-20 rounded-t-xl bg-[#00375a]" style="height: 142.74px"></div>
+                      <p class="wf-label absolute text-sm font-black text-[#00375a]" style="bottom: 152.74px" data-animate-number data-final="1586">1,586</p>
                       <p class="absolute top-[382px] max-w-[105px] text-center text-xs font-black leading-4 text-slate-900">
                         Projected Retrofit
                       </p>
