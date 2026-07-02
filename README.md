@@ -30,39 +30,18 @@ Third-party CDN (pinned where possible):
 - Fonts: Google Fonts Roboto
 - 3D section: Three.js + GSAP ScrollTrigger (CDN / import map)
 
-## GitHub Pages (recommended)
+## GitHub Pages
 
-Because the site is plain static HTML, **GitHub can serve it straight from a branch** — no build step and no artifact deploy.
-
-### Option A — Deploy from `main` (simplest)
+This site is plain static HTML. Deploy it directly from **`main`** — no build step and no Actions deploy.
 
 1. **Settings → Pages → Build and deployment**
 2. **Source**: **Deploy from a branch**
 3. **Branch**: `main`, folder **`/ (root)`**
-4. Save. The site publishes at **`https://<your-username>.github.io/<repo>/`**.
+4. Save. The site publishes at **`https://dhrumilshahruhl-del.github.io/ruhl-200-water-landing/`**
 
-Example: **`https://dhrumilshahruhl-del.github.io/ruhl-200-water-landing/`**
+Do **not** use **Source: GitHub Actions** for this repo. The default `pages build and deployment` workflow has been timing out on deploy; branch deploy from `main` is the supported path.
 
-### Option B — Deploy from `gh-pages` (automated fallback)
-
-If the default **pages build and deployment** Action times out on deploy, use the repo workflow **Publish static site to gh-pages** (`.github/workflows/publish-gh-pages.yml`). It copies the static files to the `gh-pages` branch on every push to `main`.
-
-1. Wait for that workflow to succeed on `main`.
-2. **Settings → Pages → Build and deployment**
-3. **Source**: **Deploy from a branch**
-4. **Branch**: `gh-pages`, folder **`/ (root)`**
-
-### Do not use for this repo
-
-**Settings → Pages → Source: GitHub Actions** triggers `pages build and deployment`, which has been **timing out after 10 minutes** on deploy even though the artifact upload succeeds. Prefer **Deploy from a branch** (Option A or B).
-
-If you keep Actions enabled, check **Settings → Environments → github-pages** for required reviewers blocking deploy.
-
-Ensure image files listed in `logos/README.md` exist under **`logos/`** so partner tiles and the 3D GLB load correctly.
-
-### Optional Actions deploy
-
-Earlier versions used a Node/Vite build and GitHub Actions. That path was removed when the project moved to fully static assets. Restore a workflow later only if you reintroduce a build step.
+Ensure files under **`logos/`** (including `Untitled.glb`) are committed on `main` so partner tiles and the 3D section load on Pages.
 
 ## Logo sizing
 
