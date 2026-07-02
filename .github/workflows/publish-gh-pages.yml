@@ -19,24 +19,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Publish site files to gh-pages branch
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Prepare site directory
         run: |
-          set -euo pipefail
+          mkdir site
+          cp index.html styles.css main.js building-scroll.js .nojekyll site/
+          cp -r logos site/
 
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          rm -rf /tmp/site
-          mkdir -p /tmp/site/logos
-
-          cp index.html styles.css main.js building-scroll.js .nojekyll /tmp/site/
-          cp -r logos/. /tmp/site/logos/
-
-          cd /tmp/site
-          git init -b gh-pages
-          git add .
-          git commit -m "Deploy static site from main (${GITHUB_SHA::7})"
-          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git push -f origin gh-pages
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: gh-pages
+          commit_message: Deploy static site from ${{ github.sha }}
