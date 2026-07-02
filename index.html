@@ -82,6 +82,24 @@
         </div>
       </section>
 
+      <!-- 3D Building Scroll Section -->
+      <section
+        id="building-scroll"
+        class="building-scroll-section"
+        aria-label="Interactive 3D building model"
+        data-model-path="./logos/Untitled.glb"
+      >
+        <div class="building-scroll-sticky">
+          <canvas id="building-scroll-canvas" class="building-scroll-canvas" aria-hidden="true"></canvas>
+          <p id="building-scroll-status" class="building-scroll-status" role="status">Loading 3D model…</p>
+          <div class="building-scroll-overlay">
+            <p class="building-scroll-eyebrow">200 Water Street</p>
+            <p class="building-scroll-title">Explore the building</p>
+            <p class="building-scroll-hint">Scroll to orbit and focus the rooftop systems</p>
+          </div>
+        </div>
+      </section>
+
       <!-- Organizations -->
       <section class="page-section-y py-20 lg:py-24">
         <div class="mx-auto w-full max-w-7xl px-6 md:px-10">
@@ -698,6 +716,32 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+    <script>
+      if (window.location.protocol === 'file:') {
+        document.documentElement.classList.add('building-scroll-file-protocol');
+        document.addEventListener('DOMContentLoaded', function () {
+          var section = document.getElementById('building-scroll');
+          var status = document.getElementById('building-scroll-status');
+          if (section) section.classList.add('is-blocked');
+          if (status) {
+            status.textContent =
+              'The 3D model cannot load from a saved HTML file. Open the site through a local web server, for example: python -m http.server 8765';
+            status.classList.add('is-error');
+          }
+        });
+      }
+    </script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./building-scroll.js"></script>
     <script defer src="./main.js"></script>
   </body>
 </html>
