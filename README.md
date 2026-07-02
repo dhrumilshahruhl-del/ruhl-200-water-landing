@@ -19,7 +19,8 @@ Then open http://localhost:8080/
 | `index.html` | Full page markup; Tailwind via CDN |
 | `styles.css` | Custom fonts, scroll behavior, `.reveal` animation |
 | `main.js` | Scroll reveal (`IntersectionObserver`) + Lucide icon wiring |
-| `logos/` | Partner images (see `logos/README.md`) |
+| `building-scroll.js` | GSAP ScrollTrigger + Three.js 3D building section |
+| `logos/` | Partner images + `Untitled.glb` (see `logos/README.md`) |
 | `.nojekyll` | Disables Jekyll so Pages serves static assets as-is |
 
 Third-party CDN (pinned where possible):
@@ -27,19 +28,37 @@ Third-party CDN (pinned where possible):
 - Tailwind styling: `cdn.tailwindcss.com`
 - Icons: Lucide (`jsdelivr` UMD bundle)
 - Fonts: Google Fonts Roboto
+- 3D section: Three.js + GSAP ScrollTrigger (CDN / import map)
 
 ## GitHub Pages (recommended)
 
-Because the site is plain static HTML, **GitHub can serve it straight from `main`** — no Actions required.
+Because the site is plain static HTML, **GitHub can serve it straight from a branch** — no build step and no artifact deploy.
+
+### Option A — Deploy from `main` (simplest)
 
 1. **Settings → Pages → Build and deployment**
 2. **Source**: **Deploy from a branch**
 3. **Branch**: `main`, folder **`/ (root)`**
 4. Save. The site publishes at **`https://<your-username>.github.io/<repo>/`**.
 
-Example (this repo names): **`https://bunny-bun-ux.github.io/ruhl-200-water-landing/`**
+Example: **`https://dhrumilshahruhl-del.github.io/ruhl-200-water-landing/`**
 
-Ensure image files listed in `logos/README.md` exist under **`logos/`** so partner tiles show correctly.
+### Option B — Deploy from `gh-pages` (automated fallback)
+
+If the default **pages build and deployment** Action times out on deploy, use the repo workflow **Publish static site to gh-pages** (`.github/workflows/publish-gh-pages.yml`). It copies the static files to the `gh-pages` branch on every push to `main`.
+
+1. Wait for that workflow to succeed on `main`.
+2. **Settings → Pages → Build and deployment**
+3. **Source**: **Deploy from a branch**
+4. **Branch**: `gh-pages`, folder **`/ (root)`**
+
+### Do not use for this repo
+
+**Settings → Pages → Source: GitHub Actions** triggers `pages build and deployment`, which has been **timing out after 10 minutes** on deploy even though the artifact upload succeeds. Prefer **Deploy from a branch** (Option A or B).
+
+If you keep Actions enabled, check **Settings → Environments → github-pages** for required reviewers blocking deploy.
+
+Ensure image files listed in `logos/README.md` exist under **`logos/`** so partner tiles and the 3D GLB load correctly.
 
 ### Optional Actions deploy
 
