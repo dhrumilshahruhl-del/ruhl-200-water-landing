@@ -324,6 +324,31 @@ html {
   }
 }
 
+@media (min-width: 1024px) {
+  .hero-section {
+    box-sizing: border-box;
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-section .hero-section-inner {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: clamp(2rem, 4vh, 3.5rem) !important;
+    padding-bottom: clamp(2rem, 4vh, 3.5rem) !important;
+  }
+
+  .hero-section .hero-stats {
+    margin-top: clamp(2rem, 4vh, 3.5rem) !important;
+  }
+}
+
 /* 3D building scroll section */
 .building-scroll-section {
   position: relative;
@@ -379,6 +404,10 @@ html {
 
 .building-scroll-section.is-blocked .building-scroll-status {
   color: #991b1b;
+}
+
+.building-scroll-overlay.is-disabled {
+  display: none !important;
 }
 
 .building-scroll-overlay {
