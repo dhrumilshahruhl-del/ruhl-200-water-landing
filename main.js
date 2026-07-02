@@ -3,6 +3,37 @@ document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
   }
 
+  const compactMq = window.matchMedia('(max-width: 1023px)');
+  const reduceMotionMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function isMobileViewport() {
+    return window.matchMedia('(max-width: 767px)').matches;
+  }
+
+  function getCo2SvgFit() {
+    if (isMobileViewport()) return 'xMinYMin meet';
+    if (isCompactViewport()) return 'xMidYMid meet';
+    return 'xMinYMin meet';
+  }
+
+  function isCompactViewport() {
+    return compactMq.matches;
+  }
+
+  function prefersReducedMotion() {
+    return reduceMotionMq.matches;
+  }
+
+  function getViewOpts(threshold = 0.2) {
+    if (!isCompactViewport()) {
+      return { threshold };
+    }
+    return {
+      threshold: Math.min(threshold, 0.12),
+      rootMargin: '0px 0px 6% 0px',
+    };
+  }
+
   function easeOutCubic(t) {
     return 1 - Math.pow(1 - t, 3);
   }
@@ -11,17 +42,63 @@ document.addEventListener('DOMContentLoaded', () => {
     return Math.round(n).toLocaleString();
   }
 
+  function setWillChange(els, value) {
+    els.forEach((el) => {
+      if (value) el.style.willChange = value;
+      else el.style.removeProperty('will-change');
+    });
+  }
+
+  function whenStableLayout(el, callback, { minHeight = 48, timeoutMs = 800 } = {}) {
+    if (!el) return;
+
+    const ready = () => {
+      const { height, width } = el.getBoundingClientRect();
+      return height >= minHeight && width > 0;
+    };
+
+    if (!isCompactViewport() || ready()) {
+      callback();
+      return;
+    }
+
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      ro.disconnect();
+      clearTimeout(timer);
+      callback();
+    };
+
+    const ro = new ResizeObserver(() => {
+      if (ready()) finish();
+    });
+    ro.observe(el);
+
+    const timer = setTimeout(() => {
+      if (ready()) finish();
+    }, timeoutMs);
+  }
+
+  function prepareAnimatedNumbers(container) {
+    if (!container) return;
+    container.querySelectorAll('[data-animate-number][data-final]').forEach((el) => {
+      el.style.fontVariantNumeric = 'tabular-nums';
+    });
+  }
+
   function animateWidthsAndNumbers(container, { durationMs = 1100 } = {}) {
     if (!container || container.dataset.animated === 'true') return;
     container.dataset.animated = 'true';
 
+    prepareAnimatedNumbers(container);
+
     const widthEls = Array.from(container.querySelectorAll('[data-animate-width][data-final-width]'));
     const numEls = Array.from(container.querySelectorAll('[data-animate-number][data-final]'));
 
-    // Capture final widths and set to zero before animating.
     const widths = widthEls.map((el) => {
       const finalWidth = String(el.getAttribute('data-final-width') || '').trim();
-      // Ensure we have a percent we can parse.
       const n = Number(finalWidth.replace('%', ''));
       el.style.width = '0%';
       return { el, finalWidth, n: Number.isFinite(n) ? n : 0 };
@@ -30,13 +107,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const numbers = numEls.map((el) => {
       const final = Number(el.getAttribute('data-final') || '0');
       const suffix = el.getAttribute('data-suffix') || '';
-      // Set to 0 for the animation start (keep layout; same font).
       el.textContent = `0${suffix}`;
       return { el, final: Number.isFinite(final) ? final : 0, suffix };
     });
 
-    // Ensure the browser paints the 0% state first (otherwise it can look like it “jumps”).
+    const finalize = () => {
+      widths.forEach(({ el, n }) => {
+        el.style.width = `${n}%`;
+      });
+      numbers.forEach(({ el, final, suffix }) => {
+        el.textContent = `${formatNumber(final)}${suffix}`;
+      });
+      setWillChange(widthEls, null);
+    };
+
+    if (prefersReducedMotion()) {
+      finalize();
+      return;
+    }
+
     widths.forEach(({ el }) => void el.offsetWidth);
+    if (isCompactViewport()) {
+      setWillChange(widthEls, 'width');
+    }
 
     let start = 0;
     function tick(now) {
@@ -52,14 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       if (raw < 1) requestAnimationFrame(tick);
-      else {
-        widths.forEach(({ el, n }) => {
-          el.style.width = `${n}%`;
-        });
-        numbers.forEach(({ el, final, suffix }) => {
-          el.textContent = `${formatNumber(final)}${suffix}`;
-        });
-      }
+      else finalize();
     }
     requestAnimationFrame(() => requestAnimationFrame(tick));
   }
@@ -71,6 +157,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const bars = Array.from(container.querySelectorAll('.wf-bar'));
     const labels = Array.from(container.querySelectorAll('.wf-label[data-animate-number][data-final]'));
 
+    prepareAnimatedNumbers(container);
+
+    const finalize = () => {
+      bars.forEach((bar) => {
+        bar.style.transform = 'scaleY(1)';
+        bar.classList.remove('is-animating');
+      });
+      labels.forEach((el) => {
+        const final = Number(el.getAttribute('data-final') || '0');
+        const suffix = el.getAttribute('data-suffix') || '';
+        el.textContent = `${formatNumber(final)}${suffix}`;
+      });
+      setWillChange(bars, null);
+    };
+
     bars.forEach((bar) => {
       bar.style.transformOrigin = 'bottom';
       bar.style.transform = 'scaleY(0)';
@@ -80,6 +181,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const suffix = el.getAttribute('data-suffix') || '';
       el.textContent = `0${suffix}`;
     });
+
+    if (prefersReducedMotion()) {
+      finalize();
+      return;
+    }
+
+    if (isCompactViewport()) {
+      bars.forEach((bar) => bar.classList.add('is-animating'));
+      setWillChange(bars, 'transform');
+    }
 
     const start = performance.now();
     function tick(now) {
@@ -96,6 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       if (raw < 1) requestAnimationFrame(tick);
+      else finalize();
     }
     requestAnimationFrame(tick);
   }
@@ -103,7 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function triggerOnceInView(el, onEnter, { threshold = 0.2 } = {}) {
     if (!el) return;
 
-    // If already visible (common when refreshing mid-page), run immediately.
     const rect = el.getBoundingClientRect();
     const vh = window.innerHeight || document.documentElement.clientHeight;
     if (rect.top < vh && rect.bottom > 0) {
@@ -122,9 +233,53 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       },
-      { threshold }
+      getViewOpts(threshold)
     );
     obs.observe(el);
+  }
+
+  function whenRevealReady(el, callback, { threshold = 0.2 } = {}) {
+    if (!el) return;
+
+    let started = false;
+    const run = () => {
+      if (started) return;
+      started = true;
+      whenStableLayout(el, callback);
+    };
+
+    const revealHost = el.classList.contains('reveal') ? el : el.closest('.reveal');
+
+    const canRun = () => {
+      if (!isCompactViewport()) return true;
+      if (!revealHost) return true;
+      return revealHost.classList.contains('in-view');
+    };
+
+    const tryStart = () => {
+      if (!canRun()) return;
+      run();
+    };
+
+    if (canRun()) {
+      triggerOnceInView(el, tryStart, { threshold });
+      return;
+    }
+
+    const mo = new MutationObserver(() => {
+      tryStart();
+      if (started) mo.disconnect();
+    });
+    mo.observe(revealHost, { attributes: true, attributeFilter: ['class'] });
+
+    triggerOnceInView(
+      el,
+      () => {
+        tryStart();
+        if (started) mo.disconnect();
+      },
+      { threshold }
+    );
   }
 
   function renderAndAnimateCO2Chart(container) {
@@ -148,7 +303,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const x = (value) => trackX + (value / data.max) * trackW;
 
-    // Layout constants (match reference image: two separate sliders)
     const y1Title = 30;
     const y1Sub = 50;
 
@@ -156,7 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const y1Track = 132;
     const y1Axis = 182;
 
-    // More vertical room between panel 1 and panel 2 (no badges)
     const y2Label = 340;
     const y2Track = 394;
     const y2Axis = 454;
@@ -171,7 +324,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const slate200 = '#e2e8f0';
     const slate400 = '#94a3b8';
     const slate600 = '#475569';
-    // No “above/below” pills per latest request.
 
     const tickStepMinor = 200;
     const tickStepMajor = 1000;
@@ -204,7 +356,6 @@ document.addEventListener('DOMContentLoaded', () => {
       </text>
     `;
 
-    // Prevent label collisions when points are close together (e.g., retrofit vs 2030–2034 limit).
     const collisionPx = 120;
     const offsetPx = 20;
 
@@ -221,7 +372,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const p2FutureAnchor = p2DeltaFuture < collisionPx ? 'start' : 'middle';
     const p2FutureDx = p2DeltaFuture < collisionPx ? offsetPx : 0;
 
-    // Extend yellow callouts upward (longer stems + higher label block)
     const limitLabelY1 = y1Label - 26;
     const limitNumY1 = y1Label - 4;
     const limitStemStartY1 = y1Label + 6;
@@ -230,8 +380,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const limitNumY2 = y2Label - 4;
     const limitStemStartY2 = y2Label + 6;
 
+    const svgFit = getCo2SvgFit();
+
     container.innerHTML = `
-      <svg viewBox="0 0 ${vbW} ${vbH}" width="100%" height="100%" preserveAspectRatio="xMinYMin meet" role="img" aria-label="Projected CO₂ emissions vs permitted limits">
+      <svg viewBox="0 0 ${vbW} ${vbH}" width="100%" height="100%" preserveAspectRatio="${svgFit}" role="img" aria-label="Projected CO₂ emissions vs permitted limits">
         <defs>
           <linearGradient id="co2RedGrad" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stop-color="#b91c1c" />
@@ -239,7 +391,6 @@ document.addEventListener('DOMContentLoaded', () => {
           </linearGradient>
         </defs>
 
-        <!-- Title/subtitle inside chart (as in reference) -->
         <text x="${trackX}" y="${y1Title}" font-family="${labelFont}" font-size="28" font-weight="900" fill="${navy}">
           Projected CO₂ Emissions vs. Permitted Limits
         </text>
@@ -247,14 +398,11 @@ document.addEventListener('DOMContentLoaded', () => {
           Comparison of baseline and post-retrofit emissions against Local Law 97 thresholds.
         </text>
 
-        <!-- Panel 1 label -->
         <text x="${trackX}" y="${y1Label}" font-family="${labelFont}" font-size="16" font-weight="800" fill="${navy}">Baseline CO₂ Emissions</text>
 
-        <!-- Panel 1 tracks -->
         <rect x="${trackX}" y="${y1Track}" width="${trackW}" height="${trackH}" rx="${trackR}" fill="${slate200}" />
         <rect id="co2-baseline-fill" x="${trackX}" y="${y1Track}" width="0" height="${trackH}" rx="${trackR}" fill="url(#co2RedGrad)" />
 
-        <!-- Panel 1 markers -->
         <g id="co2-p1-limit-future" transform="translate(${x(data.ll97Future)} 0)" opacity="0">
           <text x="${p1FutureDx}" y="${limitLabelY1}" text-anchor="${p1FutureAnchor}" font-family="${labelFont}" font-size="12" font-weight="800" fill="${gold}">2030–2034 Limit</text>
           <text id="co2-p1-limit-future-num" x="${p1FutureDx}" y="${limitNumY1}" text-anchor="${p1FutureAnchor}" font-family="${labelFont}" font-size="22" font-weight="900" fill="${gold}">0</text>
@@ -276,19 +424,15 @@ document.addEventListener('DOMContentLoaded', () => {
           <circle cx="0" cy="${y1Track + trackH / 2}" r="9" fill="${gold}" stroke="#fff" stroke-width="4" />
         </g>
 
-        <!-- Panel 1 axis -->
         ${tickLines(y1Axis)}
         ${majorLabels(y1Axis + 42)}
         ${axisUnit(y1Axis + 78)}
 
-        <!-- Panel 2 label -->
         <text x="${trackX}" y="${y2Label}" font-family="${labelFont}" font-size="16" font-weight="800" fill="${navy}">Expected CO₂ After Retrofit</text>
 
-        <!-- Panel 2 tracks -->
         <rect x="${trackX}" y="${y2Track}" width="${trackW}" height="${trackH}" rx="${trackR}" fill="${slate200}" />
         <rect id="co2-retrofit-fill" x="${trackX}" y="${y2Track}" width="0" height="${trackH}" rx="${trackR}" fill="${navy}" />
 
-        <!-- Panel 2 markers -->
         <g id="co2-p2-retrofit" transform="translate(${x(data.retrofit)} 0)" opacity="0">
           <text id="co2-p2-retrofit-num" x="${p2RetrofitDx}" y="${y2Label + 10}" text-anchor="${p2RetrofitAnchor}" font-family="${labelFont}" font-size="24" font-weight="900" fill="${navy}">0</text>
           <text x="${p2RetrofitDx}" y="${y2Label + 32}" text-anchor="${p2RetrofitAnchor}" font-family="${labelFont}" font-size="13" font-weight="800" fill="${navy}">After Retrofit</text>
@@ -310,7 +454,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <circle cx="0" cy="${y2Track + trackH / 2}" r="9" fill="${gold}" stroke="#fff" stroke-width="4" />
         </g>
 
-        <!-- Panel 2 axis -->
         ${tickLines(y2Axis)}
         ${majorLabels(y2Axis + 42)}
         ${axisUnit(y2Axis + 78)}
@@ -358,19 +501,42 @@ document.addEventListener('DOMContentLoaded', () => {
       ll97Current: data.ll97Current,
     };
 
-    // Stems animate down to the slider line
     const p1StemStart = limitStemStartY1;
     const p1StemEnd = y1Track + trackH / 2;
     const p2StemStart = limitStemStartY2;
     const p2StemEnd = y2Track + trackH / 2;
 
     const durationMs = 1200;
-    const start = performance.now();
 
     function setStem(lineEl, y1, y2) {
       lineEl.setAttribute('y1', String(y1));
       lineEl.setAttribute('y2', String(y2));
     }
+
+    const finalize = () => {
+      baselineFill.setAttribute('width', String(targets.baselineW));
+      retrofitFill.setAttribute('width', String(targets.retrofitW));
+      Object.values(groups).forEach((g) => g && g.setAttribute('opacity', '1'));
+      setStem(stems.p1Future, p1StemStart, p1StemEnd);
+      setStem(stems.p1Baseline, p1StemStart, p1StemEnd);
+      setStem(stems.p1Current, p1StemStart, p1StemEnd);
+      setStem(stems.p2Retrofit, p2StemStart, p2StemEnd);
+      setStem(stems.p2Future, p2StemStart, p2StemEnd);
+      setStem(stems.p2Current, p2StemStart, p2StemEnd);
+      nums.p1Future.textContent = formatNumber(targets.ll97Future);
+      nums.p1Current.textContent = formatNumber(targets.ll97Current);
+      nums.p1Baseline.textContent = formatNumber(targets.baseline);
+      nums.p2Retrofit.textContent = formatNumber(targets.retrofit);
+      nums.p2Future.textContent = formatNumber(targets.ll97Future);
+      nums.p2Current.textContent = formatNumber(targets.ll97Current);
+    };
+
+    if (prefersReducedMotion()) {
+      finalize();
+      return;
+    }
+
+    const start = performance.now();
 
     function tick(now) {
       const raw = Math.min(1, (now - start) / durationMs);
@@ -379,10 +545,8 @@ document.addEventListener('DOMContentLoaded', () => {
       baselineFill.setAttribute('width', String(targets.baselineW * t));
       retrofitFill.setAttribute('width', String(targets.retrofitW * t));
 
-      // Fade in marker groups
       Object.values(groups).forEach((g) => g && g.setAttribute('opacity', String(Math.min(1, t * 1.1))));
 
-      // Animate stems to the slider dots
       setStem(stems.p1Future, p1StemStart, p1StemStart + (p1StemEnd - p1StemStart) * t);
       setStem(stems.p1Baseline, p1StemStart, p1StemStart + (p1StemEnd - p1StemStart) * t);
       setStem(stems.p1Current, p1StemStart, p1StemStart + (p1StemEnd - p1StemStart) * t);
@@ -391,7 +555,6 @@ document.addEventListener('DOMContentLoaded', () => {
       setStem(stems.p2Future, p2StemStart, p2StemStart + (p2StemEnd - p2StemStart) * t);
       setStem(stems.p2Current, p2StemStart, p2StemStart + (p2StemEnd - p2StemStart) * t);
 
-      // Count-up numbers
       nums.p1Future.textContent = formatNumber(targets.ll97Future * t);
       nums.p1Current.textContent = formatNumber(targets.ll97Current * t);
       nums.p1Baseline.textContent = formatNumber(targets.baseline * t);
@@ -400,20 +563,15 @@ document.addEventListener('DOMContentLoaded', () => {
       nums.p2Current.textContent = formatNumber(targets.ll97Current * t);
 
       if (raw < 1) requestAnimationFrame(tick);
-      else {
-        nums.p1Future.textContent = formatNumber(targets.ll97Future);
-        nums.p1Current.textContent = formatNumber(targets.ll97Current);
-        nums.p1Baseline.textContent = formatNumber(targets.baseline);
-        nums.p2Retrofit.textContent = formatNumber(targets.retrofit);
-        nums.p2Future.textContent = formatNumber(targets.ll97Future);
-        nums.p2Current.textContent = formatNumber(targets.ll97Current);
-      }
+      else finalize();
     }
 
     requestAnimationFrame(tick);
   }
 
   const revealEls = Array.from(document.querySelectorAll('.reveal'));
+  const revealThreshold = isCompactViewport() ? 0.1 : 0.14;
+
   if (!('IntersectionObserver' in window)) {
     revealEls.forEach((el) => el.classList.add('in-view'));
     const chart = document.getElementById('co2-chart');
@@ -433,37 +591,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     },
-    { threshold: 0.14 }
+    getViewOpts(revealThreshold)
   );
 
   revealEls.forEach((el) => observer.observe(el));
 
-  // Animate the CO₂ chart once when it first scrolls into view.
   const co2Chart = document.getElementById('co2-chart');
   if (co2Chart) {
-    const chartObs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            renderAndAnimateCO2Chart(co2Chart);
-            chartObs.disconnect();
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-    chartObs.observe(co2Chart);
+    whenRevealReady(co2Chart, () => renderAndAnimateCO2Chart(co2Chart), { threshold: 0.2 });
   }
 
-  // Animate the energy bars + numbers once in view.
   const energyChart = document.getElementById('energy-chart');
-  triggerOnceInView(energyChart, () => animateWidthsAndNumbers(energyChart));
+  whenRevealReady(energyChart, () => animateWidthsAndNumbers(energyChart));
 
-  // Animate the airflow bars once in view.
   const airflowCharts = document.getElementById('airflow-charts');
-  triggerOnceInView(airflowCharts, () => animateWidthsAndNumbers(airflowCharts));
+  whenRevealReady(airflowCharts, () => animateWidthsAndNumbers(airflowCharts));
 
-  // Animate the waterfall bars + labels once in view.
   const waterfallChart = document.getElementById('waterfall-chart');
-  triggerOnceInView(waterfallChart, () => animateWaterfall(waterfallChart));
+  whenRevealReady(waterfallChart, () => animateWaterfall(waterfallChart));
 });
