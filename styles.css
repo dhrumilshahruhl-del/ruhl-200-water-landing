@@ -353,7 +353,7 @@ html {
 .building-scroll-section {
   position: relative;
   width: 100%;
-  height: 280vh;
+  height: 420vh;
   background: linear-gradient(180deg, #ffffff 0%, #f3f6f8 48%, #eef2f5 100%);
 }
 
@@ -447,7 +447,7 @@ html {
 
 @media (min-width: 768px) {
   .building-scroll-section {
-    height: 300vh;
+    height: 480vh;
   }
 
   .building-scroll-overlay {
@@ -459,5 +459,350 @@ html {
   .building-scroll-section {
     height: 100vh;
     height: 100dvh;
+  }
+}
+
+.building-scroll-rooftop-ui {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.rooftop-approach-panel.is-disabled {
+  display: none !important;
+}
+
+.rooftop-approach-panel {
+  position: absolute;
+  top: 1.25rem;
+  left: 1rem;
+  max-width: min(22rem, calc(100% - 2rem));
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(0, 55, 90, 0.12);
+  box-shadow: 0 12px 40px rgba(0, 55, 90, 0.08);
+}
+
+.rooftop-approach-eyebrow {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #00375a;
+}
+
+.rooftop-approach-title {
+  margin: 0.45rem 0 0;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  font-weight: 900;
+  line-height: 1.25;
+  color: #00375a;
+}
+
+.rooftop-approach-states {
+  margin: 0.85rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rooftop-approach-state {
+  margin: 0 0 0.55rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.65rem;
+  border: 1px solid transparent;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.rooftop-approach-state strong {
+  display: block;
+  font-size: 0.8125rem;
+  color: #00375a;
+}
+
+.rooftop-approach-state span {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: #475569;
+}
+
+.rooftop-approach-state.is-active {
+  background: rgba(252, 190, 0, 0.14);
+  border-color: rgba(0, 55, 90, 0.14);
+}
+
+.rooftop-enabled-by {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(0, 55, 90, 0.1);
+}
+
+.rooftop-enabled-by-title {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #00375a;
+}
+
+.rooftop-enabled-by ul {
+  margin: 0.45rem 0 0;
+  padding-left: 1rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: #475569;
+}
+
+.rooftop-flow-legend {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  max-width: min(14rem, calc(100% - 2rem));
+  padding: 0.75rem 0.85rem;
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 55, 90, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 55, 90, 0.08);
+}
+
+.rooftop-flow-legend-title {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #00375a;
+}
+
+.rooftop-flow-legend ul {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rooftop-flow-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0.3rem 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.rooftop-flow-swatch {
+  width: 0.75rem;
+  height: 0.2rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(0, 55, 90, 0.08);
+}
+
+.rooftop-how-it-works.is-disabled {
+  display: none !important;
+}
+
+.rooftop-how-it-works {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  max-width: min(16rem, calc(100% - 2rem));
+  padding: 0.75rem 0.85rem 0.8rem;
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 55, 90, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 55, 90, 0.08);
+}
+
+.rooftop-how-it-works-title {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #00375a;
+}
+
+.rooftop-how-it-works ol {
+  margin: 0.55rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rooftop-how-it-works li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0.35rem 0;
+  font-size: 0.625rem;
+  line-height: 1.35;
+  color: #475569;
+}
+
+.rooftop-how-it-works li strong {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 800;
+  color: #00375a;
+}
+
+.rooftop-how-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 999px;
+  font-size: 0.625rem;
+  font-weight: 900;
+  color: #0f172a;
+  background: #4ade80;
+}
+
+.rooftop-flow-label-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9;
+}
+
+.rooftop-flow-tag {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.35rem;
+  font-size: 0.5625rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.28);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  white-space: nowrap;
+}
+
+.rooftop-flow-tag.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.rooftop-label-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.rooftop-label-callout {
+  position: absolute;
+  z-index: 12;
+  width: 8.625rem;
+  max-width: min(8.625rem, 44vw);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
+  pointer-events: none;
+  touch-action: none;
+  user-select: none;
+}
+
+.rooftop-label-callout.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  cursor: grab;
+}
+
+.rooftop-label-callout.is-dragging {
+  transition: none;
+  cursor: grabbing;
+  z-index: 20;
+  box-shadow: 0 10px 28px rgba(0, 55, 90, 0.18);
+}
+
+.rooftop-label-callout.is-dragging .rooftop-label-card {
+  border-color: rgba(0, 55, 90, 0.28);
+}
+
+.rooftop-label-leaders {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 11;
+}
+
+.rooftop-label-line {
+  stroke: #00375a;
+  stroke-width: 1;
+  stroke-opacity: 0.38;
+  fill: none;
+}
+
+.rooftop-label-card {
+  padding: 0.45rem 0.5rem 0.5rem;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  border: 1px solid rgba(0, 55, 90, 0.16);
+  box-shadow: 0 6px 20px rgba(0, 55, 90, 0.12);
+}
+
+.rooftop-label-badge {
+  display: none;
+}
+
+.rooftop-label-index {
+  display: none;
+}
+
+.rooftop-label-card strong {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 900;
+  line-height: 1.25;
+  color: #00375a;
+}
+
+.rooftop-label-body {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.5625rem;
+  line-height: 1.35;
+  color: #475569;
+}
+
+@media (max-width: 767px) {
+  .rooftop-flow-legend,
+  .rooftop-how-it-works {
+    display: none;
+  }
+
+  .rooftop-flow-tag {
+    font-size: 0.5rem;
+    max-width: 6.5rem;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .rooftop-label-layer > .rooftop-label-callout:nth-child(n + 6) {
+    display: none;
+  }
+
+  .rooftop-label-body {
+    display: none;
   }
 }
