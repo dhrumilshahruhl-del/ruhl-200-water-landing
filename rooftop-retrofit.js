@@ -972,7 +972,7 @@ const flowScratch = { pt: new THREE.Vector3(), ahead: new THREE.Vector3(), look:
 export function setFlowVisibility(flows, opacity, activeIds) {
   flows.forEach((flow) => {
     const on = activeIds.includes(flow.id);
-    const reveal = on ? Math.max(0.55, opacity) : 0;
+    const reveal = on && opacity > 0.001 ? opacity : 0;
 
     flow.pipe.material.opacity = reveal * 0.9;
     if (flow.pipeLiner) {

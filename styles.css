@@ -353,8 +353,8 @@ html {
 .building-scroll-section {
   position: relative;
   width: 100%;
-  height: 420vh;
-  background: linear-gradient(180deg, #ffffff 0%, #f3f6f8 48%, #eef2f5 100%);
+  height: 480vh;
+  background: linear-gradient(180deg, #dce6ee 0%, #eef2f5 46%, #f7f8f8 100%);
 }
 
 .building-scroll-section.is-reduced-motion {
@@ -368,6 +368,7 @@ html {
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
+  background: linear-gradient(180deg, #dce6ee 0%, #eef2f5 46%, #f7f8f8 100%);
 }
 
 .building-scroll-canvas {
@@ -377,6 +378,173 @@ html {
   width: 100%;
   height: 100%;
   touch-action: pan-y;
+}
+
+.building-scroll-side-story {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(9rem, 32vw) minmax(0, 1fr);
+  align-items: start;
+  gap: 0 0.5rem;
+  padding: clamp(1.25rem, 3.5vh, 2.75rem) clamp(0.75rem, 2vw, 1.5rem)
+    clamp(1rem, 2vh, 1.75rem);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.12s linear, visibility 0.12s linear;
+}
+
+.building-scroll-side-header {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  z-index: 1;
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 0 1rem clamp(2.5rem, 8vh, 5rem);
+  text-align: center;
+}
+
+.building-scroll-side-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  grid-row: 2;
+  max-height: min(calc(100vh - 14rem), 42rem);
+  overflow: hidden;
+  justify-self: center;
+  align-self: start;
+  margin-top: clamp(0.75rem, 2.5vh, 1.75rem);
+}
+
+.building-scroll-side-col--left {
+  grid-column: 1;
+  max-width: min(20rem, 100%);
+}
+
+.building-scroll-side-col--right {
+  grid-column: 3;
+  max-width: min(20rem, 100%);
+}
+
+.building-scroll-side-eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #00375a;
+}
+
+.building-scroll-side-title {
+  margin: 0.75rem 0 0;
+  font-size: clamp(1.875rem, 3.2vw, 3rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #00375a;
+}
+
+.building-scroll-side-lead {
+  margin: 1rem auto 0;
+  max-width: 48rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  color: #475569;
+}
+
+.building-scroll-side-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.building-scroll-side-pillar {
+  margin: 0;
+  padding: 1.25rem 1rem;
+  border-radius: 2rem;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+  text-align: center;
+}
+
+.building-scroll-side-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.25rem;
+  height: 4.25rem;
+  margin: 0 auto;
+  border-radius: 999px;
+  background: #00375a;
+  color: #fcbe00;
+}
+
+.building-scroll-side-pillar h3 {
+  margin: 1rem 0 0;
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1.3;
+  color: #00375a;
+}
+
+.building-scroll-side-pillar p {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.625;
+  color: #475569;
+}
+
+.building-scroll-side-callout {
+  padding: 1.25rem 1.35rem;
+  border-radius: 2rem;
+}
+
+.building-scroll-side-callout h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.building-scroll-side-callout p {
+  margin: 0.85rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.625;
+}
+
+.building-scroll-side-callout--challenge {
+  background: #00375a;
+  color: #fff;
+}
+
+.building-scroll-side-callout--challenge p {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.building-scroll-side-callout--solution {
+  background: #fcbe00;
+  color: #00375a;
+}
+
+@media (max-width: 1100px) {
+  .building-scroll-side-story {
+    display: none;
+  }
+}
+
+@media (min-width: 1101px) and (max-width: 1280px) {
+  .building-scroll-side-story {
+    grid-template-columns: minmax(0, 1fr) minmax(7rem, 38vw) minmax(0, 1fr);
+  }
+
+  .building-scroll-side-col--left,
+  .building-scroll-side-col--right {
+    max-width: min(16rem, 100%);
+  }
 }
 
 .building-scroll-status {

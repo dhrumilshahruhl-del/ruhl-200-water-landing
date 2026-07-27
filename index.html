@@ -97,33 +97,58 @@
             <p class="building-scroll-title">Discover the building</p>
             <p class="building-scroll-hint">Scroll for a cinematic journey from reveal to rooftop inspection</p>
           </div>
-          <div id="building-scroll-rooftop-ui" class="building-scroll-rooftop-ui">
-            <div class="rooftop-approach-panel is-disabled" aria-hidden="true">
-              <p class="rooftop-approach-eyebrow">Engineering approach</p>
-              <h2 class="rooftop-approach-title">Efficiency-led retrofit: reduce, recover, modernize.</h2>
-              <ul class="rooftop-approach-states" role="list">
-                <li class="rooftop-approach-state" data-approach="reduce">
-                  <strong>Reduce Loads</strong>
-                  <span>Cut heating and cooling demand before adding larger systems.</span>
-                </li>
-                <li class="rooftop-approach-state" data-approach="recover">
-                  <strong>Recover Heat</strong>
-                  <span>Transfer exhaust energy to incoming outdoor air without mixing the air streams.</span>
-                </li>
-                <li class="rooftop-approach-state" data-approach="modernize">
-                  <strong>Modernize HVAC</strong>
-                  <span>Coordinate air handling, heat recovery, intelligent controls, hydronics, and staged heat-pump support.</span>
-                </li>
-              </ul>
-              <div class="rooftop-enabled-by">
-                <p class="rooftop-enabled-by-title">Enabled by</p>
-                <ul role="list">
-                  <li>Thermal and energy modeling</li>
-                  <li>Smart controls and hydronics</li>
-                  <li>Internal thermal energy networks</li>
-                </ul>
+          <div id="building-scroll-side-story" class="building-scroll-side-story" aria-hidden="false">
+            <header class="building-scroll-side-header">
+              <p class="building-scroll-side-eyebrow">Engineering approach</p>
+              <h2 class="building-scroll-side-title">Reduce, recover, modernize.</h2>
+              <p class="building-scroll-side-lead">
+                Fix pressure imbalance and recover exhaust energy before scaling HVAC.
+              </p>
+            </header>
+            <div class="building-scroll-side-col building-scroll-side-col--left">
+              <div class="building-scroll-side-pillars">
+                <article class="building-scroll-side-pillar">
+                  <div class="building-scroll-side-icon" aria-hidden="true">
+                    <i data-lucide="gauge" class="h-8 w-8 stroke-[2]"></i>
+                  </div>
+                  <h3>Reduce Loads</h3>
+                  <p>Cut heating and cooling demand before adding larger systems.</p>
+                </article>
+                <article class="building-scroll-side-pillar">
+                  <div class="building-scroll-side-icon" aria-hidden="true">
+                    <i data-lucide="refresh-cw" class="h-8 w-8 stroke-[2]"></i>
+                  </div>
+                  <h3>Recover Heat</h3>
+                  <p>Transfer exhaust energy to incoming outdoor air without mixing streams.</p>
+                </article>
+                <article class="building-scroll-side-pillar">
+                  <div class="building-scroll-side-icon" aria-hidden="true">
+                    <i data-lucide="wind" class="h-8 w-8 stroke-[2]"></i>
+                  </div>
+                  <h3>Modernize HVAC</h3>
+                  <p>Coordinate air handling, heat recovery, and staged water-source VRF support.</p>
+                </article>
               </div>
             </div>
+            <div class="building-scroll-side-col building-scroll-side-col--right">
+              <div class="building-scroll-side-callout building-scroll-side-callout--challenge">
+                <h3>The challenge</h3>
+                <p>
+                  Multiple roof exhaust systems operated continuously without heat recovery or supply coordination,
+                  producing a 284% negative-pressure regime and high infiltration losses through doors, windows, and
+                  façade leakage.
+                </p>
+              </div>
+              <div class="building-scroll-side-callout building-scroll-side-callout--solution">
+                <h3>The solution</h3>
+                <p>
+                  Centralized exhaust and dedicated outdoor-air supply units connected by a closed-loop refrigerant heat
+                  recovery circuit, with water-source VRF support only when recovered heat cannot meet setpoints.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div id="building-scroll-rooftop-ui" class="building-scroll-rooftop-ui">
             <div id="rooftop-flow-legend" class="rooftop-flow-legend" hidden>
               <p class="rooftop-flow-legend-title">System flows</p>
               <ul role="list"></ul>

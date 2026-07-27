@@ -22,6 +22,30 @@ const FLOW_LEGEND_ITEMS = PRIMARY_FLOW_IDS.map((id) => ({
   color: FLOW_PALETTE[id].hex,
 }));
 
+/** Site-matched studio sky (CSS + WebGL share these stops). */
+const SKY_SITE_BOTTOM = 0xf7f8f8;
+
+function createStudioSkyBackground(THREE) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 4;
+  canvas.height = 512;
+  const ctx = canvas.getContext('2d');
+  const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  gradient.addColorStop(0, '#dce6ee');
+  gradient.addColorStop(0.46, '#eef2f5');
+  gradient.addColorStop(1, '#f7f8f8');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function applyStudioAtmosphere(scene, THREE, viewRadius) {
+  const r = Math.max(viewRadius || 12, 8);
+  scene.fog = new THREE.Fog(SKY_SITE_BOTTOM, r * 0.85, r * 3.15);
+}
+
 const section = document.getElementById('building-scroll');
 const canvas = document.getElementById('building-scroll-canvas');
 const sticky = section?.querySelector('.building-scroll-sticky');
@@ -31,6 +55,11 @@ const labelLayer = document.getElementById('rooftop-label-layer');
 const flowLabelLayer = document.getElementById('rooftop-flow-label-layer');
 const flowLegend = document.getElementById('rooftop-flow-legend');
 const howItWorksPanel = document.getElementById('rooftop-how-it-works');
+const sideStoryEl = document.getElementById('building-scroll-side-story');
+
+/** Side story visible through early orbit; fades before rooftop (matches phase1 orbit end ~0.65 × L). */
+const SIDE_STORY_FADE_START = 0.05;
+const SIDE_STORY_FADE_END = 0.13;
 
 boot();
 
@@ -115,6 +144,7 @@ function initBuildingScroll() {
   let lastTickTime = performance.now();
   let flowsActive = false;
   let buildingScene = null;
+  let studioSkyBackground = null;
   const debugRooftop = new URLSearchParams(window.location.search).get('debugRooftop') === 'true';
 
   const modelPath = resolveModelPath();
@@ -134,10 +164,11 @@ function initBuildingScroll() {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.1;
-  renderer.setClearColor(0xf3f6f8, 1);
+  renderer.setClearColor(SKY_SITE_BOTTOM, 1);
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf3f6f8);
+  studioSkyBackground = createStudioSkyBackground(THREE);
+  scene.background = studioSkyBackground;
 
   const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 500);
   const lookTarget = new THREE.Vector3();
@@ -373,7 +404,7 @@ function initBuildingScroll() {
       fittedBox.getBoundingSphere(sphere);
     }
 
-    const focus = new THREE.Vector3(0, fittedSize.y * 0.06, 0);
+    const focus = new THREE.Vector3(0, fittedSize.y * 0.115, 0);
     const orbitDistance = getCameraDistance(sphere.radius, state.startFov, camera.aspect, 1.22);
 
     const orbitSpan = (130 * Math.PI) / 180;
@@ -463,6 +494,8 @@ function initBuildingScroll() {
     lightRig.rimX = state.lightBase.rim.x;
     lightRig.rimY = state.lightBase.rim.y;
     lightRig.rimZ = state.lightBase.rim.z;
+
+    applyStudioAtmosphere(scene, THREE, Math.max(startRadius, endRadius, sphere.radius * 2.2));
   }
 
   function setupRooftopUI() {
@@ -880,7 +913,30 @@ function initBuildingScroll() {
     });
   }
 
+  function updateSideStoryUI(scrollProgress) {
+    if (!sideStoryEl) return;
+    if (reduceMotionMq.matches) {
+      sideStoryEl.style.opacity = '0';
+      sideStoryEl.style.visibility = 'hidden';
+      sideStoryEl.setAttribute('aria-hidden', 'true');
+      return;
+    }
+
+    const p = scrollProgress ?? playhead.progress;
+    let opacity = 1;
+    if (p >= SIDE_STORY_FADE_END) {
+      opacity = 0;
+    } else if (p > SIDE_STORY_FADE_START) {
+      opacity = 1 - (p - SIDE_STORY_FADE_START) / (SIDE_STORY_FADE_END - SIDE_STORY_FADE_START);
+    }
+
+    sideStoryEl.style.opacity = String(opacity);
+    sideStoryEl.style.visibility = opacity < 0.04 ? 'hidden' : 'visible';
+    sideStoryEl.setAttribute('aria-hidden', opacity < 0.08 ? 'true' : 'false');
+  }
+
   function updateApproachUI() {
+    updateSideStoryUI();
     if (flowLegend) flowLegend.hidden = rooftopPhase.flows < 0.15;
     if (howItWorksPanel) howItWorksPanel.hidden = true;
     if (flowLabelLayer) flowLabelLayer.hidden = rooftopPhase.flows < 0.12;
@@ -943,6 +999,7 @@ function initBuildingScroll() {
         camLook.z = state.inspectLook.z;
       }
       updateApproachUI();
+      updateSideStoryUI(0);
       renderScene();
       showStatus('', 'hidden');
       return;
@@ -1210,9 +1267,10 @@ function initBuildingScroll() {
     timeline.eventCallback('onUpdate', () => {
       const p = timeline.progress();
       updateApproachUI();
+      updateSideStoryUI();
       if (rooftopPhase.equipment > 0) applyEquipmentReveal(rooftopPhase.equipment);
       flowsActive = rooftopPhase.flows > 0.08;
-      if (rooftopFlows && flowsActive) {
+      if (rooftopFlows) {
         setFlowVisibility(rooftopFlows, rooftopPhase.flows, PRIMARY_FLOW_IDS);
       }
     });
@@ -1275,6 +1333,8 @@ function initBuildingScroll() {
 
       setupScrollAnimation();
       ScrollTrigger.refresh();
+      if (window.lucide?.createIcons) window.lucide.createIcons();
+      updateSideStoryUI();
       window.requestAnimationFrame(renderScene);
     } catch (error) {
       console.error('Building scene setup failed:', error);
@@ -1338,6 +1398,7 @@ function initBuildingScroll() {
       scrollTriggerInstance?.kill();
       timeline?.kill();
       renderer.dispose();
+      studioSkyBackground?.dispose();
       disposeRooftopResources(rooftopFlows, rooftopRetrofitGroup);
       debugControls?.dispose();
     },
