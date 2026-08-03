@@ -3,10 +3,11 @@ import { buildingGltfPromise, cloneSceneFromGltf } from './model-preload.js';
 import { createBuildingRooftopMode } from './building-rooftop-mode.js';
 
 const SCROLL_ENTRY_END = 0;
-const SCROLL_ORBIT_END = 0.72;
+const SCROLL_ORBIT_END = 0.68;
 const SCROLL_ROOFTOP_END = 1;
 /** Show rooftop entry CTA only on the last ~2.5% of scroll (roof fully revealed). */
 const ROOFTOP_ENTRY_SHOW_START = SCROLL_ROOFTOP_END - 0.025;
+const BUILDING_SCALE_TOP_GUARD_PX = 110;
 /** Playhead catch-up — higher = snappier scroll follow, lower = more cinematic lag. */
 const PLAYHEAD_SMOOTHING = 0.16;
 const PLAYHEAD_SMOOTHING_END = 0.24;
@@ -348,6 +349,18 @@ function initBuildingScroll() {
     return 0.5 + Math.cos(t * Math.PI) * 0.5;
   }
 
+  function getScaleTopGuardShift() {
+    const progress = playhead.progress ?? targetProgress;
+    if (progress <= 0 || progress >= ROOFTOP_ENTRY_SHOW_START) return 0;
+
+    const scaleIn = Math.min(progress / SCROLL_ORBIT_END, 1);
+    const fadeOut =
+      progress <= SCROLL_ORBIT_END
+        ? 1
+        : 1 - (progress - SCROLL_ORBIT_END) / (ROOFTOP_ENTRY_SHOW_START - SCROLL_ORBIT_END);
+    return BUILDING_SCALE_TOP_GUARD_PX * gsap.parseEase('sine.inOut')(scaleIn) * Math.max(0, fadeOut);
+  }
+
   function applyBuildingViewOffset() {
     if (camera.view) camera.clearViewOffset();
 
@@ -378,7 +391,8 @@ function initBuildingScroll() {
 
     if (!framingOffsetCache) return;
 
-    const { shiftX, shiftY } = framingOffsetCache;
+    const { shiftX } = framingOffsetCache;
+    const shiftY = framingOffsetCache.shiftY + getScaleTopGuardShift();
     if (Math.abs(shiftX) < 0.5 && Math.abs(shiftY) < 0.5) return;
 
     camera.setViewOffset(
@@ -1105,17 +1119,6 @@ function initBuildingScroll() {
     timeline
       .addLabel('phase1', 0)
       .to(
-        orbitRig,
-        {
-          azimuth: state.endAzimuth,
-          elevation: state.endElevation,
-          duration: orbitDuration,
-          ease: 'sine.inOut',
-          onUpdate: syncCameraFromOrbit,
-        },
-        SCROLL_ENTRY_END
-      )
-      .to(
         sizeRig,
         {
           progress: 1,
@@ -1147,12 +1150,6 @@ function initBuildingScroll() {
           z: state.roofPos.z,
           duration: rooftopDuration,
           ease: 'sine.inOut',
-          onStart: () => {
-            orbitRig.azimuth = state.endAzimuth;
-            orbitRig.elevation = state.endElevation;
-            orbitRig.radius = state.endRadius;
-            syncCameraFromOrbit();
-          },
         },
         SCROLL_ORBIT_END
       )
