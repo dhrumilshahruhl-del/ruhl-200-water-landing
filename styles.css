@@ -353,7 +353,7 @@ html {
 .building-scroll-section {
   position: relative;
   width: 100%;
-  height: 480vh;
+  height: 380vh;
   background: linear-gradient(180deg, #dce6ee 0%, #eef2f5 46%, #f7f8f8 100%);
 }
 
@@ -367,7 +367,7 @@ html {
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  overflow: hidden;
+  overflow: visible;
   background: linear-gradient(180deg, #dce6ee 0%, #eef2f5 46%, #f7f8f8 100%);
 }
 
@@ -378,6 +378,15 @@ html {
   width: 100%;
   height: 100%;
   touch-action: pan-y;
+}
+
+.building-scroll-canvas.is-roof-draggable {
+  cursor: grab;
+}
+
+.building-scroll-canvas.is-roof-dragging {
+  cursor: grabbing;
+  touch-action: none;
 }
 
 .building-scroll-side-story {
@@ -615,7 +624,7 @@ html {
 
 @media (min-width: 768px) {
   .building-scroll-section {
-    height: 480vh;
+    height: 380vh;
   }
 
   .building-scroll-overlay {
@@ -636,6 +645,98 @@ html {
   inset: 0;
   z-index: 3;
   overflow: hidden;
+}
+
+.building-rooftop-entry-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 55, 90, 0.18);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 8px 24px rgba(0, 55, 90, 0.14);
+  color: #00375a;
+  font-size: 0.6875rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-0.35rem);
+  transition: opacity 0.18s ease, visibility 0.18s ease, transform 0.18s ease;
+}
+
+.building-rooftop-entry-btn.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.building-rooftop-entry-btn:hover {
+  background: #00375a;
+  color: #ffffff;
+}
+
+.rooftop-detail-section {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  height: 100vh;
+  height: 100dvh;
+  background: #f7f8f8;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.16s ease, visibility 0.16s ease;
+}
+
+.rooftop-detail-section.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+body.is-rooftop-detail-open {
+  overflow: hidden;
+}
+
+.rooftop-detail-sticky {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.rooftop-detail-back-link {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 18;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(0, 55, 90, 0.14);
+  box-shadow: 0 6px 18px rgba(0, 55, 90, 0.1);
+  color: #00375a;
+  font-size: 0.625rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.rooftop-detail-back-link:hover {
+  background: #00375a;
+  color: #ffffff;
 }
 
 .rooftop-approach-panel.is-disabled {
@@ -867,19 +968,48 @@ html {
 .rooftop-label-layer {
   position: absolute;
   inset: 0;
-  overflow: hidden;
+  overflow: visible;
   pointer-events: none;
+  z-index: 15;
+}
+
+.rooftop-roof-legend {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+  z-index: 13;
+}
+
+.rooftop-roof-legend.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.rooftop-roof-legend-flows {
+  margin-top: 0.55rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(0, 55, 90, 0.1);
+}
+
+.rooftop-roof-legend-flows p {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.25rem 0 0;
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #475569;
 }
 
 .rooftop-label-callout {
   position: absolute;
   z-index: 12;
-  width: 8.625rem;
-  max-width: min(8.625rem, 44vw);
+  width: 11.5rem;
+  max-width: min(11.5rem, 52vw);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(4px);
-  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
+  transform: translate(-50%, -100%);
+  transition: opacity 0.22s ease, visibility 0.22s ease;
   pointer-events: none;
   touch-action: none;
   user-select: none;
@@ -888,20 +1018,40 @@ html {
 .rooftop-label-callout.is-visible {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  pointer-events: none;
+}
+
+.rooftop-label-layer.is-editing .rooftop-label-callout.is-visible {
   pointer-events: auto;
   cursor: grab;
+}
+
+.rooftop-label-layer.is-editing .rooftop-label-card {
+  cursor: grab;
+}
+
+.rooftop-label-layer.is-editing .rooftop-label-card::after {
+  content: 'Drag';
+  position: absolute;
+  top: 0.35rem;
+  right: 0.4rem;
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #64748b;
+  pointer-events: none;
 }
 
 .rooftop-label-callout.is-dragging {
   transition: none;
   cursor: grabbing;
-  z-index: 20;
-  box-shadow: 0 10px 28px rgba(0, 55, 90, 0.18);
+  z-index: 25;
 }
 
 .rooftop-label-callout.is-dragging .rooftop-label-card {
   border-color: rgba(0, 55, 90, 0.28);
+  box-shadow: 0 10px 28px rgba(0, 55, 90, 0.18);
 }
 
 .rooftop-label-leaders {
@@ -914,19 +1064,154 @@ html {
   z-index: 11;
 }
 
+.rooftop-flow-paths {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.rooftop-flow-paths.is-editing {
+  pointer-events: auto;
+}
+
+.rooftop-flow-paths.is-editing .rooftop-flow-path.is-visible {
+  pointer-events: stroke;
+  cursor: crosshair;
+}
+
+.rooftop-flow-waypoint-layer {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 13;
+}
+
+.rooftop-flow-waypoint-layer.is-editing {
+  pointer-events: none;
+}
+
+.rooftop-flow-waypoint-handle {
+  position: absolute;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin: -0.45rem 0 0 -0.45rem;
+  padding: 0;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.28);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  cursor: grab;
+  touch-action: none;
+  transition: opacity 0.22s ease, visibility 0.22s ease, transform 0.12s ease;
+}
+
+.rooftop-flow-waypoint-handle.is-exhaust {
+  background: #e53935;
+}
+
+.rooftop-flow-waypoint-handle.is-supply {
+  background: #66ff33;
+}
+
+.rooftop-flow-waypoint-handle.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.rooftop-flow-waypoint-handle.is-dragging,
+.rooftop-flow-waypoint-handle:hover {
+  transform: scale(1.18);
+  cursor: grabbing;
+}
+
+.rooftop-flow-layout-toolbar {
+  top: auto;
+  bottom: 0.75rem;
+  right: 0.75rem;
+}
+
+.is-roof-flow-editing .building-scroll-canvas.is-roof-draggable {
+  cursor: grab;
+}
+
+.rooftop-flow-path {
+  fill: none;
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 5 11;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.24s ease, visibility 0.24s ease;
+}
+
+.rooftop-flow-path.is-visible {
+  visibility: visible;
+}
+
+.rooftop-flow-path.is-exhaust {
+  animation: rooftop-flow-march-exhaust 2.8s linear infinite;
+}
+
+.rooftop-flow-path.is-supply {
+  animation: rooftop-flow-march-supply 2.4s linear infinite;
+}
+
+@keyframes rooftop-flow-march-exhaust {
+  to {
+    stroke-dashoffset: -32;
+  }
+}
+
+@keyframes rooftop-flow-march-supply {
+  to {
+    stroke-dashoffset: -32;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rooftop-flow-path.is-exhaust,
+  .rooftop-flow-path.is-supply {
+    animation: none;
+    stroke-dasharray: none;
+    opacity: 0.42;
+  }
+}
+
 .rooftop-label-line {
   stroke: #00375a;
-  stroke-width: 1;
-  stroke-opacity: 0.38;
+  stroke-width: 1.5;
+  stroke-opacity: 0.55;
   fill: none;
+  marker-end: url(#rooftop-label-arrow);
 }
 
 .rooftop-label-card {
-  padding: 0.45rem 0.5rem 0.5rem;
+  position: relative;
+  padding: 0.45rem 0.5rem 0.5rem 1.35rem;
   border-radius: 0.5rem;
   background: #ffffff;
   border: 1px solid rgba(0, 55, 90, 0.16);
   box-shadow: 0 6px 20px rgba(0, 55, 90, 0.12);
+}
+
+.rooftop-label-swatch {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.45rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 0.125rem;
+  border: 1px solid rgba(15, 23, 42, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
 }
 
 .rooftop-label-badge {
@@ -953,9 +1238,135 @@ html {
   color: #475569;
 }
 
+.rooftop-label-anchor-layer {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 14;
+}
+
+.rooftop-label-anchor-handle {
+  position: absolute;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin: -0.4375rem 0 0 -0.4375rem;
+  padding: 0;
+  border: 2px solid #00375a;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 55, 90, 0.22);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  cursor: grab;
+  touch-action: none;
+  transition: opacity 0.22s ease, visibility 0.22s ease, transform 0.12s ease;
+}
+
+.rooftop-label-anchor-handle.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.rooftop-label-anchor-handle.is-dragging,
+.rooftop-label-anchor-handle:hover {
+  transform: scale(1.15);
+  cursor: grabbing;
+  background: #e8f4fc;
+}
+
+.rooftop-label-layout-toolbar {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 16;
+  width: min(15rem, calc(100% - 1.5rem));
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.625rem;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 55, 90, 0.14);
+  box-shadow: 0 8px 24px rgba(0, 55, 90, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+}
+
+.rooftop-label-layout-toolbar.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.rooftop-label-layout-toolbar-title {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #00375a;
+}
+
+.rooftop-label-layout-toolbar-copy {
+  margin: 0.35rem 0 0;
+  font-size: 0.625rem;
+  line-height: 1.35;
+  color: #475569;
+}
+
+.rooftop-label-layout-toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+}
+
+.rooftop-label-layout-btn {
+  appearance: none;
+  border: 1px solid rgba(0, 55, 90, 0.2);
+  border-radius: 999px;
+  background: #00375a;
+  color: #ffffff;
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+}
+
+.rooftop-label-layout-btn.is-muted {
+  background: #ffffff;
+  color: #00375a;
+}
+
+.rooftop-label-layout-toolbar-status {
+  min-height: 1rem;
+  margin: 0.45rem 0 0;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  color: #0f766e;
+}
+
+.is-roof-label-editing .building-scroll-canvas.is-roof-draggable {
+  cursor: grab;
+}
+
 @media (max-width: 767px) {
-  .rooftop-flow-legend,
   .rooftop-how-it-works {
+    display: none;
+  }
+
+  .rooftop-roof-legend {
+    display: block;
+    max-width: min(11.5rem, calc(100% - 1.25rem));
+    left: 0.55rem;
+    bottom: 0.55rem;
+    padding: 0.6rem 0.7rem;
+  }
+
+  .rooftop-roof-legend-flows {
     display: none;
   }
 
@@ -966,7 +1377,7 @@ html {
     text-align: center;
   }
 
-  .rooftop-label-layer > .rooftop-label-callout:nth-child(n + 6) {
+  .rooftop-label-layer > .rooftop-label-callout:nth-child(n + 9) {
     display: none;
   }
 
