@@ -98,7 +98,7 @@ function showStatus(message, type = 'info') {
 }
 
 function resolveModelPath() {
-  const attr = section.getAttribute('data-model-path') || 'logos/Untitled.glb';
+  const attr = section.getAttribute('data-model-path') || 'logos/200_water.glb';
   try {
     return new URL(attr, document.baseURI).href;
   } catch {
