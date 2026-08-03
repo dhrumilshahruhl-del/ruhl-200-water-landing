@@ -353,7 +353,7 @@ html {
 .building-scroll-section {
   position: relative;
   width: 100%;
-  height: 220vh;
+  height: 260vh;
   background: linear-gradient(180deg, #dce6ee 0%, #eef2f5 46%, #f7f8f8 100%);
 }
 
@@ -363,11 +363,12 @@ html {
 }
 
 .building-scroll-sticky {
-  position: relative;
+  position: sticky;
+  top: 0;
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  overflow: visible;
+  overflow: hidden;
   background: linear-gradient(180deg, #dce6ee 0%, #eef2f5 46%, #f7f8f8 100%);
 }
 
@@ -407,6 +408,7 @@ html {
 }
 
 .building-scroll-side-header {
+  position: relative;
   grid-column: 1 / -1;
   grid-row: 1;
   z-index: 1;
@@ -414,6 +416,11 @@ html {
   margin: 0 auto;
   padding: 0 1rem clamp(2.5rem, 8vh, 5rem);
   text-align: center;
+}
+
+.building-scroll-side-header > * {
+  position: relative;
+  z-index: 1;
 }
 
 .building-scroll-side-col {
@@ -457,8 +464,12 @@ html {
 }
 
 .building-scroll-side-lead {
+  display: inline-block;
   margin: 1rem auto 0;
   max-width: 48rem;
+  padding: 0 0.35rem;
+  border-radius: 0.45rem;
+  background: rgba(231, 239, 245, 0.96);
   font-size: 1.125rem;
   line-height: 1.75rem;
   color: #475569;
@@ -624,7 +635,7 @@ html {
 
 @media (min-width: 768px) {
   .building-scroll-section {
-    height: 220vh;
+    height: 260vh;
   }
 
   .building-scroll-overlay {

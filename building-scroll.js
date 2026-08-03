@@ -2,11 +2,16 @@ import * as THREE from 'three';
 import { buildingGltfPromise, cloneSceneFromGltf } from './model-preload.js';
 import { createBuildingRooftopMode } from './building-rooftop-mode.js';
 
-const SCROLL_ENTRY_END = 0.05;
-const SCROLL_ORBIT_END = 0.58;
+const SCROLL_ENTRY_END = 0;
+const SCROLL_ORBIT_END = 0.72;
 const SCROLL_ROOFTOP_END = 1;
 /** Show rooftop entry CTA only on the last ~2.5% of scroll (roof fully revealed). */
 const ROOFTOP_ENTRY_SHOW_START = SCROLL_ROOFTOP_END - 0.025;
+/** Playhead catch-up — higher = snappier scroll follow, lower = more cinematic lag. */
+const PLAYHEAD_SMOOTHING = 0.16;
+const PLAYHEAD_SMOOTHING_END = 0.24;
+/** Preserve the established facade/camera choreography when using the optimized full-building GLB. */
+const OPT_MODEL_ROTATION_COMPENSATION = 1.6876762151311447;
 const ROOFTOP_END_FIT_MARGIN = 0.72;
 const ROOFTOP_END_DISTANCE_SCALE = 0.96;
 
@@ -97,6 +102,8 @@ function initBuildingScroll() {
 
   const reduceMotionMq = window.matchMedia('(prefers-reduced-motion: reduce)');
   const mobileMq = window.matchMedia('(max-width: 767px)');
+  rooftopEntryBtn?.classList.remove('is-visible');
+  rooftopEntryBtn?.setAttribute('aria-hidden', 'true');
 
   if (reduceMotionMq.matches) {
     section.classList.add('is-reduced-motion');
@@ -169,6 +176,7 @@ function initBuildingScroll() {
   const camPos = { x: 0, y: 0, z: 0 };
   const camLook = { x: 0, y: 0, z: 0 };
   const orbitRig = { azimuth: 0, elevation: 0, radius: 0 };
+  const sizeRig = { progress: 0 };
   const orbitScratch = new THREE.Vector3();
   const framingPoint = new THREE.Vector3();
   const framingBounds = [
@@ -212,11 +220,14 @@ function initBuildingScroll() {
   function getBuildingFramingRegion(stickyRect) {
     const leftCol = sideStoryEl?.querySelector('.building-scroll-side-col--left');
     const rightCol = sideStoryEl?.querySelector('.building-scroll-side-col--right');
+    const header = sideStoryEl?.querySelector('.building-scroll-side-header');
     if (!leftCol || !rightCol) return null;
 
     const leftRect = leftCol.getBoundingClientRect();
     const rightRect = rightCol.getBoundingClientRect();
-    const top = Math.min(leftRect.top, rightRect.top) - stickyRect.top;
+    const columnTop = Math.min(leftRect.top, rightRect.top) - stickyRect.top;
+    const headerBottom = header ? header.getBoundingClientRect().bottom - stickyRect.top + 28 : columnTop;
+    const top = Math.min(columnTop, headerBottom);
     const bottom = Math.max(leftRect.bottom, rightRect.bottom) - stickyRect.top;
     const left = leftRect.right - stickyRect.left;
     const right = rightRect.left - stickyRect.left;
@@ -327,14 +338,24 @@ function initBuildingScroll() {
     return { shiftX: totalShiftX, shiftY: totalShiftY };
   }
 
+  function getBuildingViewOffsetWeight() {
+    const progress = playhead.progress ?? targetProgress;
+    if (progress <= SCROLL_ORBIT_END) return 1;
+    const fadeEnd = ROOFTOP_ENTRY_SHOW_START;
+    if (progress >= fadeEnd) return 0;
+
+    const t = (progress - SCROLL_ORBIT_END) / (fadeEnd - SCROLL_ORBIT_END);
+    return 0.5 + Math.cos(t * Math.PI) * 0.5;
+  }
+
   function applyBuildingViewOffset() {
     if (camera.view) camera.clearViewOffset();
 
     if (rooftopMode?.isOpen?.() || !sideStoryEl || !sticky || !buildingScene || reduceMotionMq.matches) return;
     if (window.matchMedia('(max-width: 1100px)').matches) return;
 
-    const opacity = parseFloat(sideStoryEl.style.opacity || '0');
-    if (opacity < 0.04) return;
+    const opacity = getBuildingViewOffsetWeight();
+    if (opacity < 0.001) return;
 
     const stickyRect = sticky.getBoundingClientRect();
     if (!stickyRect.width || !stickyRect.height) return;
@@ -430,10 +451,10 @@ function initBuildingScroll() {
     renderer.render(scene, camera);
   }
 
-  function updateRooftopEntryButton() {
+  function updateRooftopEntryButton(scrollProgress) {
     if (!rooftopEntryBtn) return;
-    const progress = scrollTriggerInstance?.progress ?? targetProgress;
-    const active = scrollTriggerInstance?.isActive ?? sectionVisible;
+    const progress = scrollProgress ?? playhead.progress;
+    const active = progress > 0.001 && (scrollTriggerInstance?.isActive ?? sectionVisible);
     const show =
       active &&
       !reduceMotionMq.matches &&
@@ -442,20 +463,58 @@ function initBuildingScroll() {
     rooftopEntryBtn.setAttribute('aria-hidden', show ? 'false' : 'true');
   }
 
+  function resetToScrollStart() {
+    targetProgress = 0;
+    playhead.progress = 0;
+    sizeRig.progress = 0;
+    if (timeline) {
+      timeline.pause(0);
+    }
+    if (state.startAzimuth !== undefined) {
+      orbitRig.azimuth = state.startAzimuth;
+      orbitRig.elevation = state.startElevation;
+      orbitRig.radius = state.startRadius;
+      syncCameraFromOrbit();
+    }
+    camera.fov = state.startFov;
+    camera.updateProjectionMatrix();
+    if (state.lightBase) {
+      lightRig.keyX = state.lightBase.key.x;
+      lightRig.keyY = state.lightBase.key.y;
+      lightRig.keyZ = state.lightBase.key.z;
+      lightRig.fillX = state.lightBase.fill.x;
+      lightRig.fillY = state.lightBase.fill.y;
+      lightRig.fillZ = state.lightBase.fill.z;
+      lightRig.rimX = state.lightBase.rim.x;
+      lightRig.rimY = state.lightBase.rim.y;
+      lightRig.rimZ = state.lightBase.rim.z;
+    }
+    updateSideStoryUI(0);
+    updateRooftopEntryButton(0);
+    renderScene();
+  }
+
   function tickRender() {
     if (!modelReady) return;
+
     if (rooftopMode?.isOpen()) {
       renderScene();
       return;
     }
-    const active = scrollTriggerInstance?.isActive ?? sectionVisible;
-    if (!active) return;
-    if (scrollTriggerInstance) {
-      targetProgress = scrollTriggerInstance.progress;
-      playhead.progress = targetProgress;
-      rooftopMode?.maybePrefetch(targetProgress);
+
+    if (!sectionVisible) return;
+
+    if (timeline && !reduceMotionMq.matches) {
+      const delta = targetProgress - playhead.progress;
+      const smoothing = targetProgress > 0.9 ? PLAYHEAD_SMOOTHING_END : PLAYHEAD_SMOOTHING;
+      playhead.progress += delta * smoothing;
+      if (Math.abs(delta) < 0.0004) playhead.progress = targetProgress;
+      timeline.progress(playhead.progress);
+      updateSideStoryUI(playhead.progress);
+      rooftopMode?.maybePrefetch(playhead.progress);
     }
-    updateRooftopEntryButton();
+
+    updateRooftopEntryButton(playhead.progress);
     renderScene();
   }
 
@@ -475,6 +534,24 @@ function initBuildingScroll() {
       target.z + radius * cosEl * Math.cos(azimuth)
     );
     return out;
+  }
+
+  function getFovScale(fov) {
+    return Math.tan((fov * Math.PI) / 360);
+  }
+
+  function applySmoothSizeProgress(progress) {
+    if (!state.sizeIncrementFactor) return;
+
+    const easedProgress = gsap.parseEase('sine.inOut')(progress);
+    const apparentScale = 1 + (state.sizeIncrementFactor - 1) * easedProgress;
+    const fov = state.startFov + (state.midFov - state.startFov) * easedProgress;
+    const startFrustum = state.startRadius * getFovScale(state.startFov);
+
+    orbitRig.radius = startFrustum / (apparentScale * getFovScale(fov));
+    camera.fov = fov;
+    camera.updateProjectionMatrix();
+    syncCameraFromOrbit();
   }
 
   function prepareMaterials(object) {
@@ -747,6 +824,11 @@ function initBuildingScroll() {
   function finalizeRooftopSnap(object) {
     state.rooftopInspectFov = Math.max(29, state.endFov - 3);
     snapRooftopLongEdgeHorizontal(object, state.endFov);
+    if (modelPath.includes('.opt.glb')) {
+      object.rotation.y += OPT_MODEL_ROTATION_COMPENSATION;
+      object.updateMatrixWorld(true);
+      rebuildRoofVertexCache(object);
+    }
     state.buildingFit.finalRotationY = object.rotation.y;
 
     if (!state.roofPos) state.roofPos = new THREE.Vector3();
@@ -832,6 +914,8 @@ function initBuildingScroll() {
     state.endElevation = endElevation;
     state.startRadius = startRadius;
     state.endRadius = endRadius;
+    state.sizeIncrementFactor =
+      (startRadius * getFovScale(state.startFov)) / (endRadius * getFovScale(state.midFov));
 
     orbitRig.azimuth = startAzimuth;
     orbitRig.elevation = startElevation;
@@ -941,27 +1025,75 @@ function initBuildingScroll() {
         trigger: section,
         start: 'top top',
         end: 'bottom bottom',
-        pin: sticky,
-        scrub: true,
-        anticipatePin: 1,
+        scrub: false,
         invalidateOnRefresh: true,
         onToggle: (self) => {
           sectionVisible = self.isActive;
-          if (sectionVisible) renderScene();
+          if (self.progress <= 0.001) {
+            resetToScrollStart();
+            return;
+          }
+          updateRooftopEntryButton(self.progress);
+          if (sectionVisible) {
+            targetProgress = self.progress;
+            renderScene();
+          }
         },
-        onEnter: renderScene,
-        onEnterBack: renderScene,
-        onRefresh: (self) => {
-          sectionVisible = self.isActive;
+        onEnter: (self) => {
+          sectionVisible = true;
+          if (self.progress <= 0.001) {
+            resetToScrollStart();
+            return;
+          }
           targetProgress = self.progress;
           playhead.progress = self.progress;
-          updateRooftopEntryButton();
+          updateRooftopEntryButton(self.progress);
+          renderScene();
+        },
+        onEnterBack: (self) => {
+          sectionVisible = true;
+          if (self.progress <= 0.001) {
+            resetToScrollStart();
+            return;
+          }
+          targetProgress = self.progress;
+          playhead.progress = self.progress;
+          updateRooftopEntryButton(self.progress);
+          renderScene();
+        },
+        onLeave: (self) => {
+          sectionVisible = false;
+          targetProgress = self.progress;
+          playhead.progress = self.progress;
+          if (timeline) timeline.progress(self.progress);
+          updateSideStoryUI(self.progress);
+          updateRooftopEntryButton(self.progress);
+          renderScene();
+        },
+        onLeaveBack: (self) => {
+          sectionVisible = false;
+          resetToScrollStart();
+        },
+        onRefresh: (self) => {
+          sectionVisible = self.isActive;
+          if (self.progress <= 0.001) {
+            resetToScrollStart();
+            return;
+          }
+          targetProgress = self.progress;
+          playhead.progress = self.progress;
+          if (timeline) timeline.progress(self.progress);
+          updateSideStoryUI(self.progress);
+          updateRooftopEntryButton(self.progress);
           renderScene();
         },
         onUpdate: (self) => {
           targetProgress = self.progress;
-          playhead.progress = self.progress;
-          rooftopMode?.maybePrefetch(self.progress);
+          if (self.progress <= 0.001) {
+            resetToScrollStart();
+            return;
+          }
+          updateRooftopEntryButton(self.progress);
         },
       },
     });
@@ -975,34 +1107,21 @@ function initBuildingScroll() {
       .to(
         orbitRig,
         {
-          azimuth: state.entryAzimuth,
-          elevation: state.entryElevation,
-          radius: state.entryRadius,
-          duration: SCROLL_ENTRY_END,
-          ease: 'power1.inOut',
-          onUpdate: syncCameraFromOrbit,
-        },
-        0
-      )
-      .to(
-        orbitRig,
-        {
           azimuth: state.endAzimuth,
           elevation: state.endElevation,
-          radius: state.endRadius,
           duration: orbitDuration,
-          ease: 'power2.out',
+          ease: 'sine.inOut',
           onUpdate: syncCameraFromOrbit,
         },
         SCROLL_ENTRY_END
       )
       .to(
-        camera,
+        sizeRig,
         {
-          fov: state.midFov,
+          progress: 1,
           duration: orbitDuration,
-          ease: 'power1.inOut',
-          onUpdate: () => camera.updateProjectionMatrix(),
+          ease: 'none',
+          onUpdate: () => applySmoothSizeProgress(sizeRig.progress),
         },
         SCROLL_ENTRY_END
       )
@@ -1015,7 +1134,7 @@ function initBuildingScroll() {
           fillX: state.lightBase.fill.x - 0.5,
           fillY: state.lightBase.fill.y + 0.25,
           duration: orbitDuration,
-          ease: 'power1.inOut',
+          ease: 'sine.inOut',
         },
         SCROLL_ENTRY_END
       )
@@ -1027,7 +1146,7 @@ function initBuildingScroll() {
           y: state.roofPos.y,
           z: state.roofPos.z,
           duration: rooftopDuration,
-          ease: 'power2.inOut',
+          ease: 'sine.inOut',
           onStart: () => {
             orbitRig.azimuth = state.endAzimuth;
             orbitRig.elevation = state.endElevation;
@@ -1044,7 +1163,7 @@ function initBuildingScroll() {
           y: state.roofLook.y,
           z: state.roofLook.z,
           duration: rooftopDuration,
-          ease: 'power2.inOut',
+          ease: 'sine.inOut',
         },
         SCROLL_ORBIT_END
       )
@@ -1053,7 +1172,7 @@ function initBuildingScroll() {
         {
           fov: state.rooftopInspectFov ?? state.endFov - 3,
           duration: rooftopDuration,
-          ease: 'power2.inOut',
+          ease: 'sine.inOut',
           onUpdate: () => camera.updateProjectionMatrix(),
         },
         SCROLL_ORBIT_END
@@ -1068,16 +1187,10 @@ function initBuildingScroll() {
           fillY: state.lightBase.fill.y + 0.55,
           rimY: state.lightBase.rim.y + 0.8,
           duration: rooftopDuration,
-          ease: 'power2.inOut',
+          ease: 'sine.inOut',
         },
         SCROLL_ORBIT_END
       );
-
-    timeline.eventCallback('onUpdate', () => {
-      updateApproachUI();
-      updateSideStoryUI();
-      updateRooftopEntryButton();
-    });
 
     syncTimeline(timeline);
     scrollTriggerInstance = timeline.scrollTrigger;
@@ -1125,6 +1238,7 @@ function initBuildingScroll() {
       buildingScene = cloneSceneFromGltf(gltf);
       modelRoot.add(buildingScene);
       fitModelCore(buildingScene);
+      finalizeRooftopSnap(buildingScene);
       modelReady = true;
       invalidateFramingOffset();
       showStatus('', 'hidden');
@@ -1132,8 +1246,13 @@ function initBuildingScroll() {
       const finishSetup = () => {
         setupScrollAnimation();
         ScrollTrigger.refresh();
+        if (scrollTriggerInstance && timeline) {
+          targetProgress = scrollTriggerInstance.progress;
+          playhead.progress = targetProgress;
+          timeline.progress(targetProgress);
+        }
         if (window.lucide?.createIcons) window.lucide.createIcons();
-        updateSideStoryUI();
+        updateSideStoryUI(playhead.progress);
         renderScene();
       };
 
@@ -1145,16 +1264,6 @@ function initBuildingScroll() {
       } else {
         finishSetup();
       }
-
-      const scheduleRoofSnap = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 120));
-      scheduleRoofSnap(() => {
-        if (disposed || !buildingScene) return;
-        finalizeRooftopSnap(buildingScene);
-        invalidateFramingOffset();
-        setupScrollAnimation();
-        ScrollTrigger.refresh();
-        renderScene();
-      });
     } catch (error) {
       console.error('Building scene setup failed:', error);
       showStatus('3D scene failed to initialize. Check the browser console for details.', 'error');
@@ -1172,6 +1281,7 @@ function initBuildingScroll() {
   showStatus('Loading 3D building…');
   renderScene();
   gsap.ticker.add(tickRender);
+  ScrollTrigger.refresh();
 
   rooftopMode = createBuildingRooftopMode({
     scene,
