@@ -456,6 +456,14 @@ export function fitBuildingForRooftopInspect(building, { mobile = false, endFov 
   return { buildingFit, roofPos, roofLook, inspectFov, cacheRef };
 }
 
+/** Pan a model in screen space while keeping the inspect camera fixed. */
+export function panObjectScreenDelta(object, roofPos, roofLook, inspectFov, aspect, ndcDx, ndcDy) {
+  const alignCam = createRooftopAlignCamera(roofPos, roofLook, inspectFov, aspect);
+  const pivot = getObjectPivot(object);
+  object.position.add(ndcOffsetToWorldDelta(ndcDx, ndcDy, pivot, alignCam));
+  object.updateMatrixWorld(true);
+}
+
 export function alignRoofOnlyToBuildingInspect(
   roofOnly,
   building,

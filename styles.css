@@ -353,7 +353,7 @@ html {
 .building-scroll-section {
   position: relative;
   width: 100%;
-  height: 380vh;
+  height: 220vh;
   background: linear-gradient(180deg, #dce6ee 0%, #eef2f5 46%, #f7f8f8 100%);
 }
 
@@ -624,7 +624,7 @@ html {
 
 @media (min-width: 768px) {
   .building-scroll-section {
-    height: 380vh;
+    height: 220vh;
   }
 
   .building-scroll-overlay {
@@ -686,22 +686,38 @@ html {
   color: #ffffff;
 }
 
+.building-scroll-canvas.is-rooftop-mode,
+.building-scroll-sticky.is-rooftop-mode {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+}
+
 .rooftop-detail-section {
   position: fixed;
   inset: 0;
   z-index: 60;
   height: 100vh;
   height: 100dvh;
-  background: #f7f8f8;
+  background: transparent;
+  pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  pointer-events: none;
   transition: opacity 0.16s ease, visibility 0.16s ease;
 }
 
 .rooftop-detail-section.is-open {
   opacity: 1;
   visibility: visible;
+  pointer-events: none;
+}
+
+.rooftop-detail-section.is-open .rooftop-detail-back-link,
+.rooftop-detail-section.is-open .rooftop-detail-controls,
+.rooftop-detail-section.is-open .rooftop-roof-legend.is-visible {
   pointer-events: auto;
 }
 
@@ -714,6 +730,45 @@ body.is-rooftop-detail-open {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  pointer-events: none;
+}
+
+.rooftop-detail-sticky > * {
+  pointer-events: none;
+}
+
+.rooftop-detail-controls {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 18;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  max-width: min(100% - 2rem, 20rem);
+}
+
+.rooftop-detail-reset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(0, 55, 90, 0.14);
+  box-shadow: 0 6px 18px rgba(0, 55, 90, 0.1);
+  color: #00375a;
+  font-size: 0.625rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.rooftop-detail-reset-btn:hover {
+  background: #00375a;
+  color: #ffffff;
 }
 
 .rooftop-detail-back-link {

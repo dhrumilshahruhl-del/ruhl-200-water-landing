@@ -735,9 +735,10 @@ function leaderAttachFromLabel(labelX, labelY, cardSize) {
   };
 }
 
-export function createRooftopLabels({ host, camera, getRoofOnly, getAlpha }) {
+export function createRooftopLabels({ host, projectionHost, camera, getRoofOnly, getAlpha }) {
   const layoutEditingEnabled = ROOF_LABEL_LAYOUT_EDITING_ENABLED;
   const flowEditingEnabled = ROOF_FLOW_LAYOUT_EDITING_ENABLED;
+  const rectHost = projectionHost ?? host;
 
   const leaderSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   leaderSvg.setAttribute('class', 'rooftop-label-leaders');
@@ -974,7 +975,7 @@ export function createRooftopLabels({ host, camera, getRoofOnly, getAlpha }) {
     if (button.dataset.flowAction === 'copy') copyFlowLayoutToClipboard();
     if (button.dataset.flowAction === 'seed') {
       const roofOnly = getRoofOnly();
-      const rect = host.getBoundingClientRect();
+      const rect = rectHost.getBoundingClientRect();
       if (!roofOnly || !rect.width) return;
       seedFlowLayoutFromAuto(buildAnchorScreenCache(roofOnly, rect), roofOnly);
       update();
@@ -1265,7 +1266,7 @@ export function createRooftopLabels({ host, camera, getRoofOnly, getAlpha }) {
   }
 
   function hostPointFromClient(clientX, clientY) {
-    const rect = host.getBoundingClientRect();
+    const rect = rectHost.getBoundingClientRect();
     return {
       x: clientX - rect.left,
       y: clientY - rect.top,
@@ -1301,7 +1302,7 @@ export function createRooftopLabels({ host, camera, getRoofOnly, getAlpha }) {
 
   function beginDrag(type, id, anchorIndex, clientX, clientY, pointerId) {
     const roofOnly = getRoofOnly();
-    const rect = host.getBoundingClientRect();
+    const rect = rectHost.getBoundingClientRect();
     const start = hostPointFromClient(clientX, clientY);
 
     if (type === 'flow-waypoint') {
@@ -1435,7 +1436,7 @@ export function createRooftopLabels({ host, camera, getRoofOnly, getAlpha }) {
     if (!flowEditingEnabled || !flowEditing) return;
 
     const roofOnly = getRoofOnly();
-    const rect = host.getBoundingClientRect();
+    const rect = rectHost.getBoundingClientRect();
     if (!roofOnly || !rect.width) return;
 
     const clickPoint = hostPointFromClient(event.clientX, event.clientY);
@@ -1472,7 +1473,7 @@ export function createRooftopLabels({ host, camera, getRoofOnly, getAlpha }) {
     if (!dragState || event.pointerId !== dragState.pointerId) return;
 
     const roofOnly = getRoofOnly();
-    const rect = host.getBoundingClientRect();
+    const rect = rectHost.getBoundingClientRect();
     const point = hostPointFromClient(event.clientX, event.clientY);
     const dx = point.x - dragState.startX;
     const dy = point.y - dragState.startY;
@@ -1542,7 +1543,7 @@ export function createRooftopLabels({ host, camera, getRoofOnly, getAlpha }) {
     setVisible(show, alpha);
     if (!show) return;
 
-    const rect = host.getBoundingClientRect();
+    const rect = rectHost.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
 
     roofOnly.updateMatrixWorld(true);
@@ -1674,12 +1675,36 @@ export function createRooftopLabels({ host, camera, getRoofOnly, getAlpha }) {
       copyLayout: copyFlowLayoutToClipboard,
       seedFromAuto: () => {
         const roofOnly = getRoofOnly();
-        const rect = host.getBoundingClientRect();
+        const rect = rectHost.getBoundingClientRect();
         if (!roofOnly || !rect.width) return;
         seedFlowLayoutFromAuto(buildAnchorScreenCache(roofOnly, rect), roofOnly);
         update();
       },
     };
+  }
+
+  function getLabelGutterCenterOffset() {
+    const rect = rectHost.getBoundingClientRect();
+    if (!rect.width) return null;
+
+    let leftExtent = 0;
+    let rightExtent = 0;
+
+    calloutMap.forEach(({ callout }) => {
+      if (!callout.classList.contains('is-visible')) return;
+      const box = callout.getBoundingClientRect();
+      const centerX = (box.left + box.right) * 0.5 - rect.left;
+      if (centerX < rect.width * 0.42) {
+        leftExtent = Math.max(leftExtent, box.right - rect.left);
+      } else if (centerX > rect.width * 0.58) {
+        rightExtent = Math.max(rightExtent, rect.right - box.left);
+      }
+    });
+
+    if (leftExtent <= 0 && rightExtent <= 0) return null;
+
+    const contentCenterX = (leftExtent + (rect.width - rightExtent)) * 0.5;
+    return contentCenterX - rect.width * 0.5;
   }
 
   return {
@@ -1688,5 +1713,6 @@ export function createRooftopLabels({ host, camera, getRoofOnly, getAlpha }) {
     dispose,
     getLayout: getLayoutSnapshot,
     getFlowLayout: getFlowLayoutSnapshot,
+    getLabelGutterCenterOffset,
   };
 }

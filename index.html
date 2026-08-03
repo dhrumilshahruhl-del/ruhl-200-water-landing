@@ -12,6 +12,16 @@
     />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="preload" href="./logos/200_water.glb" as="fetch" crossorigin />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./model-preload.js"></script>
   </head>
   <body class="antialiased">
     <main class="min-h-screen bg-[#f7f8f8] text-[#0b1724]">
@@ -92,7 +102,7 @@
       >
         <div class="building-scroll-sticky">
           <canvas id="building-scroll-canvas" class="building-scroll-canvas" aria-hidden="true"></canvas>
-          <p id="building-scroll-status" class="building-scroll-status" role="status">Loading 3D model…</p>
+          <p id="building-scroll-status" class="building-scroll-status is-hidden" role="status" aria-live="polite"></p>
           <div class="building-scroll-overlay is-disabled" aria-hidden="true">
             <p class="building-scroll-eyebrow">200 Water Street</p>
             <p class="building-scroll-title">Discover the building</p>
@@ -728,9 +738,12 @@
       hidden
     >
       <div class="rooftop-detail-sticky">
-        <canvas id="rooftop-detail-canvas" class="building-scroll-canvas" aria-hidden="true"></canvas>
-        <p id="rooftop-detail-status" class="building-scroll-status" role="status">Loading rooftop model…</p>
         <button type="button" class="rooftop-detail-back-link">← Back to building tour</button>
+        <div class="rooftop-detail-controls">
+          <button type="button" class="rooftop-detail-reset-btn" hidden aria-label="Reset rooftop view">
+            Reset view
+          </button>
+        </div>
       </div>
     </section>
 
@@ -752,16 +765,7 @@
         });
       }
     </script>
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
-        }
-      }
-    </script>
     <script type="module" src="./building-scroll.js"></script>
-    <script type="module" src="./rooftop-section.js"></script>
     <script defer src="./main.js"></script>
   </body>
 </html>
