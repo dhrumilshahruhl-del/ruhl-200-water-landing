@@ -660,19 +660,20 @@ html {
 
 .building-rooftop-entry-btn {
   position: fixed;
-  top: 1rem;
-  right: 1rem;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
   z-index: 40;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.55rem 0.95rem;
+  min-height: 2.875rem;
+  padding: 0.75rem 1.15rem;
   border-radius: 999px;
-  border: 1px solid rgba(0, 55, 90, 0.18);
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 8px 24px rgba(0, 55, 90, 0.14);
-  color: #00375a;
-  font-size: 0.6875rem;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: #00375a;
+  box-shadow: 0 14px 36px rgba(0, 55, 90, 0.24), 0 0 0 6px rgba(255, 255, 255, 0.46);
+  color: #ffffff;
+  font-size: 0.75rem;
   font-weight: 900;
   letter-spacing: 0.02em;
   text-decoration: none;
@@ -681,8 +682,8 @@ html {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(-0.35rem);
-  transition: opacity 0.18s ease, visibility 0.18s ease, transform 0.18s ease;
+  transform: translateY(0.6rem);
+  transition: opacity 0.22s ease, visibility 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 .building-rooftop-entry-btn.is-visible {
@@ -692,9 +693,19 @@ html {
   transform: translateY(0);
 }
 
+.building-rooftop-entry-btn.is-docked {
+  position: absolute;
+}
+
 .building-rooftop-entry-btn:hover {
-  background: #00375a;
+  background: #005f8f;
+  box-shadow: 0 18px 42px rgba(0, 55, 90, 0.3), 0 0 0 7px rgba(255, 255, 255, 0.54);
   color: #ffffff;
+}
+
+.building-rooftop-entry-btn:focus-visible {
+  outline: 3px solid rgba(0, 95, 143, 0.32);
+  outline-offset: 4px;
 }
 
 .building-scroll-canvas.is-rooftop-mode,

@@ -5,8 +5,8 @@ import { createBuildingRooftopMode } from './building-rooftop-mode.js';
 const SCROLL_ENTRY_END = 0;
 const SCROLL_ORBIT_END = 0.68;
 const SCROLL_ROOFTOP_END = 1;
-/** Show rooftop entry CTA only on the last ~2.5% of scroll (roof fully revealed). */
-const ROOFTOP_ENTRY_SHOW_START = SCROLL_ROOFTOP_END - 0.025;
+/** Show rooftop entry CTA through the rooftop approach while the building section is in view. */
+const ROOFTOP_ENTRY_SHOW_START = 0.88;
 const BUILDING_SCALE_TOP_GUARD_PX = 110;
 /** Playhead catch-up — higher = snappier scroll follow, lower = more cinematic lag. */
 const PLAYHEAD_SMOOTHING = 0.16;
@@ -468,12 +468,14 @@ function initBuildingScroll() {
   function updateRooftopEntryButton(scrollProgress) {
     if (!rooftopEntryBtn) return;
     const progress = scrollProgress ?? playhead.progress;
-    const active = progress > 0.001 && (scrollTriggerInstance?.isActive ?? sectionVisible);
-    const show =
-      active &&
-      !reduceMotionMq.matches &&
-      progress >= ROOFTOP_ENTRY_SHOW_START;
+    const sectionRect = section.getBoundingClientRect();
+    const sectionInView = sectionRect.bottom > 0 && sectionRect.top < window.innerHeight;
+    const reachedEntryPoint = progress >= ROOFTOP_ENTRY_SHOW_START;
+    const docked = reachedEntryPoint && sectionRect.bottom <= window.innerHeight && sectionRect.bottom > 0;
+    const active = progress > 0.001 && sectionInView && ((scrollTriggerInstance?.isActive ?? sectionVisible) || docked);
+    const show = active && !reduceMotionMq.matches && reachedEntryPoint;
     rooftopEntryBtn.classList.toggle('is-visible', show);
+    rooftopEntryBtn.classList.toggle('is-docked', show && docked);
     rooftopEntryBtn.setAttribute('aria-hidden', show ? 'false' : 'true');
   }
 
