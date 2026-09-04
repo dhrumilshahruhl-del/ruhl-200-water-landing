@@ -117,7 +117,7 @@ html {
     min-width: 0 !important;
     width: 100%;
     height: auto !important;
-    aspect-ratio: 980 / 620;
+    aspect-ratio: 1200 / 585;
     min-height: 280px;
   }
 
@@ -236,13 +236,17 @@ html {
   }
 
   /* CO₂ + waterfall: native size + horizontal scroll for readability */
-  .co2-chart-wrap,
   .waterfall-chart-wrap {
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: #94a3b8 #e2e8f0;
+    contain: none;
+  }
+
+  .co2-chart-wrap {
+    overflow: hidden;
     contain: none;
   }
 
@@ -264,11 +268,11 @@ html {
   }
 
   #co2-chart {
-    min-width: 490px !important;
-    width: 490px;
-    height: 310px !important;
-    aspect-ratio: auto;
-    min-height: 310px;
+    min-width: 0 !important;
+    width: 100%;
+    height: auto !important;
+    aspect-ratio: 1200 / 585;
+    min-height: 280px;
   }
 
   .waterfall-chart-scale {

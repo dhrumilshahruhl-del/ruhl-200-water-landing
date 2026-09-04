@@ -294,10 +294,10 @@ document.addEventListener('DOMContentLoaded', () => {
       ll97Current: 3658,
     };
 
-    const vbW = 980;
-    const vbH = 620;
+    const vbW = 1200;
+    const vbH = 585;
     const padL = 20;
-    const padR = 20;
+    const padR = 0;
     const trackX = padL;
     const trackW = vbW - padL - padR;
 
@@ -306,13 +306,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const y1Title = 30;
     const y1Sub = 50;
 
-    const y1Label = 88;
-    const y1Track = 132;
-    const y1Axis = 182;
+    const y1Label = 116;
+    const y1Track = 160;
+    const y1Axis = 210;
 
-    const y2Label = 340;
-    const y2Track = 394;
-    const y2Axis = 454;
+    const y2Label = 368;
+    const y2Track = 422;
+    const y2Axis = 482;
 
     const trackH = 16;
     const trackR = 8;
