@@ -1,0 +1,11 @@
+.git
+.github
+.cursor
+.agents
+node_modules
+scripts
+README.md
+CHAT_HANDOFF.md
+LICENSE
+building-scroll-recipe.md
+wrangler.jsonc
