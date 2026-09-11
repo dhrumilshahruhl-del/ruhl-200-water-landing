@@ -8,6 +8,40 @@ html {
   scroll-behavior: smooth;
 }
 
+.ruhl-back-link {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.5rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 55, 90, 0.14);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 28px rgba(0, 55, 90, 0.12);
+  color: #00375a;
+  font-size: 0.75rem;
+  font-weight: 900;
+  line-height: 1;
+  text-decoration: none;
+  transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.ruhl-back-link:hover {
+  background: #00375a;
+  color: #ffffff;
+  box-shadow: 0 14px 34px rgba(0, 55, 90, 0.2);
+  transform: translateY(-1px);
+}
+
+.ruhl-back-link:focus-visible {
+  outline: 3px solid rgba(252, 190, 0, 0.55);
+  outline-offset: 3px;
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;
