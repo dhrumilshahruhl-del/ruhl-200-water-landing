@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { buildingGltfPromise, cloneSceneFromGltf } from './model-preload.js';
-import { createBuildingRooftopMode } from './building-rooftop-mode.js';
 
 const SCROLL_ENTRY_END = 0;
 const SCROLL_ORBIT_END = 0.68;
@@ -511,6 +510,7 @@ function initBuildingScroll() {
   }
 
   function tickRender() {
+    if (document.documentElement.hasAttribute('data-showroom-open')) return;
     if (!modelReady) return;
 
     if (rooftopMode?.isOpen()) {
@@ -1201,7 +1201,12 @@ function initBuildingScroll() {
     showStatus('', 'hidden');
   }
 
+  let deferredReducedMotion = false;
   function handleReducedMotionChange(event) {
+    if (document.documentElement.hasAttribute('data-showroom-open')) {
+      deferredReducedMotion = true;
+      return;
+    }
     if (event.matches) {
       section.classList.add('is-reduced-motion');
       scrollTriggerInstance?.kill();
@@ -1282,17 +1287,8 @@ function initBuildingScroll() {
   gsap.ticker.add(tickRender);
   ScrollTrigger.refresh();
 
-  rooftopMode = createBuildingRooftopMode({
-    scene,
-    camera,
-    canvas,
-    sticky,
-    modelRoot,
-    getBuildingScene: () => buildingScene,
-    getInspectState,
-    onResizeRenderer: resizeRenderer,
-    mobileMq,
-  });
+  // The standalone showroom integration owns the rooftop CTA.
+  // Keep the parent scroll tour independent of the retired rooftop controller.
 
   window.addEventListener('resize', () => {
     if (!resizeRenderer()) return;
@@ -1312,6 +1308,23 @@ function initBuildingScroll() {
     resizeObserver.observe(sticky);
   }
 
+  function onShowroomClosed() {
+    if (deferredReducedMotion) {
+      deferredReducedMotion = false;
+      if (section.classList.contains('is-reduced-motion') !== reduceMotionMq.matches) {
+        handleReducedMotionChange(reduceMotionMq);
+      }
+    }
+    if (scrollTriggerInstance) {
+      scrollTriggerInstance.update();
+      targetProgress = scrollTriggerInstance.progress;
+      playhead.progress = targetProgress;
+      timeline?.progress(targetProgress);
+      updateRooftopEntryButton(targetProgress);
+      renderScene();
+    }
+  }
+  window.addEventListener('rooftop-showroom-closed', onShowroomClosed);
   reduceMotionMq.addEventListener('change', handleReducedMotionChange);
 
   buildingGltfPromise.then(onModelLoaded).catch(onModelError);
@@ -1320,6 +1333,7 @@ function initBuildingScroll() {
     'beforeunload',
     () => {
       disposed = true;
+      window.removeEventListener('rooftop-showroom-closed', onShowroomClosed);
       rooftopMode?.dispose();
       gsap.ticker.remove(tickRender);
       resizeObserver?.disconnect();

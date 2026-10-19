@@ -1,0 +1,54 @@
+
+    <main id="rooftop-showroom" class="showroom" data-building-model="./virtual-showroom/assets/models/200-water-building.opt.glb">
+      <h1 class="showroom__sr-only">200 Water Street Rooftop Virtual Showroom</h1>
+      <canvas class="showroom__canvas" tabindex="0" aria-label="Interactive 200 Water Street building model" aria-describedby="showroom-keyboard-help"></canvas>
+      <p id="showroom-keyboard-help" class="showroom__sr-only">Keyboard controls: use the arrow keys to rotate the model, plus or equals to zoom in, minus to zoom out, and R to reset the view. Tab to Explore System Flow to use the guided six-step walkthrough with buttons. Press Escape to exit System Flow.</p>
+      <div class="showroom__hud">
+        <div class="showroom__toolbar" role="group" aria-label="Showroom controls" hidden>
+          <button type="button" data-action="reset">Reset view</button>
+         <!-- <button type="button" data-action="copy-view">Copy view</button>-->
+        </div>
+      </div>
+      <div class="showroom__status" role="status" aria-live="polite">
+        <span class="showroom__status-message">Loading Virtual Showroom...</span>
+        <progress class="showroom__progress" max="100" value="0" aria-label="Loading virtual showroom"></progress>
+        <span class="showroom__progress-value" aria-hidden="true">0%</span>
+      </div>
+      <dialog id="legal-credits" class="equipment-modal legal-modal" aria-labelledby="legal-credits-title">
+        <div class="equipment-modal__content">
+          <button class="equipment-modal__close" type="button" aria-label="Close Legal &amp; Credits" autofocus>&times;</button>
+          <h2 id="legal-credits-title">Legal &amp; Credits</h2>
+          <pre class="legal-modal__notices" tabindex="0">Third-Party Notices
+
+three.js 0.170.0, including the OrbitControls, GLTFLoader, RGBELoader,
+MeshoptDecoder, and BufferGeometryUtils modules
+Source: https://github.com/mrdoob/three.js/tree/r170
+License: MIT
+
+The MIT License
+
+Copyright © 2010-2024 three.js authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+</pre>
+        </div>
+      </dialog>
+    </main>
+    <button class="showroom__legal-link" type="button" aria-haspopup="dialog" aria-controls="legal-credits">Legal &amp; Credits</button>
+    

@@ -1,6 +1,6 @@
 # RUHL / Rockrose - 200 Water Street Landing Page
 
-Static **HTML / CSS / JavaScript** landing page for the 200 Water Street ventilation retrofit project. It runs with **no build step** and is prepared to be served from:
+Static **HTML / CSS / JavaScript** landing page for the 200 Water Street ventilation retrofit project. The source can be previewed directly; production is packaged with `npm run build` into `dist/`. It is prepared to be served from:
 
 ```text
 https://ruhl.org/200-water/
@@ -28,11 +28,10 @@ The 3D model section requires HTTP(S); opening `index.html` directly from the fi
 | `styles.css` | Custom fonts, scroll behavior, `.reveal` animation |
 | `main.js` | Scroll reveal (`IntersectionObserver`) + Lucide icon wiring |
 | `building-scroll.js` | GSAP ScrollTrigger + Three.js 3D building section |
-| `building-rooftop-mode.js` | Rooftop detail overlay interaction |
+| `showroom-integration.js` | Lazy CTA binding, modal, page scroll/focus restoration |
+| `virtual-showroom/` | Isolated showroom runtime, local Three.js r170, assets, notices |
 | `model-preload.js` | Shared GLB preload/cache helper |
-| `rooftop-camera.js` | Rooftop camera and model alignment helpers |
-| `rooftop-labels.js` | Rooftop callouts, labels, and flow overlays |
-| `rooftop-retrofit.js` | Procedural rooftop retrofit visualization helpers |
+| `scripts/build-production.mjs` | Allowlisted production packaging |
 | `logos/` | Partner images and GLB models |
 
 Third-party CDN dependencies:
@@ -44,28 +43,17 @@ Third-party CDN dependencies:
 
 ## RUHL server deployment
 
-Upload these runtime files and folders into the RUHL web server directory that maps to `/200-water/`:
+Run `npm run build`, then upload the **contents of `dist/`** into the directory mapped to `/200-water/`. Cloudflare's `wrangler.jsonc` now also serves `dist/`. No deployment is performed by the build.
 
-```text
-index.html
-styles.css
-main.js
-building-scroll.js
-building-rooftop-mode.js
-model-preload.js
-rooftop-camera.js
-rooftop-labels.js
-rooftop-retrofit.js
-logos/
-```
+Do not upload the source project wholesale. The build excludes old roof models/controllers, development scripts, audit documents, source asset kits, and node_modules. The showroom's runtime ES modules and local Three.js license remain in the artifact because the browser needs them.
 
-The server should then expose the entry page at:
+The existing ?Explore rooftop systems? CTA dynamically imports `virtual-showroom/mount.js`. The local runtime mounts inside a Shadow DOM within a native fullscreen dialog. A scoped import map keeps its Three.js r170 graph separate from the parent's existing CDN graph. All showroom downloads start after activation. Native nested equipment/legal dialogs and the original System Flow behavior remain intact.
 
-```text
-/200-water/index.html
-```
+Closing disposes the runtime, releases the WebGL context, removes transient DOM, restores page scrolling and position, and returns focus to the CTA. Escape retains its existing flow/dialog behavior before closing the outer showroom. The parent building ticker skips rendering while the showroom is open. Parent reduced-motion changes are deferred while open and reconciled when closing.
 
-The `scripts/`, `.github/`, `.agents/`, `.cursor/`, `.git/`, `node_modules/`, `CHAT_HANDOFF.md`, `building-scroll-recipe.md`, `LICENSE`, `.gitignore`, `.nojekyll`, and README files are not required for production hosting.
+Standalone runtime assets were copied from the showroom's production build. Approved flow data, impact config, camera choreography, equipment images, and city assets are preserved; integration changes cover asset URL resolution, CSS host isolation, and resource teardown. The standalone source and deployment are not edited.
+
+Run browser QA with `node scripts/showroom-integration-qa.mjs` and `node scripts/showroom-extended-qa.mjs` while serving `dist/` on port 4180. These scripts require the existing local Playwright installation, Chrome, and network access for the parent's established CDN dependencies. QA captures/results stay under `scripts/` and are excluded from production.
 
 ## Logo sizing
 

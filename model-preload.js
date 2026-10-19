@@ -32,32 +32,6 @@ export function cloneSceneFromGltf(gltf) {
   return gltf.scene.clone(true);
 }
 
-function readModelPaths() {
-  const section = document.getElementById('building-scroll');
-  const rooftop = document.getElementById('rooftop-detail');
-  return {
-    building:
-      section?.getAttribute('data-model-path') ||
-      rooftop?.getAttribute('data-building-model-path') ||
-      './logos/200_water.glb',
-    roof:
-      section?.getAttribute('data-roof-model-path') ||
-      rooftop?.getAttribute('data-roof-model-path') ||
-      './logos/200 water Roof Only.glb',
-  };
-}
-
-const paths = readModelPaths();
-
-/** Building model — needed for scroll tour (priority). */
-export const buildingGltfPromise = preloadGltf(paths.building);
-
-/** Roof-only model — deferred until explicitly requested. */
-let roofGltfPromise = null;
-
-export function loadRoofGltf() {
-  if (!roofGltfPromise) {
-    roofGltfPromise = preloadGltf(paths.roof);
-  }
-  return roofGltfPromise;
-}
+// Only the shared building tour remains. The retired roof is never preloaded.
+const modelPath = document.getElementById('building-scroll')?.getAttribute('data-model-path') || './logos/200_water.glb';
+export const buildingGltfPromise = preloadGltf(modelPath);

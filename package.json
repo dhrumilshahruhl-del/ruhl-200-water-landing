@@ -1,0 +1,1 @@
+﻿{"name":"ruhl-200-water-landing","private":true,"type":"module","scripts":{"build":"node scripts/build-production.mjs","test:integration":"node scripts/showroom-integration-qa.mjs"}}
