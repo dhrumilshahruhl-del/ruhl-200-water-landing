@@ -1,0 +1,249 @@
+{
+  "checks": [
+    {
+      "pass": true,
+      "label": "Exactly one added WebGL context 0"
+    },
+    {
+      "pass": true,
+      "label": "Showroom WebGL context released 0",
+      "detail": {
+        "activeContexts": 1,
+        "raf": 2,
+        "canvases": 1,
+        "focus": "building-rooftop-entry",
+        "entry": "building-rooftop-entry-btn is-visible",
+        "scroll": 2273,
+        "documents": 2,
+        "nodes": 1212,
+        "jsEventListeners": 40,
+        "usedSize": 14684200,
+        "totalSize": 17014784,
+        "embedderHeapUsedSize": 2963000,
+        "backingStorageSize": 22890855
+      }
+    },
+    {
+      "pass": true,
+      "label": "RAF count returns to baseline 0",
+      "detail": {
+        "baseline": 2,
+        "actual": 2
+      }
+    },
+    {
+      "pass": true,
+      "label": "Same page scroll 0"
+    },
+    {
+      "pass": true,
+      "label": "CTA receives focus 0"
+    },
+    {
+      "pass": true,
+      "label": "Exactly one added WebGL context 1"
+    },
+    {
+      "pass": true,
+      "label": "Showroom WebGL context released 1",
+      "detail": {
+        "activeContexts": 1,
+        "raf": 2,
+        "canvases": 1,
+        "focus": "building-rooftop-entry",
+        "entry": "building-rooftop-entry-btn is-visible",
+        "scroll": 2273,
+        "documents": 2,
+        "nodes": 1264,
+        "jsEventListeners": 40,
+        "usedSize": 15191028,
+        "totalSize": 17539072,
+        "embedderHeapUsedSize": 2945288,
+        "backingStorageSize": 22891291
+      }
+    },
+    {
+      "pass": true,
+      "label": "RAF count returns to baseline 1",
+      "detail": {
+        "baseline": 2,
+        "actual": 2
+      }
+    },
+    {
+      "pass": true,
+      "label": "Same page scroll 1"
+    },
+    {
+      "pass": true,
+      "label": "CTA receives focus 1"
+    },
+    {
+      "pass": true,
+      "label": "Exactly one added WebGL context 2"
+    },
+    {
+      "pass": true,
+      "label": "Showroom WebGL context released 2",
+      "detail": {
+        "activeContexts": 1,
+        "raf": 2,
+        "canvases": 1,
+        "focus": "building-rooftop-entry",
+        "entry": "building-rooftop-entry-btn is-visible",
+        "scroll": 2273,
+        "documents": 2,
+        "nodes": 1316,
+        "jsEventListeners": 40,
+        "usedSize": 15546904,
+        "totalSize": 17801216,
+        "embedderHeapUsedSize": 3045864,
+        "backingStorageSize": 22891651
+      }
+    },
+    {
+      "pass": true,
+      "label": "RAF count returns to baseline 2",
+      "detail": {
+        "baseline": 2,
+        "actual": 2
+      }
+    },
+    {
+      "pass": true,
+      "label": "Same page scroll 2"
+    },
+    {
+      "pass": true,
+      "label": "CTA receives focus 2"
+    },
+    {
+      "pass": true,
+      "label": "DOM listener count stabilizes",
+      "detail": [
+        40,
+        40,
+        40
+      ]
+    },
+    {
+      "pass": true,
+      "label": "Collected JS heap stabilizes within 8 MB",
+      "detail": [
+        14684200,
+        15191028,
+        15546904
+      ]
+    },
+    {
+      "pass": true,
+      "label": "Actual browser zoom API available"
+    },
+    {
+      "pass": true,
+      "label": "Actual browser zoom is 200%",
+      "detail": {
+        "width": 709,
+        "height": 451,
+        "dpr": 2
+      }
+    },
+    {
+      "pass": true,
+      "label": "200% zoom control .showroom-exit",
+      "detail": {
+        "x": 284.12109375,
+        "y": 12,
+        "width": 140.7578125,
+        "height": 33.59375
+      }
+    },
+    {
+      "pass": true,
+      "label": "200% zoom control [data-flow=\"exit\"]",
+      "detail": {
+        "x": 315.546875,
+        "y": 379.609375,
+        "width": 72.71875,
+        "height": 36
+      }
+    },
+    {
+      "pass": true,
+      "label": "200% zoom control .showroom__legal-link",
+      "detail": {
+        "x": 593.9453125,
+        "y": 12,
+        "width": 99.0546875,
+        "height": 29
+      }
+    },
+    {
+      "pass": true,
+      "label": "Parent content and typography unchanged 1440"
+    },
+    {
+      "pass": true,
+      "label": "Parent content and typography unchanged 1280"
+    },
+    {
+      "pass": true,
+      "label": "Parent content and typography unchanged 1024"
+    },
+    {
+      "pass": true,
+      "label": "Parent content and typography unchanged 768"
+    },
+    {
+      "pass": true,
+      "label": "Parent content and typography unchanged 390"
+    }
+  ],
+  "cycles": [
+    {
+      "activeContexts": 1,
+      "raf": 2,
+      "canvases": 1,
+      "focus": "building-rooftop-entry",
+      "entry": "building-rooftop-entry-btn is-visible",
+      "scroll": 2273,
+      "documents": 2,
+      "nodes": 1212,
+      "jsEventListeners": 40,
+      "usedSize": 14684200,
+      "totalSize": 17014784,
+      "embedderHeapUsedSize": 2963000,
+      "backingStorageSize": 22890855
+    },
+    {
+      "activeContexts": 1,
+      "raf": 2,
+      "canvases": 1,
+      "focus": "building-rooftop-entry",
+      "entry": "building-rooftop-entry-btn is-visible",
+      "scroll": 2273,
+      "documents": 2,
+      "nodes": 1264,
+      "jsEventListeners": 40,
+      "usedSize": 15191028,
+      "totalSize": 17539072,
+      "embedderHeapUsedSize": 2945288,
+      "backingStorageSize": 22891291
+    },
+    {
+      "activeContexts": 1,
+      "raf": 2,
+      "canvases": 1,
+      "focus": "building-rooftop-entry",
+      "entry": "building-rooftop-entry-btn is-visible",
+      "scroll": 2273,
+      "documents": 2,
+      "nodes": 1316,
+      "jsEventListeners": 40,
+      "usedSize": 15546904,
+      "totalSize": 17801216,
+      "embedderHeapUsedSize": 3045864,
+      "backingStorageSize": 22891651
+    }
+  ]
+}

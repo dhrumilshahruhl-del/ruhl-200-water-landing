@@ -1,0 +1,41 @@
+---
+description: Approved end-frame camera and model alignment for the 3D building scroll
+globs: building-scroll.js
+alwaysApply: false
+---
+
+# Building scroll — approved end frame
+
+When changing rooftop/end animation in `building-scroll.js`, preserve this arrangement unless the user asks otherwise.
+
+## Camera
+- Upright only: `camera.up.set(0, 1, 0)` — no vertical flip
+- 52° pitch, view from +Z via `buildRooftopCameraVectors()`
+- Look target centered on rooftop mesh bounds (`getRooftopMeshBounds`), not full-building AABB
+- End FOV: `Math.max(29, state.endFov - 3)` at phase 3 end (slight zoom only)
+- Minimal inspect push: none — end frame is `roofPos` / `roofLook` directly
+
+## Model rotation
+- `snapRooftopLongEdgeHorizontal()` then **`+ Math.PI`** so the **opposite** long facade is horizontal (0°, parallel to screen bottom)
+- Alignment measured with the same rooftop camera (no flipped up vector)
+
+## Zoom (end frame)
+- `ROOFTOP_END_FIT_MARGIN = 0.72`
+- `ROOFTOP_END_DISTANCE_SCALE = 0.96`
+- Base horizontal distance: `roofSpan * (0.92 mobile / 1.0 desktop)`
+- End FOV: `Math.max(29, state.endFov - 3)` — slight zoom only at phase 3 end
+
+## Rooftop overlay
+- No procedural retrofit components (pipes, labels, flows) — GLB rooftop only
+- Timeline ends at phase 3 (rooftop camera); phase 4 crossfades to `200 water Roof Only.glb`
+- Roof-only model aligned via matching building rotation/scale + rooftop-band bounds from full model (`alignRoofOnlyModel`)
+
+## Scroll timing (orbit → rooftop)
+- Short orbit: `38°` span; spin duration `ORBIT_SPIN_FRACTION * L` (~20% of timeline)
+- Rooftop camera starts exactly when orbit ends (`phase3` at `orbitEnd`); no idle phase2
+- `LEGACY_TIMELINE_END = 0.36`, section height `340vh`
+
+## Do not regress
+- Do not reintroduce `lateralOffset` on roof look/pos
+- Do not point inspect camera at `retrofitCenter` (breaks alignment)
+- Cache roof vertices (`roofVertexCache`) during alignment — do not re-scan GLB every snap step

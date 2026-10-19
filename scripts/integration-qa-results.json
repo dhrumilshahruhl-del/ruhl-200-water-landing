@@ -1,0 +1,369 @@
+{
+  "checks": [
+    {
+      "pass": true,
+      "label": "No showroom download before CTA"
+    },
+    {
+      "pass": true,
+      "label": "One showroom canvas 0"
+    },
+    {
+      "pass": true,
+      "label": "One flow panel 0"
+    },
+    {
+      "pass": true,
+      "label": "Scroll lock 0"
+    },
+    {
+      "pass": true,
+      "label": "Pause works"
+    },
+    {
+      "pass": true,
+      "label": "Six flow steps",
+      "detail": [
+        "Return Air",
+        "Energy Recovery",
+        "Exhaust",
+        "Fresh Outdoor Air",
+        "Heat Pump",
+        "Supply Air"
+      ]
+    },
+    {
+      "pass": true,
+      "label": "Equipment modal supply"
+    },
+    {
+      "pass": true,
+      "label": "Equipment modal heat-pump"
+    },
+    {
+      "pass": true,
+      "label": "Legal modal"
+    },
+    {
+      "pass": true,
+      "label": "Third-party notices available"
+    },
+    {
+      "pass": true,
+      "label": "Visible controls fit 1440",
+      "detail": []
+    },
+    {
+      "pass": true,
+      "label": "Visible controls fit 1280",
+      "detail": []
+    },
+    {
+      "pass": true,
+      "label": "Visible controls fit 1024",
+      "detail": []
+    },
+    {
+      "pass": true,
+      "label": "Visible controls fit 768",
+      "detail": []
+    },
+    {
+      "pass": true,
+      "label": "Visible controls fit 390",
+      "detail": []
+    },
+    {
+      "pass": true,
+      "label": "Showroom DOM removed 0"
+    },
+    {
+      "pass": true,
+      "label": "Focus restored 0",
+      "detail": {
+        "focus": "<button type=\"button\" id=\"building-rooftop-entry\" class=\"building-rooftop-entry-btn is-visible\" aria-hidden=\"false\">\n          Explore rooftop systems\n        </button>",
+        "entry": "<button type=\"button\" id=\"building-rooftop-entry\" class=\"building-rooftop-entry-btn is-visible\" aria-hidden=\"false\">\n          Explore rooftop systems\n        </button>",
+        "scroll": 2520,
+        "triggers": [
+          {
+            "progress": 0.95,
+            "start": 1000,
+            "end": 2600
+          }
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "Scroll unlocked 0"
+    },
+    {
+      "pass": true,
+      "label": "Global listeners return to baseline 0",
+      "detail": {
+        "initialListeners": {
+          "window": 8,
+          "document": 7
+        },
+        "listeners": {
+          "window": 8,
+          "document": 7,
+          "details": [
+            {
+              "type": "wheel",
+              "source": "function Jb(){v&&v.isPressed&&!(v.startX>Je.clientWidth)||(qe.cache++,v?D=D||requestAnimationFrame(Z):Z(),st||U(\"scrollStart\"),st=at())}"
+            },
+            {
+              "type": "load",
+              "source": "function _refreshAll(e,t){if(We=Xe.documentElement,Je=Xe.body,l=[Ne,Xe,We,Je],!st||e||S){Yb(),rt=ne.isRefreshing=!0,qe.forEach(function(e){return Ta(e)&&++e.cacheID&&(e.rec=e())});var r=U(\"refreshInit"
+            },
+            {
+              "type": "resize",
+              "source": "function Lb(e){qe.cache++,!0!==e&&(Ke||h||Xe.fullscreenElement||Xe.webkitFullscreenElement||b&&y===Ne.innerWidth&&!(Math.abs(Ne.innerHeight-m)>.25*Ne.innerHeight))||c.restart(!0)}"
+            },
+            {
+              "type": "resize",
+              "source": "() => {\r\n    if (!resizeRenderer()) return;\r\n    invalidateFramingOffset();\r\n    rooftopMode?.onResize();\r\n    ScrollTrigger.refresh();\r\n    renderScene();\r\n  }"
+            },
+            {
+              "type": "rooftop-showroom-closed",
+              "source": "function onShowroomClosed() {\r\n    if (deferredReducedMotion) {\r\n      deferredReducedMotion = false;\r\n      if (section.classList.contains('is-reduced-motion') !== reduceMotionMq.matches) {\r\n        "
+            },
+            {
+              "type": "beforeunload",
+              "source": "() => {\r\n      disposed = true;\r\n      window.removeEventListener('rooftop-showroom-closed', onShowroomClosed);\r\n      rooftopMode?.dispose();\r\n      gsap.ticker.remove(tickRender);\r\n      resizeObser"
+            },
+            {
+              "type": "wheel",
+              "source": "function(){return Dk.tween&&Dk.tween.kill()&&(Dk.tween=0)}"
+            },
+            {
+              "type": "wheel",
+              "source": "function(){return Dk.tween&&Dk.tween.kill()&&(Dk.tween=0)}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "pass": true,
+      "label": "One showroom canvas 1"
+    },
+    {
+      "pass": true,
+      "label": "One flow panel 1"
+    },
+    {
+      "pass": true,
+      "label": "Scroll lock 1"
+    },
+    {
+      "pass": true,
+      "label": "Showroom DOM removed 1"
+    },
+    {
+      "pass": true,
+      "label": "Focus restored 1",
+      "detail": {
+        "focus": "<button type=\"button\" id=\"building-rooftop-entry\" class=\"building-rooftop-entry-btn is-visible\" aria-hidden=\"false\">\n          Explore rooftop systems\n        </button>",
+        "entry": "<button type=\"button\" id=\"building-rooftop-entry\" class=\"building-rooftop-entry-btn is-visible\" aria-hidden=\"false\">\n          Explore rooftop systems\n        </button>",
+        "scroll": 2520,
+        "triggers": [
+          {
+            "progress": 0.95,
+            "start": 1000,
+            "end": 2600
+          }
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "Scroll unlocked 1"
+    },
+    {
+      "pass": true,
+      "label": "Global listeners return to baseline 1",
+      "detail": {
+        "initialListeners": {
+          "window": 8,
+          "document": 7
+        },
+        "listeners": {
+          "window": 8,
+          "document": 7,
+          "details": [
+            {
+              "type": "wheel",
+              "source": "function Jb(){v&&v.isPressed&&!(v.startX>Je.clientWidth)||(qe.cache++,v?D=D||requestAnimationFrame(Z):Z(),st||U(\"scrollStart\"),st=at())}"
+            },
+            {
+              "type": "load",
+              "source": "function _refreshAll(e,t){if(We=Xe.documentElement,Je=Xe.body,l=[Ne,Xe,We,Je],!st||e||S){Yb(),rt=ne.isRefreshing=!0,qe.forEach(function(e){return Ta(e)&&++e.cacheID&&(e.rec=e())});var r=U(\"refreshInit"
+            },
+            {
+              "type": "resize",
+              "source": "function Lb(e){qe.cache++,!0!==e&&(Ke||h||Xe.fullscreenElement||Xe.webkitFullscreenElement||b&&y===Ne.innerWidth&&!(Math.abs(Ne.innerHeight-m)>.25*Ne.innerHeight))||c.restart(!0)}"
+            },
+            {
+              "type": "resize",
+              "source": "() => {\r\n    if (!resizeRenderer()) return;\r\n    invalidateFramingOffset();\r\n    rooftopMode?.onResize();\r\n    ScrollTrigger.refresh();\r\n    renderScene();\r\n  }"
+            },
+            {
+              "type": "rooftop-showroom-closed",
+              "source": "function onShowroomClosed() {\r\n    if (deferredReducedMotion) {\r\n      deferredReducedMotion = false;\r\n      if (section.classList.contains('is-reduced-motion') !== reduceMotionMq.matches) {\r\n        "
+            },
+            {
+              "type": "beforeunload",
+              "source": "() => {\r\n      disposed = true;\r\n      window.removeEventListener('rooftop-showroom-closed', onShowroomClosed);\r\n      rooftopMode?.dispose();\r\n      gsap.ticker.remove(tickRender);\r\n      resizeObser"
+            },
+            {
+              "type": "wheel",
+              "source": "function(){return Dk.tween&&Dk.tween.kill()&&(Dk.tween=0)}"
+            },
+            {
+              "type": "wheel",
+              "source": "function(){return Dk.tween&&Dk.tween.kill()&&(Dk.tween=0)}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "pass": true,
+      "label": "Scroll restored 1",
+      "detail": {
+        "start": {
+          "x": 0,
+          "y": 2520
+        },
+        "end": {
+          "x": 0,
+          "y": 2520
+        }
+      }
+    },
+    {
+      "pass": true,
+      "label": "One showroom canvas 2"
+    },
+    {
+      "pass": true,
+      "label": "One flow panel 2"
+    },
+    {
+      "pass": true,
+      "label": "Scroll lock 2"
+    },
+    {
+      "pass": true,
+      "label": "Showroom DOM removed 2"
+    },
+    {
+      "pass": true,
+      "label": "Focus restored 2",
+      "detail": {
+        "focus": "<button type=\"button\" id=\"building-rooftop-entry\" class=\"building-rooftop-entry-btn is-visible\" aria-hidden=\"false\">\n          Explore rooftop systems\n        </button>",
+        "entry": "<button type=\"button\" id=\"building-rooftop-entry\" class=\"building-rooftop-entry-btn is-visible\" aria-hidden=\"false\">\n          Explore rooftop systems\n        </button>",
+        "scroll": 2520,
+        "triggers": [
+          {
+            "progress": 0.95,
+            "start": 1000,
+            "end": 2600
+          }
+        ]
+      }
+    },
+    {
+      "pass": true,
+      "label": "Scroll unlocked 2"
+    },
+    {
+      "pass": true,
+      "label": "Global listeners return to baseline 2",
+      "detail": {
+        "initialListeners": {
+          "window": 8,
+          "document": 7
+        },
+        "listeners": {
+          "window": 8,
+          "document": 7,
+          "details": [
+            {
+              "type": "wheel",
+              "source": "function Jb(){v&&v.isPressed&&!(v.startX>Je.clientWidth)||(qe.cache++,v?D=D||requestAnimationFrame(Z):Z(),st||U(\"scrollStart\"),st=at())}"
+            },
+            {
+              "type": "load",
+              "source": "function _refreshAll(e,t){if(We=Xe.documentElement,Je=Xe.body,l=[Ne,Xe,We,Je],!st||e||S){Yb(),rt=ne.isRefreshing=!0,qe.forEach(function(e){return Ta(e)&&++e.cacheID&&(e.rec=e())});var r=U(\"refreshInit"
+            },
+            {
+              "type": "resize",
+              "source": "function Lb(e){qe.cache++,!0!==e&&(Ke||h||Xe.fullscreenElement||Xe.webkitFullscreenElement||b&&y===Ne.innerWidth&&!(Math.abs(Ne.innerHeight-m)>.25*Ne.innerHeight))||c.restart(!0)}"
+            },
+            {
+              "type": "resize",
+              "source": "() => {\r\n    if (!resizeRenderer()) return;\r\n    invalidateFramingOffset();\r\n    rooftopMode?.onResize();\r\n    ScrollTrigger.refresh();\r\n    renderScene();\r\n  }"
+            },
+            {
+              "type": "rooftop-showroom-closed",
+              "source": "function onShowroomClosed() {\r\n    if (deferredReducedMotion) {\r\n      deferredReducedMotion = false;\r\n      if (section.classList.contains('is-reduced-motion') !== reduceMotionMq.matches) {\r\n        "
+            },
+            {
+              "type": "beforeunload",
+              "source": "() => {\r\n      disposed = true;\r\n      window.removeEventListener('rooftop-showroom-closed', onShowroomClosed);\r\n      rooftopMode?.dispose();\r\n      gsap.ticker.remove(tickRender);\r\n      resizeObser"
+            },
+            {
+              "type": "wheel",
+              "source": "function(){return Dk.tween&&Dk.tween.kill()&&(Dk.tween=0)}"
+            },
+            {
+              "type": "wheel",
+              "source": "function(){return Dk.tween&&Dk.tween.kill()&&(Dk.tween=0)}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "pass": true,
+      "label": "Scroll restored 2",
+      "detail": {
+        "start": {
+          "x": 0,
+          "y": 2520
+        },
+        "end": {
+          "x": 0,
+          "y": 2520
+        }
+      }
+    },
+    {
+      "pass": true,
+      "label": "Old rooftop assets not requested"
+    },
+    {
+      "pass": true,
+      "label": "No local asset failures",
+      "detail": []
+    },
+    {
+      "pass": true,
+      "label": "No page errors",
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "failed": [],
+  "origins": [
+    "http://127.0.0.1:4180",
+    "https://fonts.googleapis.com",
+    "https://cdn.tailwindcss.com",
+    "https://cdn.jsdelivr.net",
+    "https://fonts.gstatic.com"
+  ],
+  "showroomRequests": 123
+}

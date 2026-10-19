@@ -1,0 +1,125 @@
+{
+  "checks": [
+    {
+      "pass": true,
+      "label": "Keyboard rotates and zooms"
+    },
+    {
+      "pass": true,
+      "label": "Keyboard reset restores camera"
+    },
+    {
+      "pass": true,
+      "label": "OrbitControls drag changes camera"
+    },
+    {
+      "pass": true,
+      "label": "Progressive city loads under subdirectory"
+    },
+    {
+      "pass": true,
+      "label": "Parent excluded from modal tab order"
+    },
+    {
+      "pass": true,
+      "label": "Parent excluded from modal tab order"
+    },
+    {
+      "pass": true,
+      "label": "Parent excluded from modal tab order"
+    },
+    {
+      "pass": true,
+      "label": "Parent excluded from modal tab order"
+    },
+    {
+      "pass": true,
+      "label": "Parent excluded from modal tab order"
+    },
+    {
+      "pass": true,
+      "label": "Parent excluded from modal tab order"
+    },
+    {
+      "pass": true,
+      "label": "Parent excluded from modal tab order"
+    },
+    {
+      "pass": true,
+      "label": "Parent excluded from modal tab order"
+    },
+    {
+      "pass": true,
+      "label": "Parent excluded from modal tab order"
+    },
+    {
+      "pass": true,
+      "label": "Parent excluded from modal tab order"
+    },
+    {
+      "pass": true,
+      "label": "Parent excluded from modal tab order"
+    },
+    {
+      "pass": true,
+      "label": "Parent excluded from modal tab order"
+    },
+    {
+      "pass": true,
+      "label": "Integrated showroom WCAG scan",
+      "detail": []
+    },
+    {
+      "pass": true,
+      "label": "Flow WCAG scan",
+      "detail": []
+    },
+    {
+      "pass": true,
+      "label": "Flow receives keyboard focus"
+    },
+    {
+      "pass": true,
+      "label": "Keyboard pauses"
+    },
+    {
+      "pass": true,
+      "label": "Escape exits flow and preserves showroom"
+    },
+    {
+      "pass": true,
+      "label": "Legal opens from keyboard"
+    },
+    {
+      "pass": true,
+      "label": "Legal WCAG scan",
+      "detail": []
+    },
+    {
+      "pass": true,
+      "label": "Hidden-tab visibility handler stops rendering",
+      "detail": {
+        "before": 634,
+        "after": 634
+      }
+    },
+    {
+      "pass": true,
+      "label": "Visible-tab visibility handler resumes rendering"
+    },
+    {
+      "pass": true,
+      "label": "Escape closes idle showroom"
+    },
+    {
+      "pass": true,
+      "label": "Keyboard close restores CTA focus"
+    },
+    {
+      "pass": true,
+      "label": "No subdirectory page errors",
+      "detail": []
+    }
+  ],
+  "errors": []
+}

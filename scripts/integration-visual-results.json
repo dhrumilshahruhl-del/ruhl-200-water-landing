@@ -1,0 +1,68 @@
+{
+  "checks": [
+    {
+      "pass": true,
+      "label": "Actual browser zoom API available"
+    },
+    {
+      "pass": true,
+      "label": "Actual browser zoom is 200%",
+      "detail": {
+        "width": 709,
+        "height": 451,
+        "dpr": 2
+      }
+    },
+    {
+      "pass": true,
+      "label": "200% zoom control .showroom-exit",
+      "detail": {
+        "x": 284.12109375,
+        "y": 12,
+        "width": 140.7578125,
+        "height": 33.59375
+      }
+    },
+    {
+      "pass": true,
+      "label": "200% zoom control [data-flow=\"exit\"]",
+      "detail": {
+        "x": 315.546875,
+        "y": 379.609375,
+        "width": 72.71875,
+        "height": 36
+      }
+    },
+    {
+      "pass": true,
+      "label": "200% zoom control .showroom__legal-link",
+      "detail": {
+        "x": 593.9453125,
+        "y": 12,
+        "width": 99.0546875,
+        "height": 29
+      }
+    },
+    {
+      "pass": true,
+      "label": "Parent content and typography unchanged 1440"
+    },
+    {
+      "pass": true,
+      "label": "Parent content and typography unchanged 1280"
+    },
+    {
+      "pass": true,
+      "label": "Parent content and typography unchanged 1024"
+    },
+    {
+      "pass": true,
+      "label": "Parent content and typography unchanged 768"
+    },
+    {
+      "pass": true,
+      "label": "Parent content and typography unchanged 390"
+    }
+  ],
+  "cycles": []
+}
