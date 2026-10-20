@@ -6,7 +6,7 @@ const out = path.join(root, 'dist');
 if (path.resolve(out) !== path.resolve(root, 'dist')) throw Error('Invalid output directory');
 await rm(out, {recursive:true, force:true});
 await mkdir(out, { recursive: true });
-const files = ['index.html','styles.css','main.js','building-scroll.js','model-preload.js','showroom-integration.js'];
+const files = ['index.html','styles.css','main.js','building-scroll.js','model-preload.js','showroom-integration.js','THIRD-PARTY-NOTICES.txt'];
 for (const file of files) await cp(path.join(root,file),path.join(out,file));
 await mkdir(path.join(out,'logos'),{recursive:true});
 for(const file of ['200_water.opt.glb','ruhl.jpg','rockrose.png','nyserda.png','dena_logo.png']) {
