@@ -37,12 +37,6 @@ export async function mountShowroom(host) {
   const legalTrigger = shadow.querySelector('.showroom__legal-link');
   const legal = shadow.querySelector('#legal-credits');
   const legalClose = legal.querySelector('.equipment-modal__close');
-  const notices = document.createElement('a');
-  notices.href = new URL('./THIRD-PARTY-NOTICES.txt', import.meta.url).href;
-  notices.target = '_blank';
-  notices.rel = 'noopener';
-  notices.textContent = 'View full Third-Party Notices';
-  legal.querySelector('.equipment-modal__content').append(notices);
   legalTrigger.addEventListener('click', () => {
     if (!legal.open) { legal.showModal(); legal.scrollTop = 0; legalClose.focus({ preventScroll: true }); }
   }, { signal: events.signal });
