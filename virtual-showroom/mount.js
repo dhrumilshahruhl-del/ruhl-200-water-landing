@@ -1,4 +1,5 @@
 import { launchShowroom } from './src/showroom.js';
+import { createMobileSheet } from './src/ui/mobile-sheet.js';
 
 // The tested runtime stays inside a native modal and a CSS-isolated shadow tree.
 export async function mountShowroom(host) {
@@ -22,6 +23,7 @@ export async function mountShowroom(host) {
   const close = document.createElement('button');
   close.className = 'showroom-exit';
   close.type = 'button';
+  close.setAttribute('aria-label', 'Back to building tour');
   close.innerHTML = '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7M5 12h14"/></svg><span>Back to building tour</span>';
   close.addEventListener('click', () => host.close(), { signal: events.signal });
   const controls = document.createElement('div');
@@ -51,6 +53,7 @@ export async function mountShowroom(host) {
   });
   observer.observe(root, { attributes: true, attributeFilter: ['data-flow-active'] });
   const showroom = await launchShowroom({ root });
+  const mobileSheet = createMobileSheet(root, legalTrigger);
   root.querySelector('canvas').focus({ preventScroll: true });
-  return { showroom, dispose() { events.abort(); observer.disconnect(); legal.close(); showroom.dispose(); shadow.replaceChildren(); } };
+  return { showroom, dispose() { mobileSheet.dispose(); events.abort(); observer.disconnect(); legal.close(); showroom.dispose(); shadow.replaceChildren(); } };
 }

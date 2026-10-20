@@ -113,6 +113,7 @@ export function createFlowImpact(root, flowPanel, onLayoutChange) {
     panel.classList.toggle('is-paused', paused);
   }
   function setStep(index) {
+    if (window.matchMedia('(max-width: 1024px)').matches) panel.open = false;
     const config = IMPACT_CONFIG[index] || null;
     if (reducedMotion.matches || panel.hidden || !panel.open) { mount(config); return; }
     pending = config;

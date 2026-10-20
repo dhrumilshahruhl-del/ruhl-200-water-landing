@@ -9,7 +9,7 @@ const overlaps = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bot
 
 // One reusable HTML callout; all positions come from existing equipment markers.
 // Project cached surface cells only on layout events/camera settling.
-export function createFlowEquipment({ root, building, camera, bounds }) {
+export function createFlowEquipment({ root, building, camera, bounds, activeBounds }) {
   const popup = document.createElement('div');
   popup.className = 'flow-equipment';
   popup.hidden = true;
@@ -43,13 +43,18 @@ export function createFlowEquipment({ root, building, camera, bounds }) {
     const linkedIds = current.anchors.slice(0, leaders.length);
     const linkedPoints = linkedIds.map(id => ({ ...project(anchors.get(id)), id }));
     const origin = root.getBoundingClientRect();
-    const blocked = [...root.querySelectorAll('.flow-panel, .flow-impact, .showroom__toolbar')]
-      .filter(node => !node.hidden && node.getClientRects().length)
+    const tablet = root.clientWidth >= 601 && root.clientWidth <= 1024;
+    const sheet = tablet ? root.querySelector('.tablet-sheet') : null;
+    const exposedBottom = sheet ? sheet.getBoundingClientRect().top - origin.top - 12 : root.clientHeight - 10;
+    const blocked = [...(tablet ? root.getRootNode().querySelectorAll('.tablet-sheet, .showroom-controls, .showroom__legal-link') : root.querySelectorAll('.flow-panel, .flow-impact, .showroom__toolbar'))]
+      .filter(node => !node.hidden && !node.closest('[data-tablet-camera-layout]') && node.getClientRects().length)
       .map(node => { const r = node.getBoundingClientRect(); return {
         left: r.left - origin.left - 8, right: r.right - origin.left + 8,
         top: r.top - origin.top - 8, bottom: r.bottom - origin.top + 8,
       }; });
     for (const box of bounds[sourceIndex]) {
+      if (tablet && activeBounds && !box.intersectsBox(activeBounds[sourceIndex]) &&
+        !current.anchors.some(id => box.distanceToPoint(anchors.get(id)) < 5)) continue;
       const points = [];
       if (!box.isEmpty()) for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) {
         points.push(project(new THREE.Vector3(x, y, z)));
@@ -66,7 +71,7 @@ export function createFlowEquipment({ root, building, camera, bounds }) {
       z: (linkedPoints[0].z + linkedPoints[1].z) / 2,
       id: linkedIds.join(' '),
     });
-    for (const gap of [16, 24, 40, 56, 72, 96, 112, 144, 160, 192]) {
+    for (const gap of (tablet ? [16, 24, 40, 56, 72, 96, 112] : [16, 24, 40, 56, 72, 96, 112, 144, 160, 192])) {
       for (const compact of [false, true]) {
         popup.classList.toggle('is-compact', compact);
         popup.hidden = false;
@@ -83,7 +88,7 @@ export function createFlowEquipment({ root, building, camera, bounds }) {
           ];
           for (const [left, top] of candidates) {
             const rect = { left, top, right: left + width, bottom: top + height };
-            if (left < 10 || top < 10 || rect.right > root.clientWidth - 10 || rect.bottom > root.clientHeight - 10 || blocked.some(b => overlaps(rect, b))) continue;
+            if (left < 10 || top < (tablet ? 76 : 10) || rect.right > root.clientWidth - 10 || rect.bottom > exposedBottom || blocked.some(b => overlaps(rect, b))) continue;
             popup.style.left = `${left}px`;
             popup.style.top = `${top}px`;
             popup.dataset.anchor = p.id;

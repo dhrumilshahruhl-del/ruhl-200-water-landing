@@ -147,9 +147,22 @@ export async function launchShowroom(options = {}) {
 
   function applyDefaultCamera() {
     camera.fov = DEFAULT_VIEW.camera.fov;
+    const target = vectorFromSnapshot(DEFAULT_VIEW.camera.target);
     camera.position.copy(vectorFromSnapshot(DEFAULT_VIEW.camera.position));
-    camera.lookAt(vectorFromSnapshot(DEFAULT_VIEW.camera.target));
+    if (window.matchMedia('(max-width: 600px)').matches) {
+      // Fit the rooftop across a narrow phone screen without changing the FOV
+      // used by guided flow. Place its focus above the collapsed bottom sheet.
+      const distanceScale = Math.max(1.15, 0.75 / camera.aspect);
+      camera.position.sub(target).multiplyScalar(distanceScale).add(target);
+      camera.lookAt(target);
+      const visibleHeight = 2 * camera.position.distanceTo(target) * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+      const shift = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion).multiplyScalar(-visibleHeight * 0.125);
+      camera.position.add(shift);
+      target.add(shift);
+    }
+    camera.lookAt(target);
     camera.updateProjectionMatrix();
+    return target;
   }
 
   function roundNumber(value) {
@@ -233,9 +246,8 @@ export async function launchShowroom(options = {}) {
 
     modelRoot.add(building);
 
-    applyDefaultCamera();
-    const defaultTarget = vectorFromSnapshot(DEFAULT_VIEW.camera.target);
-    rooftopMarkers = createRooftopMarkers(building);
+    const defaultTarget = applyDefaultCamera();
+    rooftopMarkers = createRooftopMarkers(building, { root, onActivate: (id, trigger) => equipmentModal.open(id, trigger) });
     renderer.shadowMap.autoUpdate = false;
     renderer.shadowMap.needsUpdate = true;
 
@@ -271,7 +283,9 @@ export async function launchShowroom(options = {}) {
   }
 
   let pointerStart = null;
+  let pendingMarker = null;
   function onPointerDown(event) {
+    pendingMarker = null;
     if (systemFlow?.active) return;
     pointerStart = event.isPrimary && event.button === 0 ? { x: event.clientX, y: event.clientY } : null;
   }
@@ -284,7 +298,14 @@ export async function launchShowroom(options = {}) {
     const id = rooftopMarkers?.pick(camera,
       ((event.clientX - rect.left) / rect.width) * 2 - 1,
       -((event.clientY - rect.top) / rect.height) * 2 + 1);
-    if (id) equipmentModal.open(id);
+    pendingMarker = id || null;
+  }
+  function onCanvasClick() {
+    const id = pendingMarker;
+    pendingMarker = null;
+    // Wait for the completed click: touch's compatibility click must not land
+    // on a backdrop created during pointerup and immediately dismiss it.
+    if (id && !systemFlow?.active) equipmentModal.open(id, canvas);
   }
   function onPointerMove(event) {
     if (systemFlow?.active) { canvas.style.cursor = 'default'; return; }
@@ -296,7 +317,7 @@ export async function launchShowroom(options = {}) {
     canvas.style.cursor = event.buttons ? 'grabbing' : hovered ? 'pointer' : '';
   }
   function onPointerLeave() { canvas.style.cursor = ''; }
-  function onPointerCancel() { pointerStart = null; onPointerLeave(); }
+  function onPointerCancel() { pointerStart = null; pendingMarker = null; onPointerLeave(); }
   function onCanvasKeyDown(event) {
     if (!controls || systemFlow?.active) return;
     const key = event.key;
@@ -324,6 +345,7 @@ export async function launchShowroom(options = {}) {
   canvas.addEventListener('pointerleave', onPointerLeave);
   canvas.addEventListener('pointerdown', onPointerDown);
   canvas.addEventListener('pointerup', onPointerUp);
+  canvas.addEventListener('click', onCanvasClick);
   canvas.addEventListener('pointercancel', onPointerCancel);
 
   ui.buttons.reset?.addEventListener('click', resetView);
@@ -398,6 +420,7 @@ export async function launchShowroom(options = {}) {
       canvas.removeEventListener('pointerleave', onPointerLeave);
       canvas.removeEventListener('pointerdown', onPointerDown);
       canvas.removeEventListener('pointerup', onPointerUp);
+      canvas.removeEventListener('click', onCanvasClick);
       canvas.removeEventListener('pointercancel', onPointerCancel);
       cityContext?.userData?.dispose?.();
       environment.dispose();

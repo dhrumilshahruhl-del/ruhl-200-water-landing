@@ -21,7 +21,7 @@ export const EQUIPMENT = {
 
 export function createEquipmentModal(root) {
   const dialog = document.createElement('dialog');
-  dialog.className = 'equipment-modal';
+  dialog.className = 'equipment-modal equipment-modal--details';
   dialog.setAttribute('aria-labelledby', 'equipment-title');
   dialog.innerHTML = `
     <button class="equipment-modal__close" type="button" aria-label="Close equipment details" autofocus>&times;</button>
@@ -32,13 +32,19 @@ export function createEquipmentModal(root) {
       <p class="equipment-modal__summary"><strong>In simple terms:</strong> <span></span></p>
     </div>`;
   root.append(dialog);
+  let opener = null;
+  dialog.addEventListener('close', () => {
+    if (dialog.open) return;
+    if (opener?.isConnected) opener.focus({ preventScroll: true });
+    opener = null;
+  });
   const equipmentMenu = document.createElement('details');
   equipmentMenu.className = 'equipment-menu';
   equipmentMenu.innerHTML = '<summary>Equipment details</summary>' + Object.entries(EQUIPMENT).map(([id, item]) => `<button type="button" data-equipment="${id}">${item.title}</button>`).join('');
   root.querySelector('.showroom__toolbar').append(equipmentMenu);
   equipmentMenu.addEventListener('click', event => {
-    const id = event.target.closest('[data-equipment]')?.dataset.equipment;
-    if (id) api.open(id);
+    const button = event.target.closest('[data-equipment]');
+    if (button) api.open(button.dataset.equipment, button);
   });
   dialog.querySelector('button').addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', (event) => {
@@ -47,7 +53,7 @@ export function createEquipmentModal(root) {
   });
   const api = {
     close() { dialog.close(); },
-    open(id) {
+    open(id, trigger) {
       const equipment = EQUIPMENT[id];
       if (!equipment) return;
       const image = dialog.querySelector('.equipment-modal__image img');
@@ -56,7 +62,12 @@ export function createEquipmentModal(root) {
       dialog.querySelector('h2').textContent = equipment.title;
       dialog.querySelector('.equipment-modal__description').textContent = equipment.description;
       dialog.querySelector('.equipment-modal__summary span').textContent = equipment.summary;
-      if (!dialog.open) dialog.showModal();
+      if (!dialog.open) {
+        opener = trigger || root.getRootNode().activeElement;
+        dialog.showModal();
+        dialog.scrollTop = 0;
+        dialog.querySelector('button').focus({ preventScroll: true });
+      }
     },
     dispose() { dialog.close(); dialog.remove(); equipmentMenu.remove(); },
   };

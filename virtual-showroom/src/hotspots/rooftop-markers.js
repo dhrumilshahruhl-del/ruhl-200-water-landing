@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { fromPlant } from '../flow/system-flow-data.js';
+import { EQUIPMENT } from '../ui/equipment-modal.js';
 
 export const ROOFTOP_MARKERS = [
   { id: 'left-equipment', position: [-17.29753, 5.33822, -13.98721], normal: [0, 1, 0] },
@@ -12,7 +13,7 @@ export const ROOFTOP_MARKERS = [
   { id: 'heat-pump-2', position: fromPlant(31.43937, -20.28151, 3.55185), normal: [Math.SQRT1_2, 0, Math.SQRT1_2], offset: 0.02, flowOnly: true },
 ];
 
-export function createRooftopMarkers(building) {
+export function createRooftopMarkers(building, { root, onActivate } = {}) {
   const canvas = document.createElement('canvas');
   canvas.width = canvas.height = 128;
   const context = canvas.getContext('2d');
@@ -47,10 +48,27 @@ export function createRooftopMarkers(building) {
     group.add(marker);
   }
   building.add(group);
+  const events = new AbortController();
+  const keyboardButtons = new Map();
+  if (root && onActivate) for (const marker of group.children) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'showroom__equipment-marker';
+    button.dataset.marker = marker.name;
+    button.setAttribute('aria-label', `Open ${EQUIPMENT[marker.userData.equipment].title} details`);
+    button.setAttribute('aria-haspopup', 'dialog');
+    button.hidden = true;
+    button.addEventListener('click', () => onActivate(marker.userData.equipment, button), { signal: events.signal });
+    root.append(button);
+    keyboardButtons.set(marker, button);
+  }
   const point = new THREE.Vector3();
   const scale = new THREE.Vector3();
   return {
-    setEnabled(enabled) { group.visible = enabled; },
+    setEnabled(enabled) {
+      group.visible = enabled;
+      if (!enabled) keyboardButtons.forEach(button => { button.hidden = true; });
+    },
     update(camera, viewportHeight) {
       camera.updateMatrixWorld();
       group.updateWorldMatrix(true, true);
@@ -62,6 +80,16 @@ export function createRooftopMarkers(building) {
         marker.visible = depth > camera.near;
         const size = Math.max(0, depth) * pixelsToWorld;
         marker.scale.set(size / scale.x, size / scale.y, 1);
+        const button = keyboardButtons.get(marker);
+        if (button) {
+          point.applyMatrix4(camera.projectionMatrix);
+          const hidden = !group.visible || !marker.visible || Math.abs(point.x) > 1 || Math.abs(point.y) > 1 || Math.abs(point.z) > 1;
+          if (button.hidden !== hidden) button.hidden = hidden;
+          if (!hidden && root.getRootNode().activeElement === button) {
+            button.style.left = `${(point.x + 1) * root.clientWidth / 2}px`;
+            button.style.top = `${(1 - point.y) * root.clientHeight / 2}px`;
+          }
+        }
       }
     },
     pick(camera, x, y) {
@@ -73,6 +101,8 @@ export function createRooftopMarkers(building) {
       return hit?.object.userData.equipment;
     },
     dispose() {
+      events.abort();
+      keyboardButtons.forEach(button => button.remove());
       group.removeFromParent();
       material.dispose();
       heatPumpMaterial.dispose();
